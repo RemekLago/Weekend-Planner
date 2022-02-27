@@ -2,6 +2,29 @@
 
 {% block content %}
     <h1 class="title">
-        Welcome, REMEK
+        Welcome, {{ name }}
     </h1>
+    
+    <div class="columns">
+        <div class="column">
+            <figure class="image is-100x300 has-background-white is-rounded">
+                <img src="/static/pikachu.jpg">
+            </figure>
+        </div>
+        <div class="column">
+            <div class="box has-background-light">
+                Nazwa profilu
+            </div>
+            <div class="box has-background-light">
+                Moja lokalizacja
+            </div>
+            <div class="box has-background-light">
+                Rodzaj aktywności: aktywny
+            </div>
+            <div class="box has-background-light">
+                Moja galeria...
+            </div>
+        </div>
+
+    </div>
 {% endblock %}
