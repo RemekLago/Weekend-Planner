@@ -1,17 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 class="title">
-        Welcome, {{ name }}
-    </h1>
-    
     <div class="columns">
-        <div class="column">
-            <figure class="image is-100x300 has-background-white is-rounded">
-                <img src="/static/pikachu.jpg">
+        <div class="column is-4">
+        </div>
+        <div class="column is-4">
+            <div class="box has-background-light">
+                <p><strong>Welcome {{ name }}</strong></p>
+            </div>
+        </div>
+        <div class="column is-4">
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column is-2">            
+        </div>
+        <div class="column is-4">
+            <figure class="image" > 
+                <img class="is-rounded" style="width: 300px; height: 300px;" src="/static/pikachu.jpg">
             </figure>
         </div>
-        <div class="column">
+        <div class="column is-4">
             <div class="box has-background-light">
                 Nazwa profilu
             </div>
@@ -23,6 +32,8 @@
             </div>
             <div class="box has-background-light">
                 Moja galeria...
+            </div>
+            <div class="column is-2">
             </div>
         </div>
 
