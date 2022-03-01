@@ -3,6 +3,8 @@ import requests
 from keys import APIkey
 
 """https://openweathermap.org/forecast5"""
+"""https://libraries.io/npm/weathericons"""
+"""https://rapidapi.com/wettercom-wettercom-default/api/forecast9/"""
 
 """take geographic coordinates to find a city in the next step"""
 city = "Warsaw"
@@ -20,7 +22,7 @@ weather_download = f"http://api.openweathermap.org/data/2.5/forecast?lat={lat}&l
 weather_city = requests.get(weather_download)
 
 
-"""taking: temperature, weather descriptions, level of clouds, level of wind, level of raining"""
+"""taking: temperature, weather descriptions, level of clouds, level of wind, level of raining - only for 5 day forecast"""
 weather_data = weather_city.json().get("list")
 """1 day, data from 6am i 12am - it is the 5th sample from day """
 weather_day = weather_data[4].get("dt_txt")
