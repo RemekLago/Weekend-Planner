@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <h1>Hello, {{ current_user.username }}!</h1>
     <h1 class="title">
         List with propositions as a result of checking weather conditions, lacalization and kind of profile
     </h1>
+    {% for activity in activities %}
+    <div>
+        <p>{{ activity.author.username }} says: <b>{{ activity.body }}</b></p>
+    </div>
+    {% endfor %}
     
 {% endblock %}
