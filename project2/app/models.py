@@ -1,4 +1,5 @@
 from app import db
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import login
@@ -9,6 +10,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    about_me = db.Column(db.String(140))
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -18,17 +21,27 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
+
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, size)
 
-# class ActivitiesInfo(db.Model):
-#     pass
 
-    # def __repr__(self):
-    #         return '<ActivitiesInfo {}>'.format(self.body)
+
+class ActivityDescription(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    activite_name = db.Column(db.String(100), nullable=False)
+    activite_description = db.Column(db.String(200), nullable=False)
+    activite_todo_list = db.Column(db.String(200), nullable=False)
+    activite_conditions = db.Column(db.Integer, nullable=False)
+    activite_calories = db.Column(db.String(100))
+    activite_favorite = db.Column(db.Boolean)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    def __repr__(self):
+        return '<Activity {}>'.format(self.body)
 
 @login.user_loader
 def load_user(id):
