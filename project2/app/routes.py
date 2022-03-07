@@ -2,7 +2,7 @@ from app import app
 from flask import render_template, flash, redirect, url_for
 from app.forms import LoginForm
 from flask_login import current_user, login_user
-from app.models import User
+from app.models import User, ActivitiesTable
 from flask_login import logout_user
 from flask_login import login_required
 from flask import request
@@ -11,6 +11,14 @@ from app import db
 from app.forms import RegistrationForm
 from datetime import datetime
 from app.forms import EditProfileForm
+
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
+
 
 @app.route('/')
 @app.route('/index')
@@ -21,7 +29,6 @@ def index():
 @login_required
 @app.route('/propositions')
 def propositions():
-    user = {'username': 'Remek'}
     activities = [
         {
             'author': {'username': 'John'},
@@ -37,10 +44,12 @@ def propositions():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # print(current_user.__dir__())
     if current_user.is_authenticated:
         return redirect(url_for('propositions'))
     form = LoginForm()
     if form.validate_on_submit():
+        
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
@@ -52,24 +61,11 @@ def login():
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
-@app.route("/signup", methods=["GET", "POST"])
-def signup():
-    return render_template("signup.html")
-
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-
-@app.route("/activities")
-def activities():
-    return render_template("activities.html")
-
-
-@app.route("/gallery")
-def gallery():
-    return render_template("gallery.html")    
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -86,22 +82,15 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/profile/<username>')
+@app.route('/user/<username>')
 @login_required
-def profile(username):
+def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    activities = [
-        {'author': user, 'body': 'Test activity #1'},
-        {'author': user, 'body': 'Test activity #2'}
-    ]
-    return render_template('profile.html', user=user, activities=activities)
-
-
-@app.before_request
-def before_request():
-    if current_user.is_authenticated:
-        current_user.last_seen = datetime.utcnow()
-        db.session.commit()
+    # activities = [
+    #     {'author': user, 'body': 'Test activity #1'},
+    #     {'author': user, 'body': 'Test activity #2'}
+    # ]
+    return render_template('user.html', user=user, activities=activities)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
@@ -118,3 +107,34 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile',form=form)
+
+
+@app.route("/activities", methods=["GET", "POST"])
+def activities():
+    """jeśli będę chciał z tego poziomu dodawać nowe aktywności uruchamiam IF"""
+    # if request.method == ["POST"]:
+    #     activity = ActivitiesTable(activity_name = request.form["activity"])
+    #     db.session.add(activity)
+    #     db.session.commit()
+    activities = ActivitiesTable.query.all()
+    return render_template("activities.html", activities=activities)
+
+
+# @app.route("/signup", methods=["GET", "POST"])
+# def signup():
+#     return render_template("signup.html")
+
+
+@app.route("/gallery")
+def gallery():
+    return render_template("gallery.html")    
+
+
+
+
+
+
+
+
+
+
