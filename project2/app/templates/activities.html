@@ -1,20 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 class="title">
-        List with propositions recommended by system
-    </h1>
+    <h3 class="title">
+        List of all activities in the system. <br>
+        From that place, WEATHER PLANNER <br>
+        will choose a recommended solution for you.
+    </h3>
     <div class="columns is-multiline">
-        <div class="column is-one-third">
-            <div class="notification has-background-white has-text-black">
-                <p class="title is-3 has-text-black">Jazda na rowerze</p>
-                <ul>
-                    <li style="text-align: left"><strong>Lista rzeczy do przygotowania:</strong></li>
-                    <li style="text-align: left">coś do picia</li align: left>
-                    <li style="text-align: left">okulary przeciwsloneczne</li>
-                    <li style="text-align: left">maly plecak</li>
-                    <li style="text-align: left">zestaw naprawcz do roweru</li>
-                </ul>
+        <div class="column is-half">
+            {% for activity in activities %}
+            <div class="block has-background-white has-text-black">
+                <div class="notification has-background-white has-text-black">
+                    <p class="title is-3 has-text-black">{{ activity.activity_name }}</p>
+                    <p> {{ activity.activity_description }}</p>
+                    <br>
+                    <p> <strong>Lista rzeczy do przygotowania:</strong></p>
+                    <p> {{ activity.activity_todo_list }}</p>
+                    <br>
+                    <p> {{ activity.activity_calories }}</p>
+                    <p> {{ activity.activity_favourite }}</p>
+                    <!-- <p> {{ activity.activity_timestamp }}</p> -->
+                </div>
                 <nav class="level ">
                     <p class="level-item has-text-centered">
                         <img src="/static/chmury.jpg">
@@ -31,48 +37,23 @@
                     </div>
                 </nav>
             </div>
-            <div class="notification has-background-white has-text-black">
-                <p class="title is-3 has-text-black">Jazda na rowerze</p>
-                Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla.
-                Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum  efficitur.
-                <nav class="level">
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/slonce.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                </nav>
-            </div>
-            <div class="notification has-background-white has-text-black">
-                <p class="title is-3 has-text-black">Jazda na rowerze</p>
-                Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla.
-                Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum  efficitur.
-                <nav class="level">
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/slonce.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                </nav>
-            </div>
+            {% endfor %}
         </div>
-        <div class="column is-one-third">
-            <div class="notification has-background-white has-text-black">
-                <p class="title is-3 has-text-black">Pływanie kajakiem</p>
-                Primar lorem ipsum dolor sit amet, consectetur
-                adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla.
-                Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum  efficitur.
-                <nav class="level">
+        <div class="column is-half">
+            {% for activity in activities %}
+            <div class="block has-background-white has-text-black">
+                <div class="notification has-background-white has-text-black">
+                    <p class="title is-3 has-text-black">{{ activity.activity_name }}</p>
+                    <p> {{ activity.activity_description }}</p>
+                    <br>
+                    <p> <strong>Lista rzeczy do przygotowania:</strong></p>
+                    <p> {{ activity.activity_todo_list }}</p>
+                    <br>
+                    <p> {{ activity.activity_calories }}</p>
+                    <p> {{ activity.activity_favourite }}</p>
+                    <!-- <p> {{ activity.activity_timestamp }}</p> -->
+                </div>
+                <nav class="level ">
                     <p class="level-item has-text-centered">
                         <img src="/static/chmury.jpg">
                     </p>
@@ -82,101 +63,13 @@
                     <p class="level-item has-text-centered">
                         <img src="/static/chmury.jpg">
                     </p>
+                    <div>
+                        <p class="heading">Temperature:</p>
+                        <p class="title has-text-black">23</p>
+                    </div>
                 </nav>
             </div>
-            <div class="notification has-background-white has-text-black">
-                <p class="title is-3 has-text-black">Pływanie kajakiem</p>
-                Primar lorem ipsum dolor sit amet, consectetur
-                adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla.
-                Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum  efficitur.
-                <nav class="level">
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/slonce.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                </nav>
-            </div>
-            <div class="notification has-background-white has-text-black">
-                <p class="title is-3 has-text-black">Pływanie kajakiem</p>
-                Primar lorem ipsum dolor sit amet, consectetur
-                adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla.
-                Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum efficitur.
-                <nav class="level">
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/slonce.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                </nav>
-            </div>
+            {% endfor %}
         </div>
-        <div class="column is-one-third">
-            <div class="notification has-background-white has-text-black">
-                <p class="title is-3 has-text-black">Jazda na rowerze</p>
-                Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec
-                nulla.
-                Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum efficitur.
-                <nav class="level">
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/slonce.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                </nav>
-            </div>
-            <div class="notification has-background-white has-text-black">
-                <p class="title is-3 has-text-black">Jazda na rowerze</p>
-                Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec
-                nulla.
-                Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum efficitur.
-                <nav class="level">
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/slonce.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                </nav>
-            </div>
-            <div class="notification has-background-white has-text-black">
-                <p class="title is-3 has-text-black">Jazda na rowerze</p>
-                Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec
-                nulla.
-                Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum efficitur.
-                <nav class="level">
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/slonce.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                </nav>
-            </div>
-        </div>
-        
     </div>
-
-
 {% endblock %}
