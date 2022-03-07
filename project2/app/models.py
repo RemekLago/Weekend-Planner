@@ -28,20 +28,20 @@ class User(UserMixin, db.Model):
             digest, size)
 
 
-
-class ActivityDescription(db.Model):
+class ActivitiesTable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    activite_name = db.Column(db.String(100), nullable=False)
-    activite_description = db.Column(db.String(200), nullable=False)
-    activite_todo_list = db.Column(db.String(200), nullable=False)
-    activite_conditions = db.Column(db.Integer, nullable=False)
-    activite_calories = db.Column(db.String(100))
-    activite_favorite = db.Column(db.Boolean)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    activity_name = db.Column(db.String(500), nullable=False)
+    activity_description = db.Column(db.String(500), nullable=False)
+    activity_todo_list = db.Column(db.String(500), nullable=False)
+    activity_conditions = db.Column(db.String, nullable=False)
+    activity_calories = db.Column(db.String(100))
+    activity_favorite = db.Column(db.String(100))
+    activity_timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    activity_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):
-        return '<Activity {}>'.format(self.body)
+        return '<activities {}>'.format(self.activity_name)
+
 
 @login.user_loader
 def load_user(id):
