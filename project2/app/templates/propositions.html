@@ -1,14 +1,93 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hello, {{ current_user.username }}!</h1>
-    <h1 class="title">
-        List with propositions as a result of checking weather conditions, lacalization and kind of profile
-    </h1>
-    {% for activity in activities %}
-    <div>
-        <p>{{ activity.author.username }} says: <b>{{ activity.body }}</b></p>
+<article class="message">
+    <div class="message-header is-size-4">
+        <p>Hello, {{ current_user.username }}!</p>
     </div>
+    <div class="message-body">
+        Below is the list with propositions for you. <br>
+        WEATHER PLANNER chose its as a result of checking weather conditions, lacalization and kind of your profile.
+    </div>
+</article>
+<article class="message">
+    <div class="message-header is-size-4">
+        <p>Weather forecast for: {{ current_user.location }}</p>
+    </div>
+    <div class="columns ">
+        <div class="column is-one-quarter">
+            <figure class="image is-128x128 is-inline-block">
+                <img src="/static/rain.png">
+            </figure>
+        </div>
+        <div class="column is-one-quarter">
+            <figure class="image is-128x128 is-inline-block">
+                <img src="/static/rain.png">
+            </figure>
+        </div>
+        <div class="column is-one-quarter">
+            <figure class="image is-128x128 is-inline-block">
+                <img src="/static/rain.png">
+            </figure>
+        </div>
+        <div class="column is-one-quarter">
+            <figure class="image is-128x128 is-inline-block">
+                <img src="/static/rain.png">
+            </figure>
+        </div>
+    </div>
+</article>
+    {% for activity in activities %}
+    {% if activity.id <= 3 %}
+    <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
+    
+        <div class="column is-6">
+            <div class="block has-background-white has-text-black">
+                <div class="notification has-background-white has-text-black">
+                    <div class="content">
+                        <div class="notification">
+                            <p class="title is-3 has-text-black">{{ activity.activity_name }}</p>
+                            <p> {{ activity.activity_description }}</p>
+                        </div>
+                        <nav class="level ">
+                            <p class="level-item has-text-centered">
+                                <img src="/static/chmury.jpg">
+                            </p>
+                            <p class="level-item has-text-centered">
+                                <img src="/static/slonce.jpg">
+                            </p>
+                            <p class="level-item has-text-centered">
+                                <img src="/static/chmury.jpg">
+                            </p>
+                            <div>
+                                <p class="heading">Temperature:</p>
+                                <p class="title has-text-black">23</p>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-6">
+            <div class="block has-background-white has-text-black">
+                <div class="notification has-background-white has-text-black">
+                    <div class="content">
+                        <div class="notification">
+                            <p> <strong>Lista rzeczy do przygotowania:</strong></p>
+                            <p> {{ activity.activity_todo_list }}</p>
+                        </div>
+                        <div class="notification">
+                            <p> {{ activity.activity_calories }}</p>
+                            <p> {{ activity.activity_favourite }}</p>
+                            <!-- <p> {{ activity.activity_timestamp }}</p> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+    {% endif %}
     {% endfor %}
     
 {% endblock %}
