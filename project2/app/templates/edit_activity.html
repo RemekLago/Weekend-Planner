@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 class="title has-text-white">
+    Here you can edit your added activity.
+</h3>
+<form action="" method="post">
+    <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
+
+        <div class="column is-6">
+            <div class="block has-background-white has-text-black">
+                <div class="notification has-background-white has-text-black">
+                    <div class="content">
+                        <div class="notification">
+                            <input class="input is-large" type="text" name="activity_name" placeholder="activity name" ,
+                                value="{{ current_activity_name }}">
+                            </input>
+                        </div>
+                        <div class="notification">
+                            <input class="input is-large" type="text" name="activity_description"
+                                placeholder="activity description" value="{{ current_activity_description }}">
+                            </input>
+                        </div>
+                        <nav class="level">
+                            <p class="level-item has-text-centered">
+                                <img src="/static/chmury.jpg">
+                            </p>
+                            <p class="level-item has-text-centered">
+                                <img src="/static/slonce.jpg">
+                            </p>
+                            <p class="level-item has-text-centered">
+                                <img src="/static/chmury.jpg">
+                            </p>
+                            <div>
+                                <p class="heading">Temperature:</p>
+                                <p class="title has-text-black">23</p>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-6">
+            <div class="block has-background-white has-text-black">
+                <div class="notification has-background-white has-text-black">
+                    <div class="content">
+                        <div class="notification">
+                            <p> <strong>Todo list before starting activity:</strong></p>
+                            <input class="input is-large" type="text" name="activity_todo_list"
+                                placeholder="activity todo list" value="{{ current_activity_todo_list }}">
+                            </input>
+                        </div>
+                        <div class="notification">
+                            <input class="input is-large" type="text" name="activity_calories"
+                                placeholder="activity calories" value="{{ current_activity_calories }}">
+                            </input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+{% endblock %}
