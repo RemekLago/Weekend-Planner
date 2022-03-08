@@ -3,73 +3,57 @@
 {% block content %}
     <h3 class="title">
         List of all activities in the system. <br>
-        From that place, WEATHER PLANNER <br>
+        From that place, WEEKEND PLANNER <br>
         will choose a recommended solution for you.
     </h3>
-    <div class="columns is-multiline">
-        <div class="column is-half">
-            {% for activity in activities %}
-            <div class="block has-background-white has-text-black">
-                <div class="notification has-background-white has-text-black">
-                    <p class="title is-3 has-text-black">{{ activity.activity_name }}</p>
-                    <p> {{ activity.activity_description }}</p>
-                    <br>
-                    <p> <strong>Lista rzeczy do przygotowania:</strong></p>
-                    <p> {{ activity.activity_todo_list }}</p>
-                    <br>
-                    <p> {{ activity.activity_calories }}</p>
-                    <p> {{ activity.activity_favourite }}</p>
-                    <!-- <p> {{ activity.activity_timestamp }}</p> -->
-                </div>
-                <nav class="level ">
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/slonce.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                    <div>
-                        <p class="heading">Temperature:</p>
-                        <p class="title has-text-black">23</p>
+    {% for activity in activities %}
+    <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
+        
+            <div class="column is-6">
+                <div class="block has-background-white has-text-black">
+                    <div class="notification has-background-white has-text-black">
+                        <div class="content">
+                            <div class="notification">
+                                <p class="title is-3 has-text-black">{{ activity.activity_name }}</p>
+                                <p> {{ activity.activity_description }}</p>
+                            </div>
+                            <nav class="level ">
+                                <p class="level-item has-text-centered">
+                                    <img src="/static/chmury.jpg">
+                                </p>
+                                <p class="level-item has-text-centered">
+                                    <img src="/static/slonce.jpg">
+                                </p>
+                                <p class="level-item has-text-centered">
+                                    <img src="/static/chmury.jpg">
+                                </p>
+                                <div>
+                                    <p class="heading">Temperature:</p>
+                                    <p class="title has-text-black">23</p>
+                                </div>
+                            </nav>
+                        </div>
                     </div>
-                </nav>
-            </div>
-            {% endfor %}
-        </div>
-        <div class="column is-half">
-            {% for activity in activities %}
-            <div class="block has-background-white has-text-black">
-                <div class="notification has-background-white has-text-black">
-                    <p class="title is-3 has-text-black">{{ activity.activity_name }}</p>
-                    <p> {{ activity.activity_description }}</p>
-                    <br>
-                    <p> <strong>Lista rzeczy do przygotowania:</strong></p>
-                    <p> {{ activity.activity_todo_list }}</p>
-                    <br>
-                    <p> {{ activity.activity_calories }}</p>
-                    <p> {{ activity.activity_favourite }}</p>
-                    <!-- <p> {{ activity.activity_timestamp }}</p> -->
                 </div>
-                <nav class="level ">
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/slonce.jpg">
-                    </p>
-                    <p class="level-item has-text-centered">
-                        <img src="/static/chmury.jpg">
-                    </p>
-                    <div>
-                        <p class="heading">Temperature:</p>
-                        <p class="title has-text-black">23</p>
-                    </div>
-                </nav>
             </div>
-            {% endfor %}
-        </div>
+            <div class="column is-6">
+                <div class="block has-background-white has-text-black">
+                    <div class="notification has-background-white has-text-black">
+                        <div class="content">
+                            <div class="notification">
+                                <p> <strong>Lista rzeczy do przygotowania:</strong></p>
+                                <p> {{ activity.activity_todo_list }}</p>
+                            </div>
+                            <div class="notification">
+                                <p> {{ activity.activity_calories }}</p>
+                                <p> {{ activity.activity_favourite }}</p>
+                                <!-- <p> {{ activity.activity_timestamp }}</p> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     </div>
+    {% endfor %}
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Edit Profile</h1>
+<!-- <h1>Edit Profile</h1>
 <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
@@ -19,5 +19,52 @@
         {% endfor %}
     </p>
     <p>{{ form.submit() }}</p>
-</form>
+</form> -->
+
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Edit profile</h3>
+    <div class="box is-info">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="username" placeholder="Text input" value="{{ current_user.username }}">
+                    {% for error in form.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                    </input>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">About me</label>
+                <div class="control">
+                    <div class="control">
+                        <textarea class="textarea" placeholder="{{ current_user.about_me }}" name="about_me" value="{{ current_user.about_me }}"></textarea>
+                    </div>
+                    {% for error in form.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Location</label>
+                <div class="control">
+                    <div class="control">
+                        <input class="input" type="text" placeholder="{{ current_user.location }}" name="location" value="{{ current_user.location }}">
+                        </input>
+                    </div>
+                    {% for error in form.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <button class="button is-block is-info is-large is-fullwidth">Submit
+            </button>
+            <br>
+            <button class="button is-block is-info is-small is-fullwidth">Back to profile <a href="{{ url_for('index') }}">    
+            </button>
+
+        </form>
+    </div>
+</div>
 {% endblock %}
