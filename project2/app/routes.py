@@ -86,10 +86,8 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    # activities = [
-    #     {'author': user, 'body': 'Test activity #1'},
-    #     {'author': user, 'body': 'Test activity #2'}
-    # ]
+    # activities = ActivitiesTable.query.filter_by(username=username).first_or_404()
+    activities = ActivitiesTable.query.get(1)
     return render_template('user.html', user=user, activities=activities)
 
 
@@ -100,12 +98,14 @@ def edit_profile():
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
+        current_user.location = form.location.data
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('edit_profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
+        form.location.data = current_user.location
     return render_template('edit_profile.html', title='Edit Profile',form=form)
 
 
@@ -120,17 +120,15 @@ def activities():
     return render_template("activities.html", activities=activities)
 
 
-# @app.route("/signup", methods=["GET", "POST"])
-# def signup():
-#     return render_template("signup.html")
-
-
 @app.route("/gallery")
 def gallery():
-    return render_template("gallery.html")    
+    return render_template("gallery.html")
 
-
-
+@app.template_filter('formatdatetime')
+def format_datetime(value, format="%d %b %Y %I:%M %p"):
+    if value is None:
+        return ""
+    return value.strftime(format)
 
 
 
