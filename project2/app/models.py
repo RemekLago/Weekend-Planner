@@ -43,6 +43,19 @@ class ActivitiesTable(db.Model):
     def __repr__(self):
         return '<activities {}>'.format(self.activity_name)
 
+class WeatherTable(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    weather_date = db.Column(db.DateTime)
+    weather_day = db.Column(db.String(100))
+    weather_temperature = db.Column(db.Integer)
+    weather_wind = db.Column(db.Integer)
+    weather_cloud = db.Column(db.Integer)
+    weather_description = db.Column(db.String(500))
+    weather_icon = db.Column(db.String(100))
+
+    def __repr__(self):
+        return '<wetaher {}>'.format(self.weather)
+
 
 @login.user_loader
 def load_user(id):
