@@ -10,7 +10,7 @@ from werkzeug.urls import url_parse
 from app import db
 from app.forms import RegistrationForm
 from datetime import datetime
-from app.forms import EditProfileForm
+from app.forms import EditProfileForm, AddActivity, EditActivity
 
 
 @app.before_request
@@ -29,16 +29,7 @@ def index():
 @login_required
 @app.route('/propositions')
 def propositions():
-    activities = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
+    activities = ActivitiesTable.query.all()
     return render_template('propositions.html', title='Home',  activities=activities)
 
 
@@ -111,11 +102,6 @@ def edit_profile():
 
 @app.route("/activities", methods=["GET", "POST"])
 def activities():
-    """jeśli będę chciał z tego poziomu dodawać nowe aktywności uruchamiam IF"""
-    # if request.method == ["POST"]:
-    #     activity = ActivitiesTable(activity_name = request.form["activity"])
-    #     db.session.add(activity)
-    #     db.session.commit()
     activities = ActivitiesTable.query.all()
     return render_template("activities.html", activities=activities)
 
@@ -124,11 +110,52 @@ def activities():
 def gallery():
     return render_template("gallery.html")
 
-@app.template_filter('formatdatetime')
-def format_datetime(value, format="%d %b %Y %I:%M %p"):
-    if value is None:
-        return ""
-    return value.strftime(format)
+@app.route("/add_activity", methods=["GET", "POST"])
+def add_activity():
+    form = AddActivity()
+    # if form.validate_on_submit():
+    activity = ActivitiesTable(
+    activity_name = form.activity_name.data,
+    activity_description = form.activity_description.data,
+    activity_todo_list = form.activity_todo_list.data,
+    activity_conditions = form.activity_conditions,
+    # activity_conditions = form.activity_conditions.data,
+    activity_calories = form.activity_calories.data,
+    activity_favorite = form.activity_favorite.data,
+    activity_user_id = form.activity_user_id.data
+        )
+
+    db.session.add(activity)
+    db.session.commit()
+    flash('Congratulations, you have been added new activity!')
+    # return redirect(url_for('user'))
+    return render_template('add_activity.html', title='Add Activity', form=form)
+    
+
+@app.route('/edit_activity', methods=['GET', 'POST'])
+def edit_activity():
+    form = EditActivity()
+    if form.validate_on_submit():
+        current_activity_name = form.activity_name.data
+        current_activity_description = form.activity_description.data
+        current_activity_todo_list = form.activity_todo_list.data
+        current_activity_conditions = form.activity_conditions.data
+        current_activity_calories = form.activity_calories.data
+        current_activity_favorite = form.activity_favorite.data
+        current_activity_user_id = form.activity_user_id.data
+
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('edit_activity'))
+    elif request.method == 'GET':
+        form.activity_name.data = current_activity_name
+        form.activity_description.data = current_activity_description
+        form.activity_todo_list.data = current_activity_todo_list
+        form.activity_conditions.data = current_activity_conditions
+        form.activity_calories.data = current_activity_calories
+        form.activity_favorite.data = current_activity_favorite
+        form.activity_user_id.data = current_activity_user_id
+    return render_template('edit_activity.html', title='Edit Activity', form=form)
 
 
 

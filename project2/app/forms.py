@@ -32,4 +32,26 @@ class RegistrationForm(FlaskForm):
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    location = TextAreaField('Location', validators=[Length(min=0, max=100)])
+    submit = SubmitField('Submit')
+
+class AddActivity(FlaskForm):
+    activity_name = TextAreaField('activity_name ', validators=[Length(min=0, max=140)])
+    activity_description = TextAreaField('activity_description', validators=[Length(min=0, max=500)])
+    activity_todo_list = TextAreaField('activity_todo_list', validators=[Length(min=0, max=500)])
+    activity_conditions = "list of weather conditions"
+    activity_calories = TextAreaField('activity_calories', validators=[Length(min=0, max=140)])
+    activity_favorite = TextAreaField('activity_favorite')
+    activity_user_id = TextAreaField('activity_user_id')
+    submit = SubmitField('Submit')
+
+class EditActivity(FlaskForm):
+    activity_name = TextAreaField('activity_name', validators=[Length(min=0, max=140)])
+    activity_description = TextAreaField('activity_description', validators=[Length(min=0, max=140)])
+    activity_todo_list = TextAreaField('activity_todo_list', validators=[Length(min=0, max=140)])
+    activity_conditions = TextAreaField('activity_conditions', validators=[Length(min=0, max=140)])
+    activity_calories = TextAreaField('activity_calories', validators=[Length(min=0, max=140)])
+    activity_favorite = TextAreaField('activity_favorite', validators=[Length(min=0, max=140)])
+    activity_favorite = TextAreaField('activity_favorite', validators=[Length(min=0, max=140)])
+    activity_user_id = TextAreaField('activity_user_id' , validators=[Length(min=0, max=140)])
     submit = SubmitField('Submit')

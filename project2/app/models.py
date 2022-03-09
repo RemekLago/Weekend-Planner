@@ -12,6 +12,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    location = db.Column(db.String(100))
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
