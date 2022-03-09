@@ -1,6 +1,7 @@
 from pprint import pprint
 from app import db
-from app.models import ActivityDescription
+from app.models import ActivitiesTable
+from datetime import datetime
 
 def open_file():
     temporary_list = []
@@ -16,6 +17,7 @@ def open_file():
 
 def create_dict_with_descriptions():
     data = open_file()
+
     dict_with_descriptions = {}
     list_with_dict_description = []
     for idx in data:
@@ -25,24 +27,30 @@ def create_dict_with_descriptions():
         dict_with_descriptions["activite_conditions"] = idx[3]
         dict_with_descriptions["activite_calories"] = idx[4]
         dict_with_descriptions["activite_favorite"] = idx[5]
+        dict_with_descriptions["activity_user_id"] = idx[7]
         list_with_dict_description.append(dict_with_descriptions)
-    # pprint(list_with_dict_description)
+        dict_with_descriptions = {}
+    #pprint(list_with_dict_description)
     return list_with_dict_description
 
 def adding_activities_to_base():
     input_data = create_dict_with_descriptions()
-    # pprint(input_data)
+    today = datetime.today()
     for idx in input_data:
-        activity = ActivityDescription(
+        activity = ActivitiesTable(
             activity_name = idx["activite_name"],
             activity_description = idx["activite_description"],
             activity_todo_list = idx["activite_todo_list"],
             activity_conditions = idx["activite_conditions"],
             activity_calories = idx["activite_calories"],
-            activity_favorite = idx["activite_favorite"]
+            activity_favorite = idx["activite_favorite"],
+            activity_user_id = idx["activity_user_id"],
+            activity_timestamp = today
             )
-        print(activity.activity_name)
-        # db.session.add(activity)  
-        # db.session.commit()
+        
+        # print(activity.activity_name)
+        db.session.add(activity)  
+        db.session.commit()
+
     
 adding_activities_to_base()
