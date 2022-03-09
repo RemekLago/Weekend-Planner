@@ -5,6 +5,7 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
 Kayaking
 Kayaking description 
@@ -13,6 +14,7 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
 Roller skating
 Roller skating description
@@ -21,6 +23,7 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
 Nordic walking
 Nordic walking description
@@ -29,6 +32,7 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
 Yoga exercises
 Yoga exercises description
@@ -37,6 +41,7 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
 Gym exercises
 Gym exercises description
@@ -45,6 +50,7 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
 Swimming in the pool
 Swimming in the pool description
@@ -53,6 +59,7 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
 Going out to the cafe
 Going out to the cafe description
@@ -61,6 +68,7 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
 A trip to the forest
 A trip to the forest description
@@ -69,6 +77,7 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
 A trip to the lake or the river bank
 A trip to the lake or the river bank description
@@ -77,8 +86,25 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
+
 Grill ze znajomymi, rodziną
+Grill ze znajomymi, rodziną description
+list of things
+list of weather conditions
+calories approximately 1000kcal/h
+False
+Timestamp
+User_id_0
+
 Wyprawa do parku z piknikiem
+Wyprawa do parku z piknikiem description
+list of things
+list of weather conditions
+calories approximately 1000kcal/h
+False
+Timestamp
+User_id_0
 
 Trip to the cinema
 Cinema description
@@ -87,6 +113,7 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
 Trip to the theater
 Trip to the theater description
@@ -95,6 +122,7 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
 Trip to the museum
 Muzeum description
@@ -103,6 +131,7 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
 Board games at home or cafe
 Board games at home or cafe description
@@ -111,4 +140,5 @@ list of weather conditions
 calories approximately 1000kcal/h
 False
 Timestamp
+User_id_0
 
