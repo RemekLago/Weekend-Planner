@@ -10,7 +10,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    about_me = db.Column(db.String(140))
+    about_me = db.Column(db.String(500))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     location = db.Column(db.String(100))
 
@@ -41,20 +41,33 @@ class ActivitiesTable(db.Model):
     activity_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):
-        return '<activities {}>'.format(self.activity_name)
+        return '<ActivitiesTable {}>'.format(self.activity_name)
 
 class WeatherTable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    weather_date = db.Column(db.DateTime)
-    weather_day = db.Column(db.String(100))
+    weather_date = db.Column(db.String(100))
+    weather_day = db.Column(db.Integer)
+    weather_day_name = db.Column(db.String(100))
     weather_temperature = db.Column(db.Integer)
     weather_wind = db.Column(db.Integer)
     weather_cloud = db.Column(db.Integer)
     weather_description = db.Column(db.String(500))
     weather_icon = db.Column(db.String(100))
+    weather_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):
-        return '<wetaher {}>'.format(self.weather)
+        return '<WeatherTable {}>'.format(self.weather_icon)
+
+
+class IconsTable(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    icon_name = db.Column(db.String(10))
+    icon_value = db.Column(db.String(10))
+    icon_link = db.Column(db.String(100))
+    icon_id = db.Column(db.Integer, db.ForeignKey("weather_table.weather_icon"))
+
+    def __repr__(self):
+        return '<IconsTable {}>'.format(self.icon_name)
 
 
 @login.user_loader
