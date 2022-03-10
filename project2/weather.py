@@ -26,7 +26,7 @@ lon = coordinats_to_cityname.json()[0].get("lon")
 units = "metric"
 part = "current,minutely,hourly,alerts"
 
-weather_download = f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&units{units}&exclude={part}&appid={APIkey}"
+weather_download = f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&units={units}&exclude={part}&appid={APIkey}"
 weather_download_link = weather_download
 weather_data = (requests.get(weather_download_link)).json()
 #print(weather_download_link)
@@ -57,7 +57,6 @@ def adding_weather_to_base():
     input_data = create_dict_with_weather()
     db.session.query(WeatherTable).delete()
     db.session.commit()
-    #db.session.delete(weather)
     for idx in input_data:
         weather = WeatherTable(
             weather_date = idx["weather_date"],
