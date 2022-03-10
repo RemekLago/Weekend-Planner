@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="columns is-full is-centered is-gapless block has-background-white has-text-black">
+    <div class="card is-shadowless">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-180x180">
+                        <img src="{{ user.avatar(180) }}" alt="Placeholder image">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <p class="title is-3 has-text-black">{{ user.username }}, {{user.location}}</p>
+                    {% if user.about_me %}
+                    <div class="notification">
+                        <p>{{ user.about_me }}</p>
+                    </div>
+                    {% endif %}
+                    {% if user.last_seen %}
+                    <div class="notification">
+                        <p>Last seen on: {{ user.last_seen }}</p>
+                    </div>
+                    {% endif %}
+                    {% if user == current_user %}
+                    <button class="button">
+                        <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
+                    </button>
+                    <button class="button">
+                        <p><a href="{{ url_for('add_activity') }}">Add your activity</a></p>
+                    </button>
+                    <button class="button">
+                        <p><a href="{{ url_for('edit_activity') }}">Edit your activity</a></p>
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="box title is-5 has-text-black has-background-light">
+    <p>Your activities</p>
+</div>
+<div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
+    <div class="column is-6">
+        <div class="block has-background-white has-text-black">
+            <div class="notification has-background-white has-text-black">
+                <div class="content">
+                    <div class="notification">
+                        <p class="title is-3 has-text-black">{{ activities.activity_name }}</p>
+                        <p> {{ activities.activity_description }}</p>
+                    </div>
+                    <nav class="level ">
+                        <p class="level-item has-text-centered">
+                            <img src="/static/chmury.jpg">
+                        </p>
+                        <p class="level-item has-text-centered">
+                            <img src="/static/slonce.jpg">
+                        </p>
+                        <p class="level-item has-text-centered">
+                            <img src="/static/chmury.jpg">
+                        </p>
+                        <div>
+                            <p class="heading">Temperature:</p>
+                            <p class="title has-text-black">23</p>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column is-6">
+        <div class="block has-background-white has-text-black">
+            <div class="notification has-background-white has-text-black">
+                <div class="content">
+                    <div class="notification">
+                        <p> <strong>Lista rzeczy do przygotowania:</strong></p>
+                        <p> {{ activities.activity_todo_list }}</p>
+                    </div>
+                    <div class="notification">
+                        <p> {{ activities.activity_calories }}</p>
+                        <p> {{ activities.activity_favourite }}</p>
+                        <p> {{ activities.activity_timestamp }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

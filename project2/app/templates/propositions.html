@@ -12,30 +12,69 @@
 </article>
 <article class="message">
     <div class="message-header is-size-4">
-        <p>Weather forecast for: {{ current_user.location }}</p>
+        <p>Weekend weather forecast for: {{ current_user.location }}</p>
     </div>
-    <div class="columns ">
-        <div class="column is-one-quarter">
-            <figure class="image is-96x96 is-inline-block">
-                <img src="/static/sun.png">
-            </figure>
-        </div>
-        <div class="column is-one-quarter">
-            <figure class="image is-96x96 is-inline-block">
-                <img src="/static/rain.png">
-            </figure>
-        </div>
-        <div class="column is-one-quarter">
-            <figure class="image is-96x96 is-inline-block">
-                <img src="/static/wind.png">
-            </figure>
-        </div>
-        <div class="column is-one-quarter">
-            <figure class="image is-96x96 is-inline-block">
-                <img src="/static/temperature.png">
-            </figure>
-        </div>
-    </div>
+    <table class="table is-fullwidth">
+        <thead>
+            <tr>
+                <th>Weather Forecast</th>
+                <th><abbr title="Date">Date</abbr></th>
+                <th><abbr title="Day">Day</abbr></th>
+                <th><abbr title="Temperature">Temperature</abbr></th>
+                <th><abbr title="Wind">Wind</abbr></th>
+                <th><abbr title="Cloud">Claud</abbr></th>
+                <th><abbr title="Image">Image</abbr></th>
+                <th><abbr title="Description">Description</abbr></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for idx in weather %}
+                {% if idx.weather_day_name == "Saturday" %}
+                <td></td>
+                <td>{{ idx.weather_date }}</td>
+                <td>{{ idx.weather_day_name }}</td>
+                <td>{{ idx.weather_temperature }} °C</td>
+                <td>{{ idx.weather_wind }} m/s</td>
+                <td>{{ idx.weather_cloud }} %</td>
+                {% for icon in icons %}
+                {% if icon.icon_value == idx.weather_icon %}
+                <td>
+                    <figure class="image is-64x64">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                </td>
+                {% endif %}
+                {% endfor %}
+                <td>{{ idx.weather_description }}</td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for idx in weather %}
+                {% if idx.weather_day_name == "Sunday" %}
+                <td></td>
+                <td>{{ idx.weather_date }}</td>
+                <td>{{ idx.weather_day_name }}</td>
+                <td>{{ idx.weather_temperature }} °C</td>
+                <td>{{ idx.weather_wind }} m/s</td>
+                <td>{{ idx.weather_cloud }} %</td>
+                {% for icon in icons %}
+                {% if icon.icon_value == idx.weather_icon %}
+                <td>
+                    <figure class="image is-64x64">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                </td>
+                {% endif %}
+                {% endfor %}
+                <td>{{ idx.weather_description }}</td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            </tr>
+        </tbody>
+    </table>
 </article>
     {% for activity in activities %}
     {% if activity.id <= 3 %}
