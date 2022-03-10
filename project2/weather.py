@@ -34,6 +34,15 @@ weather_data = (requests.get(weather_download_link)).json()
 """taking: temperature, weather descriptions, level of clouds, level of wind, level of raining - for 7 day forecast"""
 def create_dict_with_weather():
     list_with_weather_day_dict = []
+    dict_weekday_name = {
+        "0": "Sunday",
+        "1": "Monday",
+        "2": "Tuesday",
+        "3": "Wednesday",
+        "4": "Thursday",
+        "5": "Friday",
+        "6": "Saturday"
+    }
     for idx in range (8):
         weather_day_dict = {}
         weather_day_dict["id"] = idx 
@@ -42,6 +51,8 @@ def create_dict_with_weather():
         timestamp2 = timestamp.rsplit(" ")[0]
         weather_day_dict["weather_date"] = timestamp2
         weather_day_dict["weather_day"] = timestamp1.weekday()
+        day_number = int(timestamp1.weekday())
+        weather_day_dict["weather_day_name"] = dict_weekday_name.get(f"{day_number}")
         weather_day_dict["weather_temperature"] = weather_data["daily"][idx]["temp"]["day"]
         weather_day_dict["weather_wind"] = weather_data["daily"][idx]["wind_speed"]
         weather_day_dict["weather_cloud"] = weather_data["daily"][idx]["pop"]
@@ -61,6 +72,7 @@ def adding_weather_to_base():
         weather = WeatherTable(
             weather_date = idx["weather_date"],
             weather_day = idx["weather_day"],
+            weather_day_name = idx["weather_day_name"],
             weather_temperature = idx["weather_temperature"],
             weather_wind = idx["weather_wind"],
             weather_cloud  = idx["weather_cloud"],
@@ -69,5 +81,5 @@ def adding_weather_to_base():
             )
         db.session.add(weather)  
         db.session.commit()
-
+        # print(weather.weather_day_name)
 adding_weather_to_base()
