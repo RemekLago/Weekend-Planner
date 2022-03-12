@@ -47,6 +47,7 @@ class WeatherTable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     weather_date = db.Column(db.String(100))
     weather_day = db.Column(db.Integer)
+    weather_location = db.Column(db.String(100))
     weather_day_name = db.Column(db.String(100))
     weather_temperature = db.Column(db.Integer)
     weather_wind = db.Column(db.Integer)
