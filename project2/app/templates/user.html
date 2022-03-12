@@ -32,7 +32,7 @@
                 <div class="column is-4">
                     <div class="column has-text-">
                         {% for idx in weather %}
-                        {% if idx.id == 1 %}
+                        {% if idx.id%8 == 1 %}
                         <div class="title has-text-black title is-4">
                             <p>{{ idx.weather_day_name }}, {{ idx.weather_date }}</p>
                         </div>
@@ -112,7 +112,7 @@
             <tbody>
                 <tr>
                     {% for idx in weather %}
-                    {% if idx.id == 2 %}
+                    {% if idx.id%8 == 2 %}
                     <td></td>
                     <td>{{ idx.weather_date }}</td>
                     <td>{{ idx.weather_day_name }}</td>
@@ -132,7 +132,7 @@
                 </tr>
                 <tr>
                     {% for idx in weather %}
-                    {% if idx.id == 3 %}
+                    {% if idx.id%8 == 3 %}
                     <td></td>
                     <td>{{ idx.weather_date }}</td>
                     <td>{{ idx.weather_day_name }}</td>
@@ -154,7 +154,7 @@
                 </tr>
                 <tr>
                     {% for idx in weather %}
-                    {% if idx.id == 4 %}
+                    {% if idx.id%8 == 4 %}
                     <td></td>
                     <td>{{ idx.weather_date }}</td>
                     <td>{{ idx.weather_day_name }}</td>
@@ -176,7 +176,7 @@
                 </tr>
                 <tr>
                     {% for idx in weather %}
-                    {% if idx.id == 5 %}
+                    {% if idx.id%8 == 5 %}
                     <td></td>
                     <td>{{ idx.weather_date }}</td>
                     <td>{{ idx.weather_day_name }}</td>
@@ -198,7 +198,7 @@
                 </tr>
                 <tr>
                     {% for idx in weather %}
-                    {% if idx.id == 6 %}
+                    {% if idx.id%8 == 6 %}
                     <td></td>
                     <td>{{ idx.weather_date }}</td>
                     <td>{{ idx.weather_day_name }}</td>
@@ -220,7 +220,29 @@
                 </tr>
                 <tr>
                     {% for idx in weather %}
-                    {% if idx.id == 7 %}
+                    {% if idx.id%8 == 7 %}
+                    <td></td>
+                    <td>{{ idx.weather_date }}</td>
+                    <td>{{ idx.weather_day_name }}</td>
+                    <td>{{ idx.weather_temperature }} °C</td>
+                    <td>{{ idx.weather_wind }} m/s</td>
+                    <td>{{ idx.weather_cloud }} %</td>
+                    {% for icon in icons %}
+                    {% if icon.icon_value == idx.weather_icon %}
+                    <td>
+                        <figure class="image is-64x64">
+                            <img src="{{ icon.icon_link }}">
+                        </figure>
+                    </td>
+                    {% endif %}
+                    {% endfor %}
+                    <td>{{ idx.weather_description }}</td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for idx in weather %}
+                    {% if idx.id%8 == 0 %}
                     <td></td>
                     <td>{{ idx.weather_date }}</td>
                     <td>{{ idx.weather_day_name }}</td>
