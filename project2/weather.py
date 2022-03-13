@@ -3,7 +3,7 @@ import requests
 from keys import APIkey
 from datetime import datetime
 from app import db
-from app.models import WeatherTable
+from app.models import WeatherTable, WeatherTableHistory
 
 """links to weather API and libray with icons:
 https://openweathermap.org/forecast5
@@ -49,6 +49,7 @@ def take_forecast_for_city(city):
 
     return weather_data, city
 
+# take_forecast_for_city("Warsaw")
 
 def create_dict_with_weather(city):
     """create dictionary with weather conditions for futer export to base, taking: temperature, weather descriptions, level of clouds, level of wind, level of raining - for 8 day forecast"""
@@ -80,6 +81,7 @@ def create_dict_with_weather(city):
         weather_day_dict["weather_description"] = weather_data["daily"][idx]["weather"][0]["description"]
         weather_day_dict["weather_icon"] = weather_data["daily"][idx]["weather"][0]["icon"]
         weather_day_dict["weather_location"] = city
+        weather_day_dict["weather_main"] = weather_data["daily"][idx]["weather"][0]["main"]
         list_with_weather_day_dict.append(weather_day_dict)
     # pprint(list_with_weather_day_dict)
     
@@ -101,13 +103,36 @@ def adding_weather_to_base(city):
             weather_cloud  = idx["weather_cloud"],
             weather_description = idx["weather_description"],
             weather_icon = idx["weather_icon"],
-            weather_location = idx["weather_location"]
+            weather_location = idx["weather_location"],
+            weather_main = idx["weather_main"]
             )
         db.session.add(weather)  
         db.session.commit()
         # pprint(weather.weather_location)
         # pprint(weather.weather_day_name)
 
+def adding_weather_to_base_history(city):
+    """take list with parameters and add to data base"""
+    input_data = create_dict_with_weather(city)
+    
+    for idx in input_data:
+        if idx["weather_date"] != WeatherTableHistory.weather_date:
+            weather = WeatherTableHistory(
+                weather_date = idx["weather_date"],
+                weather_day = idx["weather_day"],
+                weather_day_name = idx["weather_day_name"],
+                weather_temperature = idx["weather_temperature"],
+                weather_wind = idx["weather_wind"],
+                weather_cloud  = idx["weather_cloud"],
+                weather_description = idx["weather_description"],
+                weather_icon = idx["weather_icon"],
+                weather_location = idx["weather_location"],
+                weather_main = idx["weather_main"]
+                )
+            db.session.add(weather)  
+            db.session.commit()
+        # pprint(weather.weather_location)
+        # pprint(weather.weather_day_name)
 
 def adding_data_for_all_cities():
     db.session.query(WeatherTable).delete()
@@ -116,5 +141,6 @@ def adding_data_for_all_cities():
     for idx in cities:
         take_coordinates_of_city(idx)
         adding_weather_to_base(idx)
+        adding_weather_to_base_history(idx)
 
 adding_data_for_all_cities()
