@@ -13,6 +13,7 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.String(500))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     location = db.Column(db.String(100))
+    activity_level = db.Column(db.Integer)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -33,10 +34,23 @@ class ActivitiesTable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     activity_name = db.Column(db.String(500), nullable=False)
     activity_description = db.Column(db.String(500), nullable=False)
+    # activity_conditions = db.Column(db.String(500), nullable=False)
     activity_todo_list = db.Column(db.String(500), nullable=False)
-    activity_conditions = db.Column(db.String, nullable=False)
+    activity_conditions_temp = db.Column(db.Integer, nullable=False)
+    activity_conditions_1 = db.Column(db.String(10))
+    activity_conditions_2 = db.Column(db.String(10))
+    activity_conditions_3 = db.Column(db.String(10))
+    activity_conditions_4 = db.Column(db.String(10))
+    activity_conditions_5 = db.Column(db.String(10))
+    activity_conditions_6 = db.Column(db.String(10))
+    activity_conditions_7 = db.Column(db.String(10))
+    activity_conditions_8 = db.Column(db.String(10))
+    activity_conditions_9 = db.Column(db.String(10))
     activity_calories = db.Column(db.String(100))
-    activity_favorite = db.Column(db.String(100))
+    activity_favourite = db.Column(db.String(10))
+    activity_level1 = db.Column(db.String(10))
+    activity_level2 = db.Column(db.String(10))
+    activity_level3 = db.Column(db.String(10))
     activity_timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     activity_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
@@ -54,10 +68,28 @@ class WeatherTable(db.Model):
     weather_cloud = db.Column(db.Integer)
     weather_description = db.Column(db.String(500))
     weather_icon = db.Column(db.String(100))
+    weather_main = db.Column(db.String(300))
     weather_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):
         return '<WeatherTable {}>'.format(self.weather_icon)
+
+class WeatherTableHistory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    weather_date = db.Column(db.String(100))
+    weather_day = db.Column(db.Integer)
+    weather_location = db.Column(db.String(100))
+    weather_day_name = db.Column(db.String(100))
+    weather_temperature = db.Column(db.Integer)
+    weather_wind = db.Column(db.Integer)
+    weather_cloud = db.Column(db.Integer)
+    weather_description = db.Column(db.String(500))
+    weather_icon = db.Column(db.String(100))
+    weather_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    weather_main = db.Column(db.String(300))
+
+    def __repr__(self):
+        return '<WeatherTable {}>'.format(self.weather_icon)        
 
 
 class IconsTable(db.Model):

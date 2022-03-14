@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User, WeatherTable, IconsTable
 from wtforms import StringField, TextAreaField, SubmitField
@@ -33,16 +33,29 @@ class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     about_me = TextAreaField('About me', validators=[Length(min=0, max=500)])
     location = TextAreaField('Location', validators=[Length(min=0, max=100)])
+    activity_level = StringField('Activity level', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 class AddActivity(FlaskForm):
     activity_name = TextAreaField('activity_name ', validators=[Length(min=0, max=140)])
     activity_description = TextAreaField('activity_description', validators=[Length(min=0, max=500)])
     activity_todo_list = TextAreaField('activity_todo_list', validators=[Length(min=0, max=500)])
-    activity_conditions = "list of weather conditions"
     activity_calories = TextAreaField('activity_calories', validators=[Length(min=0, max=140)])
-    activity_favorite = TextAreaField('activity_favorite')
+    activity_favourite = TextAreaField('activity_favourite')
     activity_user_id = TextAreaField('activity_user_id')
+    activity_level1 = TextAreaField('activity_lavel1', validators=[Length(min=0, max=10)])
+    activity_level2 = TextAreaField('activity_lavel2', validators=[Length(min=0, max=10)])
+    activity_level3 = TextAreaField('activity_lavel3', validators=[Length(min=0, max=10)])
+    activity_conditions_temp = TextAreaField('activity_conditions_temp', validators=[Length(min=0, max=10)])
+    activity_conditions_1 = TextAreaField('activity_conditions_1', validators=[Length(min=0, max=10)])
+    activity_conditions_2 = TextAreaField('activity_conditions_2', validators=[Length(min=0, max=10)])
+    activity_conditions_3 = TextAreaField('activity_conditions_3', validators=[Length(min=0, max=10)])
+    activity_conditions_4 = TextAreaField('activity_conditions_4', validators=[Length(min=0, max=10)])
+    activity_conditions_5 = TextAreaField('activity_conditions_5', validators=[Length(min=0, max=10)])
+    activity_conditions_6 = TextAreaField('activity_conditions_6', validators=[Length(min=0, max=10)])
+    activity_conditions_7 = TextAreaField('activity_conditions_7', validators=[Length(min=0, max=10)])
+    activity_conditions_8 = TextAreaField('activity_conditions_8', validators=[Length(min=0, max=10)])
+    activity_conditions_9 = TextAreaField('activity_conditions_9', validators=[Length(min=0, max=10)])
     submit = SubmitField('Submit')
 
 class EditActivity(FlaskForm):
@@ -51,7 +64,19 @@ class EditActivity(FlaskForm):
     activity_todo_list = TextAreaField('activity_todo_list', validators=[Length(min=0, max=140)])
     activity_conditions = TextAreaField('activity_conditions', validators=[Length(min=0, max=140)])
     activity_calories = TextAreaField('activity_calories', validators=[Length(min=0, max=140)])
-    activity_favorite = TextAreaField('activity_favorite', validators=[Length(min=0, max=140)])
-    activity_favorite = TextAreaField('activity_favorite', validators=[Length(min=0, max=140)])
+    activity_favourite = TextAreaField('activity_favourite', validators=[Length(min=0, max=140)])
     activity_user_id = TextAreaField('activity_user_id' , validators=[Length(min=0, max=140)])
+    activity_level1 = TextAreaField('activity_lavel1', validators=[Length(min=0, max=10)])
+    activity_level2 = TextAreaField('activity_lavel2', validators=[Length(min=0, max=10)])
+    activity_level3 = TextAreaField('activity_lavel3', validators=[Length(min=0, max=10)])
+    activity_conditions_temp = TextAreaField('activity_conditions_temp', validators=[Length(min=0, max=10)])
+    activity_conditions_1 = TextAreaField('activity_conditions_1', validators=[Length(min=0, max=10)])
+    activity_conditions_2 = TextAreaField('activity_conditions_2', validators=[Length(min=0, max=10)])
+    activity_conditions_3 = TextAreaField('activity_conditions_3', validators=[Length(min=0, max=10)])
+    activity_conditions_4 = TextAreaField('activity_conditions_4', validators=[Length(min=0, max=10)])
+    activity_conditions_5 = TextAreaField('activity_conditions_5', validators=[Length(min=0, max=10)])
+    activity_conditions_6 = TextAreaField('activity_conditions_6', validators=[Length(min=0, max=10)])
+    activity_conditions_7 = TextAreaField('activity_conditions_7', validators=[Length(min=0, max=10)])
+    activity_conditions_8 = TextAreaField('activity_conditions_8', validators=[Length(min=0, max=10)])
+    activity_conditions_9 = TextAreaField('activity_conditions_9', validators=[Length(min=0, max=10)])
     submit = SubmitField('Submit')
