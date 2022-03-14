@@ -13,7 +13,7 @@ def open_file():
             else:    
                 list_descriptions.append(temporary_list)
                 temporary_list = []
-    pprint(list_descriptions)
+    # pprint(list_descriptions)
     return list_descriptions
 
 
@@ -26,7 +26,6 @@ def create_dict_with_descriptions():
         dict_with_descriptions["activite_name"] = idx[0]
         dict_with_descriptions["activite_description"] = idx[1]
         dict_with_descriptions["activite_todo_list"] = idx[2]
-        # dict_with_descriptions["activite_conditions"] = idx[3]
         dict_with_descriptions["activite_calories"] = idx[4]
         dict_with_descriptions["activity_conditions_temp"] = idx[5]
         dict_with_descriptions["activity_conditions_1"] = idx[6]
@@ -38,18 +37,21 @@ def create_dict_with_descriptions():
         dict_with_descriptions["activity_conditions_7"] = idx[12]
         dict_with_descriptions["activity_conditions_8"] = idx[13]
         dict_with_descriptions["activity_conditions_9"] = idx[14]
-        dict_with_descriptions["activity_user_id"] = idx[15]
-        dict_with_descriptions["activity_favorite"] = False
+        dict_with_descriptions["activity_user_id"] = idx[16]
+        dict_with_descriptions["activity_level1"] = idx[17]
+        dict_with_descriptions["activity_level2"] = idx[18]
+        dict_with_descriptions["activity_level3"] = idx[19]
+        dict_with_descriptions["activity_favourite"] = False
         list_with_dict_description.append(dict_with_descriptions)
         dict_with_descriptions = {}
-    pprint(list_with_dict_description)
+    # pprint(list_with_dict_description)
     return list_with_dict_description
 
 def adding_activities_to_base():
     input_data = create_dict_with_descriptions()
     today = datetime.today()
-    # db.session.query(ActivitiesTable).delete()
-    # db.session.commit()
+    db.session.query(ActivitiesTable).delete()
+    db.session.commit()
     for idx in input_data:
         activity = ActivitiesTable(
             activity_name = idx["activite_name"],
@@ -68,11 +70,14 @@ def adding_activities_to_base():
             activity_conditions_8 = idx["activity_conditions_8"],
             activity_conditions_9 = idx["activity_conditions_9"],
             activity_user_id = idx["activity_user_id"],
-            activity_favorite = idx["activity_favorite"],
+            activity_favourite = idx["activity_favourite"],
+            activity_level1 = idx["activity_level1"],
+            activity_level2 = idx["activity_level2"],
+            activity_level3 = idx["activity_level3"],
             activity_timestamp = today
             )
         
-        # print(activity.activity_conditions_4)
+        # print(activity.activity_level1)
         db.session.add(activity)  
         db.session.commit()
 
