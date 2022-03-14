@@ -3,142 +3,334 @@ This activity is the perfect solution for warm and cooler days. You can spend ti
 bike, gloves, spare inner tube, bike lock, bike keys, pump, water bottle, water, snacks, glasses, sweatshirt, money
 list of weather conditions
 calories approximately 1000kcal/h
+15
+True
+False
+True
+True
+True
+True
+True
+False
 False
 Timestamp
 User_id_0
+True
+True
+True
 
 Kayaking
 Kayaking description 
 comfortable clothes, shoes, cap, glasses, sunscreen, snacks, water, backpack, money, mosquito repellent, sweatshirt
 list of weather conditions
 calories approximately 1000kcal/h
+20
+True
+False
+True
+True
+False
+True
+True
+False
 False
 Timestamp
 User_id_0
+True
+True
+True
 
 Roller skating
 Roller skating description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
+25
+True
+False
+True
+True
+False
+True
+True
+False
 False
 Timestamp
 User_id_0
+False
+True
+True
 
 Nordic walking
 Nordic walking description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
+15
+True
+False
+True
+True
+False
+False
+True
+False
 False
 Timestamp
 User_id_0
+False
+True
+True
 
 Yoga exercises
 Yoga exercises description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
-False
+5
+True
+True
+True
+True
+True
+True
+True
+True
+True
 Timestamp
 User_id_0
+False
+True
+True
 
 Gym exercises
 Gym exercises description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
+2
+True
+False
+True
+True
+True
+True
+True
+False
 False
 Timestamp
 User_id_0
+False
+True
+True
 
 Swimming in the pool
 Swimming in the pool description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
+5
+True
+False
+True
+True
+False
+True
+True
+False
 False
 Timestamp
 User_id_0
+False
+True
+True
 
 Going out to the cafe
 Going out to the cafe description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
+0
+True
+False
+True
+True
+False
+False
+False
+False
 False
 Timestamp
 User_id_0
+True
+True
+False
 
 A trip to the forest
 A trip to the forest description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
+20
+True
+False
+True
+True
+False
+False
+False
+False
 False
 Timestamp
 User_id_0
+True
+True
+False
 
 A trip to the lake or the river bank
 A trip to the lake or the river bank description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
-False
+18
+True
+True
+True
+True
+True
+True
+True
+True
+True
 Timestamp
 User_id_0
+True
+True
+False
 
 Grill ze znajomymi, rodziną
 Grill ze znajomymi, rodziną description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
-False
+30
+True
+True
+True
+True
+True
+True
+True
+True
+True
 Timestamp
 User_id_0
+True
+True
+False
 
 Wyprawa do parku z piknikiem
 Wyprawa do parku z piknikiem description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
+14
+True
+False
+True
+False
+True
+True
+True
+False
 False
 Timestamp
 User_id_0
+True
+True
+True
 
 Trip to the cinema
 Cinema description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
+9
+True
+False
+True
+True
+True
+True
+True
+False
 False
 Timestamp
 User_id_0
+True
+False
+True
 
 Trip to the theater
 Trip to the theater description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
+17
+True
+False
+True
+True
+True
+True
+True
+False
 False
 Timestamp
 User_id_0
+True
+False
+True
 
 Trip to the museum
 Muzeum description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
+18
+False
+False
+True
+True
+True
+True
+True
+False
 False
 Timestamp
 User_id_0
+True
+True
+True
 
 Board games at home or cafe
 Board games at home or cafe description
 list of things
 list of weather conditions
 calories approximately 1000kcal/h
+12
+True
+False
+True
+True
+True
+True
+False
+True
 False
 Timestamp
 User_id_0
+True
+True
+True
 
