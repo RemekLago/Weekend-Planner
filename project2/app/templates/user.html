@@ -5,74 +5,75 @@
 <div class="container">
     <div class="notification has-background-white">
         <div class="columns is-full is-gapless block has-background-white has-text-black">
-                <div class="column is-8">
-                    <div class="columns">
-                        <div class="column is-2">
+            <div class="column is-8">
+                <div class="columns">
+                    <div class="column is-2">
                         <figure class="image is-128x128">
                             <img src="{{ user.avatar(180) }}" alt="Placeholder image">
                         </figure>
-                        </div>
-                        <div class="column is-11">
-                            <div class="box is-shadowless is-pulled-left">
-                                <p class="title is-3 has-text-black">{{ user.username }}, {{user.location}}</p>
-                                {% if user.last_seen %}
-                                <p>Last seen on: {{ user.last_seen }}</p>
-                                {% endif %}
-                            </div>
-                        </div>
                     </div>
-                    <div class="box is-shadowless is-full">
-                        {% if user.about_me %}
-                        <div class="notification">
-                            <p>{{ user.about_me }}</p>
+                    <div class="column is-11">
+                        <div class="box is-shadowless is-pulled-left">
+                            <p class="title is-3 has-text-black">{{ user.username }}, {{user.location}}</p>
+                            <p class="title is-5 has-text-black">Your activity level: {{ user.activity_level }}</p>
+                            {% if user.last_seen %}
+                            <p>Last seen on: {{ user.last_seen }}</p>
+                            {% endif %}
                         </div>
-                        {% endif %}
                     </div>
                 </div>
-                <div class="column is-4">
-                    <div class="column has-text-">
-                        {% for idx in weather %}
-                        {% if idx.id%8 == 1 %}
-                        <div class="title has-text-black title is-4">
-                            <p>{{ idx.weather_day_name }}, {{ idx.weather_date }}</p>
-                        </div>
-                        
-                        <table class="table is-fullwidth is-inline">
-                            <thead>
-                                <tr>
-                                    <th><abbr title="weather_temperature">Temperature</abbr></th>
-                                    <th><abbr title="weather_wind">Wind</abbr></th>
-                                    <th><abbr title="weather_cloud">Cloud</abbr></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{ idx.weather_temperature }} °C</td>
-                                    <td>{{ idx.weather_wind }} m/s</td>
-                                    <td>{{ idx.weather_cloud }} %</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="columns">
-                            <div class="column">
-                                {% for icon in icons %}
-                                {% if icon.icon_value == idx.weather_icon %}
-                                <figure class="image is-128x128 is-inline ">
-                                    <img src="{{ icon.icon_link }}">
-                                </figure>
-                                {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div class="column">
-                                <div class="box is-shadowless is-pulled-left is-inline">
-                                    <p class="title is-3 has-text-black">{{ idx.weather_description }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-                        {% endfor %}
+                <div class="box is-shadowless is-full">
+                    {% if user.about_me %}
+                    <div class="notification">
+                        <p>{{ user.about_me }}</p>
                     </div>
+                    {% endif %}
                 </div>
+            </div>
+            <div class="column is-4">
+                <div class="column has-text-">
+                    {% for idx in weather_today %}
+                   
+                    <div class="title has-text-black title is-4">
+                        <p>{{ idx.weather_day_name }}, {{ idx.weather_date }}</p>
+                    </div>
+
+                    <table class="table is-fullwidth is-inline">
+                        <thead>
+                            <tr>
+                                <th><abbr title="weather_temperature">Temperature</abbr></th>
+                                <th><abbr title="weather_wind">Wind</abbr></th>
+                                <th><abbr title="weather_cloud">Cloud</abbr></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ idx.weather_temperature }} °C</td>
+                                <td>{{ idx.weather_wind }} m/s</td>
+                                <td>{{ idx.weather_cloud }} %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="columns">
+                        <div class="column">
+                            {% for icon in icons %}
+                            {% if icon.icon_value == idx.weather_icon %}
+                            <figure class="image is-128x128 is-inline ">
+                                <img src="{{ icon.icon_link }}">
+                            </figure>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="column">
+                            <div class="box is-shadowless is-pulled-left is-inline">
+                                <p class="title is-3 has-text-black">{{ idx.weather_description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% endfor %}
+                </div>
+            </div>
         </div>
         <div class="column is-8 block has-background-white has-text-black">
             {% if user == current_user %}
@@ -84,6 +85,9 @@
             </button>
             <button class="button is-info">
                 <a href="{{ url_for('edit_activity') }}">Edit your activity</a>
+            </button>
+            <button class="button is-info">
+                <a href="{{ url_for('edit_activity') }}">Add your photo to gallery</a>
             </button>
             {% endif %}
         </div>
@@ -108,7 +112,7 @@
                     <th><abbr title="Description">Description</abbr></th>
                 </tr>
             </thead>
-            
+
             <tbody>
                 <tr>
                     {% for idx in weather %}
@@ -121,9 +125,11 @@
                     <td>{{ idx.weather_cloud }} %</td>
                     {% for icon in icons %}
                     {% if icon.icon_value == idx.weather_icon %}
-                    <td><figure class="image is-64x64">
-                        <img src="{{ icon.icon_link }}">
-                    </figure></td>
+                    <td>
+                        <figure class="image is-64x64">
+                            <img src="{{ icon.icon_link }}">
+                        </figure>
+                    </td>
                     {% endif %}
                     {% endfor %}
                     <td>{{ idx.weather_description }}</td>
@@ -276,7 +282,7 @@
                 </tr>
             </tfoot>
         </table>
-    </div>    
+    </div>
 </div>
 
 <hr>
@@ -285,50 +291,148 @@
     <p>Your activities</p>
 </div>
 
-<div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
-    <div class="column is-6">
-        <div class="block has-background-white has-text-black">
-            <div class="notification has-background-white has-text-black">
-                <div class="content">
-                    <div class="notification">
-                        <p class="title is-3 has-text-black">{{ activities.activity_name }}</p>
-                        <p> {{ activities.activity_description }}</p>
-                    </div>
-                    <nav class="level ">
-                        <p class="level-item has-text-centered">
-                            <img src="/static/chmury.jpg">
-                        </p>
-                        <p class="level-item has-text-centered">
-                            <img src="/static/slonce.jpg">
-                        </p>
-                        <p class="level-item has-text-centered">
-                            <img src="/static/chmury.jpg">
-                        </p>
-                        <div>
-                            <p class="heading">Temperature:</p>
-                            <p class="title has-text-black">23</p>
+{% for activity in activities %}
+<div class="notification is-gapless has-background-white">
+    <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
+        <div class="column is-6">
+            <div class="block has-background-white has-text-black">
+                <div class="notification has-background-white has-text-black">
+                    <div class="content">
+                        <div class="notification">
+                            <p class="title is-3 has-text-black">{{ activity.activity_name }}</p>
+                            <p> {{ activity.activity_description }}</p>
                         </div>
-                    </nav>
+                        <div class="notification">
+                            <p class="title has-text-black">{{ activity.activity_conditions_temp }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-6">
+            <div class="block has-background-white has-text-black">
+                <div class="notification has-background-white has-text-black">
+                    <div class="content">
+                        <div class="notification">
+                            <p> <strong>Todo list before starting activity:</strong></p>
+                            <p> {{ activity.activity_todo_list }}</p>
+                        </div>
+                        <div class="notification">
+                            <p> {{ activity.activity_calories }}</p>
+                            <p> {{ activity.activity_favourite }}</p>
+                            <!-- <p> {{ activity.activity_timestamp }}</p> -->
+                        </div>
+                        <div class="notification">
+                            <p><strong>Activity avaible for user with activity level:</strong></p>
+                            <p>Very active: {{ activity.activity_level1 }}</p>
+                            <p>Active: {{ activity.activity_level2 }}</p>
+                            <p>Less active: {{ activity.activity_level3 }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="column is-6">
-        <div class="block has-background-white has-text-black">
-            <div class="notification has-background-white has-text-black">
-                <div class="content">
-                    <div class="notification">
-                        <p> <strong>Lista rzeczy do przygotowania:</strong></p>
-                        <p> {{ activities.activity_todo_list }}</p>
-                    </div>
-                    <div class="notification">
-                        <p> {{ activities.activity_calories }}</p>
-                        <p> {{ activities.activity_favourite }}</p>
-                        <p> {{ activities.activity_timestamp }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="column is-full block has-background-white">
+        <p class="heading">Minimum Temperature for activity:</p>
+        <nav class="level">
+            {% if activity.activity_conditions_1 == "True" %}
+            {% for icon in icons %}
+            {% if icon.id == 1 %}
+            <figure class="image is-96x96">
+                <img src="{{ icon.icon_link }}">
+            </figure>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            {% if activity.activity_conditions_2 == "True" %}
+            {% for icon in icons %}
+            {% if icon.id == 2 %}
+            <figure class="image is-96x96">
+                <img src="{{ icon.icon_link }}">
+            </figure>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            {% if activity.activity_conditions_3 == "True" %}
+            {% for icon in icons %}
+            {% if icon.id == 3 %}
+            <figure class="image is-96x96">
+                <img src="{{ icon.icon_link }}">
+            </figure>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            </p>
+            {% if activity.activity_conditions_4 == "True" %}
+            {% for icon in icons %}
+            {% if icon.id == 4 %}
+            <figure class="image is-96x96">
+                <img src="{{ icon.icon_link }}">
+            </figure>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            </p>
+            {% if activity.activity_conditions_5 == "True" %}
+            {% for icon in icons %}
+            {% if icon.id == 5 %}
+            <figure class="image is-96x96">
+                <img src="{{ icon.icon_link }}">
+            </figure>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            {% if activity.activity_conditions_6 == "True" %}
+            {% for icon in icons %}
+            {% if icon.id == 6 %}
+            <figure class="image is-96x96">
+                <img src="{{ icon.icon_link }}">
+            </figure>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+
+            {% if activity.activity_conditions_7 == "True" %}
+            {% for icon in icons %}
+            {% if icon.id == 7 %}
+            <figure class="image is-96x96">
+                <img src="{{ icon.icon_link }}">
+            </figure>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            </p>
+            {% if activity.activity_conditions_8 == "True" %}
+            {% for icon in icons %}
+            {% if icon.id == 8 %}
+            <figure class="image is-96x96">
+                <img src="{{ icon.icon_link }}">
+            </figure>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            </p>
+            {% if activity.activity_conditions_9 == "True" %}
+            {% for icon in icons %}
+            {% if icon.id == 9 %}
+            <figure class="image is-96x96">
+                <img src="{{ icon.icon_link }}">
+            </figure>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+        </nav>
     </div>
 </div>
+{% endfor %}
 {% endblock %}
