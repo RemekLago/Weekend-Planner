@@ -19,7 +19,7 @@
                             </div>
                             <div class="notification">
                                 <p class="heading">Minimum Temperature for activity:</p>
-                                <p class="title has-text-black">23</p>
+                                <p class="title has-text-black">{{ activity.activity_conditions_temp }}</p>
                             </div>
                         </div>
                     </div>
@@ -34,9 +34,15 @@
                                 <p> {{ activity.activity_todo_list }}</p>
                             </div>
                             <div class="notification">
-                                <p> {{ activity.activity_calories }}</p>
+                                <p><strong> {{ activity.activity_calories }}</strong></p>
                                 <p> {{ activity.activity_favourite }}</p>
                                 <!-- <p> {{ activity.activity_timestamp }}</p> -->
+                            </div>
+                            <div class="notification">
+                                <p><strong>Activity avaible for user with activity level:</strong></p>
+                                <p>Very active: {{ activity.activity_level1 }}</p>
+                                <p>Active: {{ activity.activity_level2 }}</p>
+                                <p>Less active: {{ activity.activity_level3 }}</p>
                             </div>
                         </div>
                     </div>
@@ -44,7 +50,6 @@
             </div>
         </div>
         <div class="column is-full block has-background-white">
-            <p class="heading">Minimum Temperature for activity:</p>
             <nav class="level">
                 {% if activity.activity_conditions_1 == "True" %}
                 {% for icon in icons %}
