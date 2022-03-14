@@ -80,48 +80,146 @@
     {% if activity.id <= 3 %}
     <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
     
-        <div class="column is-6">
-            <div class="block has-background-white has-text-black">
-                <div class="notification has-background-white has-text-black">
-                    <div class="content">
-                        <div class="notification">
-                            <p class="title is-3 has-text-black">{{ activity.activity_name }}</p>
-                            <p> {{ activity.activity_description }}</p>
-                        </div>
-                        <nav class="level ">
-                            <p class="level-item has-text-centered">
-                                <img src="/static/chmury.jpg">
-                            </p>
-                            <p class="level-item has-text-centered">
-                                <img src="/static/slonce.jpg">
-                            </p>
-                            <p class="level-item has-text-centered">
-                                <img src="/static/chmury.jpg">
-                            </p>
-                            <div>
-                                <p class="heading">Temperature:</p>
-                                <p class="title has-text-black">23</p>
+        <div class="notification is-gapless has-background-white">
+            <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
+                <div class="column is-6">
+                    <div class="block has-background-white has-text-black">
+                        <div class="notification has-background-white has-text-black">
+                            <div class="content">
+                                <div class="notification">
+                                    <p class="title is-3 has-text-black">{{ activity.activity_name }}</p>
+                                    <p> {{ activity.activity_description }}</p>
+                                </div>
+                                <div class="notification">
+                                    <p class="title has-text-black">{{ activity.activity_conditions_temp }}</p>
+                                </div>
                             </div>
-                        </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-6">
+                    <div class="block has-background-white has-text-black">
+                        <div class="notification has-background-white has-text-black">
+                            <div class="content">
+                                <div class="notification">
+                                    <p> <strong>Todo list before starting activity:</strong></p>
+                                    <p> {{ activity.activity_todo_list }}</p>
+                                </div>
+                                <div class="notification">
+                                    <p><strong> {{ activity.activity_calories }}</strong></p>
+                                    <p> {{ activity.activity_favourite }}</p>
+                                    <!-- <p> {{ activity.activity_timestamp }}</p> -->
+                                </div>
+                                <div class="notification">
+                                    <p><strong>Activity avaible for user with activity level:</strong></p>
+                                    <p>Very active: {{ activity.activity_level1 }}</p>
+                                    <p>Active: {{ activity.activity_level2 }}</p>
+                                    <p>Less active: {{ activity.activity_level3 }}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="column is-6">
-            <div class="block has-background-white has-text-black">
-                <div class="notification has-background-white has-text-black">
-                    <div class="content">
-                        <div class="notification">
-                            <p> <strong>Lista rzeczy do przygotowania:</strong></p>
-                            <p> {{ activity.activity_todo_list }}</p>
-                        </div>
-                        <div class="notification">
-                            <p> {{ activity.activity_calories }}</p>
-                            <p> {{ activity.activity_favourite }}</p>
-                            <!-- <p> {{ activity.activity_timestamp }}</p> -->
-                        </div>
-                    </div>
-                </div>
+            <div class="column is-full block has-background-white">
+                <p class="heading">Minimum Temperature for activity:</p>
+                <nav class="level">
+                    {% if activity.activity_conditions_1 == "True" %}
+                    {% for icon in icons %}
+                    {% if icon.id == 1 %}
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+        
+                    {% if activity.activity_conditions_2 == "True" %}
+                    {% for icon in icons %}
+                    {% if icon.id == 2 %}
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+        
+                    {% if activity.activity_conditions_3 == "True" %}
+                    {% for icon in icons %}
+                    {% if icon.id == 3 %}
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+        
+                    </p>
+                    {% if activity.activity_conditions_4 == "True" %}
+                    {% for icon in icons %}
+                    {% if icon.id == 4 %}
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+        
+                    </p>
+                    {% if activity.activity_conditions_5 == "True" %}
+                    {% for icon in icons %}
+                    {% if icon.id == 5 %}
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+        
+                    {% if activity.activity_conditions_6 == "True" %}
+                    {% for icon in icons %}
+                    {% if icon.id == 6 %}
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+        
+        
+                    {% if activity.activity_conditions_7 == "True" %}
+                    {% for icon in icons %}
+                    {% if icon.id == 7 %}
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+        
+                    </p>
+                    {% if activity.activity_conditions_8 == "True" %}
+                    {% for icon in icons %}
+                    {% if icon.id == 8 %}
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+        
+                    </p>
+                    {% if activity.activity_conditions_9 == "True" %}
+                    {% for icon in icons %}
+                    {% if icon.id == 9 %}
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+        
+                </nav>
             </div>
         </div>
     
