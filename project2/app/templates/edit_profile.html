@@ -39,6 +39,20 @@
                     {% endfor %}
                 </div>
             </div>
+            <div class="field">
+                <label class="label">Choose activity level</label>
+                <p>1-very active, 2-active, 3-less active</p>
+                <div class="control">
+                    <div class="control">
+                        <input class="input" type="text" placeholder="{{ current_user.activity_level }}" name="activity_level"
+                            value="{{ current_user.activity_level }}">
+                        </input>
+                    </div>
+                    {% for error in form.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
             <button class="button is-block is-info is-large is-fullwidth">Submit
             </button>
         </form>
