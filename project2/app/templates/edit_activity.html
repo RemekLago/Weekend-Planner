@@ -1,65 +1,155 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <h3 class="title has-text-white">
-    Here you can edit your added activity.
+    Here you can add your activity to your favourite list of activities
 </h3>
 <form action="" method="post">
-    <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
 
-        <div class="column is-6">
-            <div class="block has-background-white has-text-black">
-                <div class="notification has-background-white has-text-black">
-                    <div class="content">
-                        <div class="notification">
-                            <input class="input is-large" type="text" name="activity_name" placeholder="activity name" ,
-                                value="{{ current_activity_name }}">
-                            </input>
-                        </div>
-                        <div class="notification">
-                            <input class="input is-large" type="text" name="activity_description"
-                                placeholder="activity description" value="{{ current_activity_description }}">
-                            </input>
-                        </div>
-                        <nav class="level">
-                            <p class="level-item has-text-centered">
-                                <img src="/static/chmury.jpg">
-                            </p>
-                            <p class="level-item has-text-centered">
-                                <img src="/static/slonce.jpg">
-                            </p>
-                            <p class="level-item has-text-centered">
-                                <img src="/static/chmury.jpg">
-                            </p>
-                            <div>
-                                <p class="heading">Temperature:</p>
-                                <p class="title has-text-black">23</p>
+    <div class="notification is-gapless has-background-white">
+        <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
+            <div class="column is-6">
+                <div class="block has-background-white has-text-black">
+                    <div class="notification has-background-white has-text-black">
+                        <div class="content">
+                            <div class="notification">
+                                <input class="input is-large" type="text" name="activity_name"
+                                    placeholder="activity name" , value="{{ activity_name }}">
+                                </input>
                             </div>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="column is-6">
-            <div class="block has-background-white has-text-black">
-                <div class="notification has-background-white has-text-black">
-                    <div class="content">
-                        <div class="notification">
-                            <p> <strong>Todo list before starting activity:</strong></p>
-                            <input class="input is-large" type="text" name="activity_todo_list"
-                                placeholder="activity todo list" value="{{ current_activity_todo_list }}">
-                            </input>
-                        </div>
-                        <div class="notification">
-                            <input class="input is-large" type="text" name="activity_calories"
-                                placeholder="activity calories" value="{{ current_activity_calories }}">
-                            </input>
+                            <div class="notification">
+                                <input class="input is-large" type="text" name="activity_description"
+                                    placeholder="activity description" value="{{ activity_description }}">
+                                </input>
+                            </div>
+                            <div class="notification">
+                                <p class="heading">Minimum Temperature for activity:</p>
+                                <input class="input is-large" type="text" name="activity_conditions_temp"
+                                    placeholder="activity conditions temp" value="{{ activity_conditions_temp }}">
+                                </input>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="column is-6">
+                <div class="block has-background-white has-text-black">
+                    <div class="notification has-background-white has-text-black">
+                        <div class="content">
+                            <div class="notification">
+                                <p> <strong>Todo list before starting activity:</strong></p>
+                                <input class="input is-large" type="text" name="activity_todo_list"
+                                    placeholder="activity todo list" value="{{ activity_todo_list }}">
+                                </input>
+                            </div>
+                            <div class="notification">
+                                <input class="input is-large" type="text" name="activity_calories"
+                                    placeholder="activity calories" value="{{ activity_calories }}">
+                                </input>
+                            </div>
+                            <div class="notification">
+                                <p><strong>Activity avaible for user with activity level:</strong></p>
+                                <p><label class="checkbox">
+                                        Very active
+                                        <input type="checkbox" value="{{ activity_level1 }}"
+                                            name="activity_level1"></input>
+                                    </label></p>
+                                <p><label class="checkbox">
+                                        Active
+                                        <input type="checkbox" value="{{ activity_level2 }}"
+                                            name="activity_level2"></input>
+                                    </label></p>
+                                <p><label class="checkbox">
+                                        Less active
+                                        <input type="checkbox" value="{{ activity_level3 }}"
+                                            name="activity_level3"></input>
+                                    </label></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="column is-full block has-background-white">
+            <nav class="level">
+                {% for icon in icons %}
+                {% if icon.id == 1 %}
+                <label class="checkbox">
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    <input type="checkbox" value="1" name="activity_conditions_1"></input>
+                </label>
+                {% endif %}
+                </figure>
+                {% if icon.id == 2 %}
+                <label class="checkbox">
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    <input type="checkbox" value="{{ activity_conditions_2 }}" name="activity_conditions_2"></input>
+                </label>
+                {% endif %}
+                {% if icon.id == 3 %}
+                <label class="checkbox">
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    <input type="checkbox" value="{{ activity_conditions_3 }}" name="activity_conditions_3"></input>
+                </label>
+                {% endif %}
+                {% if icon.id == 4 %}
+                <label class="checkbox">
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    <input type="checkbox" value="{{ activity_conditions_4 }}" name="activity_conditions_4"></input>
+                </label>
+                {% endif %}
+                {% if icon.id == 5 %}
+                <label class="checkbox">
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    <input type="checkbox" value="{{ activity_conditions_5 }}" name="activity_conditions_5"></input>
+                </label>
+                {% endif %}
+                <{% if icon.id==6 %} <label class="checkbox">
+                    <figure class="image is-96x96">
+                        <img src="{{ icon.icon_link }}">
+                    </figure>
+                    <input type="checkbox" value="{{ activity_conditions_6 }}" name="activity_conditions_6"></input>
+                    </label>
+                    {% endif %}
+                    {% if icon.id == 7 %}
+                    <label class="checkbox">
+                        <figure class="image is-96x96">
+                            <img src="{{ icon.icon_link }}">
+                        </figure>
+                        <input type="checkbox" value="{{ activity_conditions_7 }}" name="activity_conditions_7"></input>
+                    </label>
+                    {% endif %}
+                    {% if icon.id == 8 %}
+                    <label class="checkbox">
+                        <figure class="image is-96x96">
+                            <img src="{{ icon.icon_link }}">
+                        </figure>
+                        <input type="checkbox" value="{{ activity_conditions_8 }}" name="activity_conditions_8"></input>
+                    </label>
+                    {% endif %}
+                    {% if icon.id == 9 %}
+                    <label class="checkbox">
+                        <figure class="image is-96x96">
+                            <img src="{{ icon.icon_link }}">
+                        </figure>
+                        <input type="checkbox" value="{{ activity_conditions_9 }}" name="activity_conditions_9"></input>
+                    </label>
+                    {% endif %}
+                    {% endfor %}
+            </nav>
+        </div>
+        <button class="button is-inline is-block is-info is-large">Submit
+        </button>
     </div>
 </form>
 </div>
