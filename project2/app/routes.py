@@ -1,3 +1,4 @@
+import os
 from app import app
 from flask import render_template, flash, redirect, url_for
 from app.forms import LoginForm
@@ -11,6 +12,9 @@ from app import db
 from app.forms import RegistrationForm
 from datetime import datetime, timedelta
 from app.forms import EditProfileForm, AddActivity, EditActivity
+from flask_pymongo import PyMongo
+from werkzeug.utils import secure_filename
+# from app import mongo
 
 
 @app.before_request
@@ -126,7 +130,7 @@ def activities():
 
 @app.route("/gallery")
 def gallery():
-    return render_template("gallery.html")
+    return render_template("gallery.html", gallery=mongo.db.gallery.find())
 
 @app.route("/add_activity", methods=["GET", "POST"])
 def add_activity():
@@ -134,11 +138,11 @@ def add_activity():
     icons = IconsTable.query.all()
     today = datetime.today()
     if form.validate_on_submit():
+        print(form.data)
         activity = ActivitiesTable(
         activity_name = form.activity_name.data,
         activity_description = form.activity_description.data,
         activity_todo_list = form.activity_todo_list.data,
-        activity_conditions = form.activity_conditions,
         activity_calories = form.activity_calories.data,
         activity_favourite = form.activity_favourite.data,
         activity_user_id = form.activity_user_id.data,
@@ -161,38 +165,86 @@ def add_activity():
         db.session.add(activity)
         db.session.commit()
         flash('Congratulations, you have been added new activity!')
-        return redirect(url_for('user'))
-    return render_template('add_activity.html', title='Add Activity', form=form, activities=activities, icons=icons)
+        return redirect(url_for('add_activity'))
+    return render_template('add_activity.html', title='Add Activity', form=form, icons=icons)
     
 
 @app.route('/edit_activity', methods=['GET', 'POST'])
 def edit_activity():
-    form = EditActivity()
-    icons = IconsTable()
+    # form = EditActivity()
+    # icons = IconsTable()
+    # today = datetime.today()
+    # if form.validate_on_submit():
+    #     activity_name = form.activity_name.data,
+    #     activity_description = form.activity_description.data,
+    #     activity_todo_list = form.activity_todo_list.data,
+    #     activity_calories = form.activity_calories.data,
+    #     activity_favourite = form.activity_favourite.data,
+    #     activity_user_id = form.activity_user_id.data,
+    #     activity_conditions_temp = form.activity_conditions_temp.data,
+    #     # activity_conditions_1 = request.form.get("activity_conditions_1"),
+    #     activity_conditions_1 = form.activity_conditions_1.data,
+    #     activity_conditions_2 = form.activity_conditions_2.data,
+    #     activity_conditions_3 = form.activity_conditions_3.data,
+    #     activity_conditions_4 = form.activity_conditions_4.data,
+    #     activity_conditions_5 = form.activity_conditions_5.data,
+    #     activity_conditions_6 = form.activity_conditions_6.data,
+    #     activity_conditions_7 = form.activity_conditions_7.data,
+    #     activity_conditions_8 = form.activity_conditions_8.data,
+    #     activity_conditions_9 = form.activity_conditions_9.data,
+    #     activity_level1 = form.activity_level1.data,
+    #     activity_level2 = form.activity_level2.data,
+    #     activity_level3 = form.activity_level3.data,
+    #     activity_timestamp = today
 
-    if form.validate_on_submit():
-        current_activity_name = form.activity_name.data
-        current_activity_description = form.activity_description.data
-        current_activity_todo_list = form.activity_todo_list.data
-        current_activity_conditions = form.activity_conditions.data
-        current_activity_calories = form.activity_calories.data
-        current_activity_favourite = form.activity_favourite.data
-        current_activity_user_id = form.activity_user_id.data
+    #     flash('Your changes have been saved.')
+    #     return redirect(url_for('edit_activity'))
 
-        db.session.commit()
-        flash('Your changes have been saved.')
-        return redirect(url_for('edit_activity'))
-    elif request.method == 'GET':
-        form.activity_name.data = current_activity_name
-        form.activity_description.data = current_activity_description
-        form.activity_todo_list.data = current_activity_todo_list
-        form.activity_conditions.data = current_activity_conditions
-        form.activity_calories.data = current_activity_calories
-        form.activity_favourite.data = current_activity_favourite
-        form.activity_user_id.data = current_activity_user_id
-    return render_template('edit_activity.html', title='Edit Activity', form=form, icons=icons)
+    # elif request.method == 'GET':
+    #     form.activity_name.data = activity_name
+    #     form.activity_description.data = activity_description
+    #     form.activity_todo_list.data = activity_todo_list
+    #     form.activity_calories.data = activity_calories
+    #     form.activity_favourite.data = activity_favourite
+    #     form.activity_user_id.data = activity_user_id
+    #     form.activity_conditions_temp.data = activity_conditions_temp
+    #     form.activity_conditions_1.data = activity_conditions_1
+    #     form.activity_conditions_2.data = activity_conditions_2
+    #     form.activity_conditions_3.data = activity_conditions_3
+    #     form.activity_conditions_4.data = activity_conditions_4
+    #     form.activity_conditions_5.data = activity_conditions_5
+    #     form.activity_conditions_6.data = activity_conditions_6
+    #     form.activity_conditions_7.data = activity_conditions_7
+    #     form.activity_conditions_8.data = activity_conditions_8
+    #     form.activity_conditions_9.data = activity_conditions_9
+    #     form.activity_level1.data = activity_level1
+    #     form.activity_level2.data = activity_level2
+    #     form.activity_level3.data = activity_level3
+
+    return render_template('edit_activity.html', title='Edit Activity')
 
 
+@app.route("/upload_image", methods=["GET", "POST"])
+def upload_image():
+    # if request.method == "POST":
+    #     image = request.files["image"]
+    #     description = request.form.get("description")
+    #     if image and description and image.filename.split(".")[-1].lower() in ALLOWED_EXTENSIONS:
+    #         filename = secure_filename(image.filename)
+    #         image.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+    #         mongo.db.gallery.insert_one(
+    #             {
+    #             "filename": filename,
+    #             "description": description.strip()
+    #         })
+
+    #         flash("Successfully uploaded image", "success")
+    #         return redirect(url_for("upload_image"))
+    #     else:
+    #         flash("An error occurred while uploading the image!", "danger")
+    #         return redirect(url_for("upload_image"))
+    return render_template("upload_image.html")
 
 
 

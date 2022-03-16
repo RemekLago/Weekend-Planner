@@ -5,6 +5,7 @@
         Here you can add your activity to your favourite list of activities
     </h3>
     <form action="" method="post">
+        {{ form.hidden_tag() }}
         <div class="notification is-gapless has-background-white">
         <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
             <div class="column is-6">
@@ -12,7 +13,7 @@
                     <div class="notification has-background-white has-text-black">
                         <div class="content">
                             <div class="notification">
-                                <input class="input is-large" type="text" name="activity_name" placeholder="activity name" ,
+                                <input class="input is-large" type="text" name="activity_name" placeholder="activity name",
                                     value="{{ activity_name }}">
                                 </input>
                             </div>
@@ -74,7 +75,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_1 }}" name="activity_level2"></input>
+                    <input type="checkbox" value="True"  name="activity_conditions_1"></input>
                 </label>
                 {% endif %}
                 </figure>
@@ -83,7 +84,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_2 }}" name="activity_level2"></input>
+                    <input type="checkbox" value="{{ activity_conditions_2 }}" name="activity_conditions_2"></input>
                 </label>
                 {% endif %}
                 {% if icon.id == 3 %}
@@ -91,7 +92,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_3 }}" name="activity_level2"></input>
+                    <input type="checkbox" value="{{ activity_conditions_3 }}" name="activity_conditions_3"></input>
                 </label>
                 {% endif %}
                 {% if icon.id == 4 %}
@@ -99,7 +100,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_4 }}" name="activity_level2"></input>
+                    <input type="checkbox" value="{{ activity_conditions_4 }}" name="activity_conditions_4"></input>
                 </label>
                 {% endif %}
                 {% if icon.id == 5 %}
@@ -107,7 +108,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_5 }}" name="activity_level2"></input>
+                    <input type="checkbox" value="{{ activity_conditions_5 }}" name="activity_conditions_5"></input>
                 </label>
                 {% endif %}
                 <{% if icon.id == 6 %}
@@ -115,7 +116,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_6 }}" name="activity_level2"></input>
+                    <input type="checkbox" value="{{ activity_conditions_6 }}" name="activity_conditions_6"></input>
                 </label>
                 {% endif %}
                 {% if icon.id == 7 %}
@@ -123,7 +124,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_7 }}" name="activity_level2"></input>
+                    <input type="checkbox" value="{{ activity_conditions_7 }}" name="activity_conditions_7"></input>
                 </label>
                 {% endif %}
                 {% if icon.id == 8 %}
@@ -131,7 +132,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_8 }}" name="activity_level2"></input>
+                    <input type="checkbox" value="{{ activity_conditions_8 }}" name="activity_conditions_8"></input>
                 </label>
                 {% endif %}
                 {% if icon.id == 9 %}
@@ -139,7 +140,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_9 }}" name="activity_level2"></input>
+                    <input type="checkbox" value="{{ activity_conditions_9 }}" name="activity_conditions_9"></input>
                 </label>
                 {% endif %}
             {% endfor %}
