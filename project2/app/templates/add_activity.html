@@ -51,15 +51,15 @@
                                 <p><strong>Activity avaible for user with activity level:</strong></p>
                                 <p><label class="checkbox">
                                     Very active
-                                    <input type="checkbox" value="{{ activity_level1 }}" name="activity_level1"></input>
+                                    <input type="checkbox" id="{{ activity_level1 }}" name="activity_level1"></input>
                                 </label></p>
                                 <p><label class="checkbox">
                                     Active
-                                    <input type="checkbox" value="{{ activity_level2 }}" name="activity_level2"></input>
+                                    <input type="checkbox" id="{{ activity_level2 }}" name="activity_level2"></input>
                                 </label></p>
                                 <p><label class="checkbox">
                                     Less active
-                                    <input type="checkbox" value="{{ activity_level3 }}" name="activity_level3"></input>
+                                    <input type="checkbox" id="{{ activity_level3 }}" name="activity_level3"></input>
                                 </label></p>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="True"  name="activity_conditions_1"></input>
+                    <input type="checkbox"  name="activity_conditions_1" id="activity_conditions_1"></input>
                 </label>
                 {% endif %}
                 </figure>
@@ -84,7 +84,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_2 }}" name="activity_conditions_2"></input>
+                    <input type="checkbox" name="activity_conditions_2" id="activity_conditions_2"></input>
                 </label>
                 {% endif %}
                 {% if icon.id == 3 %}
@@ -92,7 +92,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_3 }}" name="activity_conditions_3"></input>
+                    <input type="checkbox" id={{activity_conditions_3}} name="activity_conditions_3"></input>
                 </label>
                 {% endif %}
                 {% if icon.id == 4 %}
@@ -100,7 +100,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_4 }}" name="activity_conditions_4"></input>
+                    <input type="checkbox" id="{{ activity_conditions_4 }}" name="activity_conditions_4"></input>
                 </label>
                 {% endif %}
                 {% if icon.id == 5 %}
@@ -108,7 +108,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_5 }}" name="activity_conditions_5"></input>
+                    <input type="checkbox" id="{{ activity_conditions_5 }}" name="activity_conditions_5"></input>
                 </label>
                 {% endif %}
                 <{% if icon.id == 6 %}
@@ -116,7 +116,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_6 }}" name="activity_conditions_6"></input>
+                    <input type="checkbox" id="{{ activity_conditions_6 }}" name="activity_conditions_6"></input>
                 </label>
                 {% endif %}
                 {% if icon.id == 7 %}
@@ -124,7 +124,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_7 }}" name="activity_conditions_7"></input>
+                    <input type="checkbox" id="{{ activity_conditions_7 }}" name="activity_conditions_7"></input>
                 </label>
                 {% endif %}
                 {% if icon.id == 8 %}
@@ -132,7 +132,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_8 }}" name="activity_conditions_8"></input>
+                    <input type="checkbox" id="{{ activity_conditions_8 }}" name="activity_conditions_8"></input>
                 </label>
                 {% endif %}
                 {% if icon.id == 9 %}
@@ -140,7 +140,7 @@
                     <figure class="image is-96x96">
                         <img src="{{ icon.icon_link }}">
                     </figure>
-                    <input type="checkbox" value="{{ activity_conditions_9 }}" name="activity_conditions_9"></input>
+                    <input type="checkbox" id="{{ activity_conditions_9 }}" name="activity_conditions_9"></input>
                 </label>
                 {% endif %}
             {% endfor %}
