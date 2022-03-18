@@ -58,8 +58,8 @@ class ActivitiesTable(db.Model):
 
 class WeatherTable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    weather_date = db.Column(db.String(100))
-    weather_day = db.Column(db.Integer)
+    weather_date = db.Column(db.DateTime)
+    weather_day = db.Column(db.String(100))
     weather_location = db.Column(db.String(100))
     weather_day_name = db.Column(db.String(100))
     weather_temperature = db.Column(db.Integer)
@@ -75,8 +75,8 @@ class WeatherTable(db.Model):
 
 class WeatherTableHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    weather_date = db.Column(db.String(100))
-    weather_day = db.Column(db.Integer)
+    weather_date = db.Column(db.DateTime)
+    weather_day = db.Column(db.String(100))
     weather_location = db.Column(db.String(100))
     weather_day_name = db.Column(db.String(100))
     weather_temperature = db.Column(db.Integer)
@@ -100,6 +100,17 @@ class IconsTable(db.Model):
 
     def __repr__(self):
         return '<IconsTable {}>'.format(self.icon_name)
+
+
+class ImageTable(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    image_date = db.Column(db.DateTime)
+    image_name = db.Column(db.String(10))
+    image_description = db.Column(db.String(10))
+    image_link = db.Column(db.String(100))
+
+    def __repr__(self):
+        return '<ImageTable {}>'.format(self.image_name)
 
 
 @login.user_loader
