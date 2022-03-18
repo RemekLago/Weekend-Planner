@@ -18,7 +18,7 @@
                             <p class="title is-5 has-text-black">Your activity level: {{ user.activity_level }}</p>
                             {% if user.last_seen %}
                             <!--<p>Last seen on: {{ user.last_seen }}</p>-->
-                            <p>Last seen on: {{ moment(user.last_seen).format('LLL') }}</p>
+                            <p>Last seen on: {{ user.last_seen.strftime('%Y-%m-%d') }}</p>
                             {% endif %}
                         </div>
                     </div>
@@ -34,7 +34,6 @@
             <div class="column is-4">
                 <div class="column has-text-">
                     {% for idx in weather_today %}
-                   
                     <div class="title has-text-black title is-4">
                         <p>{{ idx.weather_day_name }}, {{ idx.weather_date }}</p>
                     </div>
@@ -119,7 +118,7 @@
                     {% for idx in weather %}
                     {% if idx.id%8 == 2 %}
                     <td></td>
-                    <td>{{ idx.weather_date }}</td>
+                    <td>{{ idx.weather_date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ idx.weather_day_name }}</td>
                     <td>{{ idx.weather_temperature }} °C</td>
                     <td>{{ idx.weather_wind }} m/s</td>
@@ -141,7 +140,7 @@
                     {% for idx in weather %}
                     {% if idx.id%8 == 3 %}
                     <td></td>
-                    <td>{{ idx.weather_date }}</td>
+                    <td>{{ idx.weather_date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ idx.weather_day_name }}</td>
                     <td>{{ idx.weather_temperature }} °C</td>
                     <td>{{ idx.weather_wind }} m/s</td>
@@ -163,7 +162,7 @@
                     {% for idx in weather %}
                     {% if idx.id%8 == 4 %}
                     <td></td>
-                    <td>{{ idx.weather_date }}</td>
+                    <td>{{ idx.weather_date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ idx.weather_day_name }}</td>
                     <td>{{ idx.weather_temperature }} °C</td>
                     <td>{{ idx.weather_wind }} m/s</td>
@@ -185,7 +184,7 @@
                     {% for idx in weather %}
                     {% if idx.id%8 == 5 %}
                     <td></td>
-                    <td>{{ idx.weather_date }}</td>
+                    <td>{{ idx.weather_date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ idx.weather_day_name }}</td>
                     <td>{{ idx.weather_temperature }} °C</td>
                     <td>{{ idx.weather_wind }} m/s</td>
@@ -207,7 +206,7 @@
                     {% for idx in weather %}
                     {% if idx.id%8 == 6 %}
                     <td></td>
-                    <td>{{ idx.weather_date }}</td>
+                    <td>{{ idx.weather_date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ idx.weather_day_name }}</td>
                     <td>{{ idx.weather_temperature }} °C</td>
                     <td>{{ idx.weather_wind }} m/s</td>
@@ -229,7 +228,7 @@
                     {% for idx in weather %}
                     {% if idx.id%8 == 7 %}
                     <td></td>
-                    <td>{{ idx.weather_date }}</td>
+                    <td>{{ idx.weather_date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ idx.weather_day_name }}</td>
                     <td>{{ idx.weather_temperature }} °C</td>
                     <td>{{ idx.weather_wind }} m/s</td>
@@ -251,7 +250,7 @@
                     {% for idx in weather %}
                     {% if idx.id%8 == 0 %}
                     <td></td>
-                    <td>{{ idx.weather_date }}</td>
+                    <td>{{ idx.weather_date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ idx.weather_day_name }}</td>
                     <td>{{ idx.weather_temperature }} °C</td>
                     <td>{{ idx.weather_wind }} m/s</td>
