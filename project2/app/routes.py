@@ -172,18 +172,20 @@ def add_activity():
     return render_template('add_activity.html', title='Add Activity', form=form, icons=icons)
     
 
-@app.route('/edit_activity', methods=['GET', 'POST'])
-def edit_activity():
+@app.route('/edit_activity/<activity_id>', methods=['GET', 'POST'])
+def edit_activity(activity_id):
+    activity = ActivitiesTable.query.filter(ActivitiesTable.id==activity_id).all()
     form = EditActivity()
-    icons = IconsTable()
+    icons = IconsTable.query.all()
     today = datetime.today()
+    
     if form.validate_on_submit():
+        activity = ActivitiesTable(
         activity_name = form.activity_name.data,
         activity_description = form.activity_description.data,
         activity_todo_list = form.activity_todo_list.data,
         activity_calories = form.activity_calories.data,
         activity_favourite = form.activity_favourite.data,
-        activity_user_id = form.activity_user_id.data,
         activity_conditions_temp = form.activity_conditions_temp.data,
         activity_conditions_1 = form.activity_conditions_1.data,
         activity_conditions_2 = form.activity_conditions_2.data,
@@ -197,32 +199,37 @@ def edit_activity():
         activity_level1 = form.activity_level1.data,
         activity_level2 = form.activity_level2.data,
         activity_level3 = form.activity_level3.data,
-        activity_timestamp = today
+        activity_timestamp = today,
+        activity_user_id = form.activity_user_id.data
+        )
+        
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit_activity'))
+        return redirect(url_for('edit_activity'), activity=activity)
 
-    elif request.method == 'GET':
-            form.activity_name.data = activity_name
-            form.activity_description.data = activity_description
-            form.activity_todo_list.data = activity_todo_list
-            form.activity_calories.data = activity_calories
-            form.activity_favourite.data = activity_favourite
-            form.activity_user_id.data = activity_user_id
-            form.activity_conditions_temp.data = activity_conditions_temp
-            form.activity_conditions_1.data = activity_conditions_1
-            form.activity_conditions_2.data = activity_conditions_2
-            form.activity_conditions_3.data = activity_conditions_3
-            form.activity_conditions_4.data = activity_conditions_4
-            form.activity_conditions_5.data = activity_conditions_5
-            form.activity_conditions_6.data = activity_conditions_6
-            form.activity_conditions_7.data = activity_conditions_7
-            form.activity_conditions_8.data = activity_conditions_8
-            form.activity_conditions_9.data = activity_conditions_9
-            form.activity_level1.data = activity_level1
-            form.activity_level2.data = activity_level2
-            form.activity_level3.data = activity_level3
-    return render_template('edit_activity.html', title='Edit Activity')
+    # elif request.method == 'GET':
+    #     print(f"wydrukowane: aaaa")
+    #     form.activity_name.data = activity.activity_name
+    #     form.activity_description.data = activity_description
+    #     form.activity_todo_list.data = activity_todo_list
+    #     form.activity_calories.data = activity_calories
+    #     form.activity_favourite.data = activity_favourite
+    #     form.activity_user_id.data = activity_user_id
+    #     form.activity_conditions_temp.data = activity_conditions_temp
+    #     form.activity_conditions_1.data = activity_conditions_1
+    #     form.activity_conditions_2.data = activity_conditions_2
+    #     form.activity_conditions_3.data = activity_conditions_3
+    #     form.activity_conditions_4.data = activity_conditions_4
+    #     form.activity_conditions_5.data = activity_conditions_5
+    #     form.activity_conditions_6.data = activity_conditions_6
+    #     form.activity_conditions_7.data = activity_conditions_7
+    #     form.activity_conditions_8.data = activity_conditions_8
+    #     form.activity_conditions_9.data = activity_conditions_9
+    #     form.activity_level1.data = activity_level1
+    #     form.activity_level2.data = activity_level2
+    #     form.activity_level3.data = activity_level3
+    #     form.activity_timestamp.data = activity_timestamp 
+    return render_template('edit_activity.html', title='Edit Activity', form=form, icons=icons, activity=activity)
 
 
 @app.route("/users_activities", methods=["GET", "POST"])
