@@ -3,7 +3,7 @@ from app import app
 from flask import render_template, flash, redirect, url_for
 from app.forms import LoginForm
 from flask_login import current_user, login_user
-from app.models import User, ActivitiesTable, WeatherTable, IconsTable
+from app.models import User, ActivitiesTable, WeatherTable, IconsTable, ImageTable
 from flask_login import logout_user
 from flask_login import login_required
 from flask import request
@@ -11,9 +11,10 @@ from werkzeug.urls import url_parse
 from app import db
 from app.forms import RegistrationForm
 from datetime import datetime, timedelta
-from app.forms import EditProfileForm, AddActivity, EditActivity
+from app.forms import EditProfileForm, AddActivity, EditActivity, AddImage
 from flask_pymongo import PyMongo
 from werkzeug.utils import secure_filename
+from sqlalchemy import cast,Date
 # from app import mongo
 
 
@@ -93,9 +94,12 @@ def user(username):
     #weather = WeatherTable.query.get(1)
     # weather = WeatherTable.query.all()
     # today = str(datetime.now().date() + timedelta(days = 2))
-    today = str(datetime.now().date())
+    today = datetime.now().date()
     weather = WeatherTable.query.filter((WeatherTable.weather_location==user.location)&(WeatherTable.weather_date>=today)).all()
     weather_today = WeatherTable.query.filter((WeatherTable.weather_location==user.location)&(WeatherTable.weather_date==today)).all()
+    # print(weather_today)
+    # print(today)
+    # print(WeatherTable.query(WeatherTable.weather_date).all())
     # weather = WeatherTable.query.filter(WeatherTable.weather_date>=today).all()
     icons = IconsTable.query.all()
     return render_template('user.html', user=user, activities=activities, weather=weather, icons=icons, weather_today=weather_today)
@@ -138,8 +142,42 @@ def add_activity():
     icons = IconsTable.query.all()
     today = datetime.today()
     if form.validate_on_submit():
-        print(form.data)
         activity = ActivitiesTable(
+        activity_name = form.activity_name.data,
+        activity_description = form.activity_description.data,
+        activity_todo_list = form.activity_todo_list.data,
+        activity_calories = form.activity_calories.data,
+        activity_favourite = form.activity_favourite.data,
+        activity_conditions_temp = form.activity_conditions_temp.data,
+        activity_conditions_1 = form.activity_conditions_1.data,
+        activity_conditions_2 = form.activity_conditions_2.data,
+        activity_conditions_3 = form.activity_conditions_3.data,
+        activity_conditions_4 = form.activity_conditions_4.data,
+        activity_conditions_5 = form.activity_conditions_5.data,
+        activity_conditions_6 = form.activity_conditions_6.data,
+        activity_conditions_7 = form.activity_conditions_7.data,
+        activity_conditions_8 = form.activity_conditions_8.data,
+        activity_conditions_9 = form.activity_conditions_9.data,
+        activity_level1 = form.activity_level1.data,
+        activity_level2 = form.activity_level2.data,
+        activity_level3 = form.activity_level3.data,
+        activity_timestamp = today,
+        activity_user_id = current_user.id
+        )
+
+        db.session.add(activity)
+        db.session.commit()
+        flash('Congratulations, you have been added new activity!')
+        return redirect(url_for('add_activity'))
+    return render_template('add_activity.html', title='Add Activity', form=form, icons=icons)
+    
+
+@app.route('/edit_activity', methods=['GET', 'POST'])
+def edit_activity():
+    form = EditActivity()
+    icons = IconsTable()
+    today = datetime.today()
+    if form.validate_on_submit():
         activity_name = form.activity_name.data,
         activity_description = form.activity_description.data,
         activity_todo_list = form.activity_todo_list.data,
@@ -160,72 +198,66 @@ def add_activity():
         activity_level2 = form.activity_level2.data,
         activity_level3 = form.activity_level3.data,
         activity_timestamp = today
-        )
-
-        db.session.add(activity)
         db.session.commit()
-        flash('Congratulations, you have been added new activity!')
-        return redirect(url_for('add_activity'))
-    return render_template('add_activity.html', title='Add Activity', form=form, icons=icons)
-    
+        flash('Your changes have been saved.')
+        return redirect(url_for('edit_activity'))
 
-@app.route('/edit_activity', methods=['GET', 'POST'])
-def edit_activity():
-    # form = EditActivity()
-    # icons = IconsTable()
-    # today = datetime.today()
-    # if form.validate_on_submit():
-    #     activity_name = form.activity_name.data,
-    #     activity_description = form.activity_description.data,
-    #     activity_todo_list = form.activity_todo_list.data,
-    #     activity_calories = form.activity_calories.data,
-    #     activity_favourite = form.activity_favourite.data,
-    #     activity_user_id = form.activity_user_id.data,
-    #     activity_conditions_temp = form.activity_conditions_temp.data,
-    #     # activity_conditions_1 = request.form.get("activity_conditions_1"),
-    #     activity_conditions_1 = form.activity_conditions_1.data,
-    #     activity_conditions_2 = form.activity_conditions_2.data,
-    #     activity_conditions_3 = form.activity_conditions_3.data,
-    #     activity_conditions_4 = form.activity_conditions_4.data,
-    #     activity_conditions_5 = form.activity_conditions_5.data,
-    #     activity_conditions_6 = form.activity_conditions_6.data,
-    #     activity_conditions_7 = form.activity_conditions_7.data,
-    #     activity_conditions_8 = form.activity_conditions_8.data,
-    #     activity_conditions_9 = form.activity_conditions_9.data,
-    #     activity_level1 = form.activity_level1.data,
-    #     activity_level2 = form.activity_level2.data,
-    #     activity_level3 = form.activity_level3.data,
-    #     activity_timestamp = today
-
-    #     flash('Your changes have been saved.')
-    #     return redirect(url_for('edit_activity'))
-
-    # elif request.method == 'GET':
-    #     form.activity_name.data = activity_name
-    #     form.activity_description.data = activity_description
-    #     form.activity_todo_list.data = activity_todo_list
-    #     form.activity_calories.data = activity_calories
-    #     form.activity_favourite.data = activity_favourite
-    #     form.activity_user_id.data = activity_user_id
-    #     form.activity_conditions_temp.data = activity_conditions_temp
-    #     form.activity_conditions_1.data = activity_conditions_1
-    #     form.activity_conditions_2.data = activity_conditions_2
-    #     form.activity_conditions_3.data = activity_conditions_3
-    #     form.activity_conditions_4.data = activity_conditions_4
-    #     form.activity_conditions_5.data = activity_conditions_5
-    #     form.activity_conditions_6.data = activity_conditions_6
-    #     form.activity_conditions_7.data = activity_conditions_7
-    #     form.activity_conditions_8.data = activity_conditions_8
-    #     form.activity_conditions_9.data = activity_conditions_9
-    #     form.activity_level1.data = activity_level1
-    #     form.activity_level2.data = activity_level2
-    #     form.activity_level3.data = activity_level3
-
+    elif request.method == 'GET':
+            form.activity_name.data = activity_name
+            form.activity_description.data = activity_description
+            form.activity_todo_list.data = activity_todo_list
+            form.activity_calories.data = activity_calories
+            form.activity_favourite.data = activity_favourite
+            form.activity_user_id.data = activity_user_id
+            form.activity_conditions_temp.data = activity_conditions_temp
+            form.activity_conditions_1.data = activity_conditions_1
+            form.activity_conditions_2.data = activity_conditions_2
+            form.activity_conditions_3.data = activity_conditions_3
+            form.activity_conditions_4.data = activity_conditions_4
+            form.activity_conditions_5.data = activity_conditions_5
+            form.activity_conditions_6.data = activity_conditions_6
+            form.activity_conditions_7.data = activity_conditions_7
+            form.activity_conditions_8.data = activity_conditions_8
+            form.activity_conditions_9.data = activity_conditions_9
+            form.activity_level1.data = activity_level1
+            form.activity_level2.data = activity_level2
+            form.activity_level3.data = activity_level3
     return render_template('edit_activity.html', title='Edit Activity')
+
+
+@app.route("/users_activities", methods=["GET", "POST"])
+def users_activities():
+    form = ActivitiesTable()
+    user = User.query.all()
+    activities = ActivitiesTable.query.filter(ActivitiesTable.activity_user_id==current_user.id).all()
+    icons = IconsTable.query.all()
+    return render_template("users_activities.html", title='Users activities',activities=activities, icons=icons, user=user, form=form)
 
 
 @app.route("/upload_image", methods=["GET", "POST"])
 def upload_image():
+    form = AddImage()
+    if form.validate_on_submit():
+        image = ImageTable(
+        image_name=form.image_name.data,
+        image_description=form.image_description.data,
+        image_link=form.image_link.data
+        )
+
+        image_name = secure_filename(image.image_name)
+        # image.save(os.path.join("app/static/uploads/", image_name))
+        f=request.files
+        print(f)
+
+
+
+        db.session.add(image)
+        db.session.commit()
+        flash("Congratulations, you have been added new image")
+        return redirect(url_for('/upload_image'))
+    return render_template("upload_image.html")
+
+
     # if request.method == "POST":
     #     image = request.files["image"]
     #     description = request.form.get("description")
@@ -244,7 +276,7 @@ def upload_image():
     #     else:
     #         flash("An error occurred while uploading the image!", "danger")
     #         return redirect(url_for("upload_image"))
-    return render_template("upload_image.html")
+    
 
 
 
