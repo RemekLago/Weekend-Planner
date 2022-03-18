@@ -79,3 +79,10 @@ class EditActivity(FlaskForm):
     activity_conditions_8 = BooleanField('activity_conditions_8')
     activity_conditions_9 = BooleanField('activity_conditions_9')
     submit = SubmitField('Submit')
+
+
+class AddImage(FlaskForm):
+    image_name = TextAreaField('image_name', validators=[Length(min=0, max=100)])
+    image_description = TextAreaField('image_description', validators=[Length(min=0, max=500)])
+    image_link = TextAreaField('image_link', validators=[Length(min=0, max=500)])
+    submit = SubmitField('Submit')
