@@ -15,7 +15,11 @@
                     <div class="column is-11">
                         <div class="box is-shadowless is-pulled-left">
                             <p class="title is-3 has-text-black">{{ user.username }}, {{user.location}}</p>
-                            <p class="title is-5 has-text-black">Your activity level: {{ user.activity_level }}</p>
+                            <p class="title is-5 has-text-black">Your activity level: </p>
+                            Very active - {{ user.activity_level1 }}<br>
+                            Active - {{ user.activity_level2 }}<br>
+                            Less active - {{ user.activity_level3 }}<br>
+                            <br>
                             {% if user.last_seen %}
                             <!--<p>Last seen on: {{ user.last_seen }}</p>-->
                             <p>Last seen on: {{ user.last_seen.strftime('%Y-%m-%d') }}</p>
@@ -84,7 +88,7 @@
                 <a href="{{ url_for('add_activity') }}">Add your activity</a>
             </button>
             <button class="button is-info">
-                <a href="{{ url_for('edit_activity') }}">Edit your activity</a>
+                <a href="{{ url_for('users_activities') }}">Edit your activity</a>
             </button>
             <button class="button is-info">
                 <a href="{{ url_for('upload_image') }}">Add your photo to gallery</a>
