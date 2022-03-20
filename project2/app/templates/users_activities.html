@@ -9,11 +9,11 @@
         Below is the list with your activities which you can edit<br>
     </div>
 </article>
+
 {% for activity in activities %}
-<form>
 
     <div class="notification is-gapless has-background-white">
-        <a href="{{ url_for('edit_activity') }}">
+        <a href="{{ url_for('edit_activity', activity_id=activity.id) }}">
             <button class="button is-block is-info is-inline">Edit activity</button>
         </a>
         <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
@@ -152,11 +152,10 @@
                 {% endif %}
                 {% endfor %}
                 {% endif %}
-    
             </nav>
         </div>
     </div>
-</form>
+
     
 {% endfor %}
 {% endblock %}
