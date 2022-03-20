@@ -33,7 +33,9 @@ class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     about_me = TextAreaField('About me', validators=[Length(min=0, max=500)])
     location = TextAreaField('Location', validators=[Length(min=0, max=100)])
-    activity_level = StringField('Activity level', validators=[DataRequired()])
+    activity_level1 = BooleanField('activity_lavel1')
+    activity_level2 = BooleanField('activity_lavel2')
+    activity_level3 = BooleanField('activity_lavel3')
     submit = SubmitField('Submit')
 
 class AddActivity(FlaskForm):
@@ -56,6 +58,16 @@ class AddActivity(FlaskForm):
     activity_conditions_7 = BooleanField('activity_conditions_7')
     activity_conditions_8 = BooleanField('activity_conditions_8')
     activity_conditions_9 = BooleanField('activity_conditions_9')
+    activity_conditions_1_icon = TextAreaField('activity_conditions_1_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_2_icon = TextAreaField('activity_conditions_2_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_3_icon = TextAreaField('activity_conditions_3_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_4_icon = TextAreaField('activity_conditions_4_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_5_icon = TextAreaField('activity_conditions_5_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_6_icon = TextAreaField('activity_conditions_6_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_7_icon = TextAreaField('activity_conditions_7_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_8_icon = TextAreaField('activity_conditions_8_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_9_icon = TextAreaField('activity_conditions_9_icon', validators=[Length(min=0, max=100)])
+    chosen_status= BooleanField('chosen_status')
     submit = SubmitField('Submit')
 
 class EditActivity(FlaskForm):
@@ -78,6 +90,16 @@ class EditActivity(FlaskForm):
     activity_conditions_7 = BooleanField('activity_conditions_7')
     activity_conditions_8 = BooleanField('activity_conditions_8')
     activity_conditions_9 = BooleanField('activity_conditions_9')
+    activity_conditions_1_icon = TextAreaField('activity_conditions_1_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_2_icon = TextAreaField('activity_conditions_2_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_3_icon = TextAreaField('activity_conditions_3_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_4_icon = TextAreaField('activity_conditions_4_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_5_icon = TextAreaField('activity_conditions_5_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_6_icon = TextAreaField('activity_conditions_6_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_7_icon = TextAreaField('activity_conditions_7_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_8_icon = TextAreaField('activity_conditions_8_icon', validators=[Length(min=0, max=100)])
+    activity_conditions_9_icon = TextAreaField('activity_conditions_9_icon', validators=[Length(min=0, max=100)])
+    chosen_status= BooleanField('chosen_status')
     submit = SubmitField('Submit')
 
 
@@ -86,3 +108,9 @@ class AddImage(FlaskForm):
     image_description = TextAreaField('image_description', validators=[Length(min=0, max=500)])
     image_link = TextAreaField('image_link', validators=[Length(min=0, max=500)])
     submit = SubmitField('Submit')
+
+
+# class ChosenActivities(FlaskForm):
+#     chosen_activity_name = TextAreaField('activity_name', validators=[Length(min=0, max=140)])
+#     chosen_status = BooleanField('chosen_atatus')
+#     submit = SubmitField('Submit')
