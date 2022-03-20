@@ -33,15 +33,69 @@ def index():
 
 
 @login_required
-@app.route('/propositions')
+@app.route('/propositions', methods=["GET", "POST"])
 def propositions():
+    form = EditActivity()
+    tomorrow = str(datetime.now().date() + timedelta(days = 1))
+    today = str(datetime.now().date())
     user = User.query.all()
-    activities = ActivitiesTable.query.all()
-    today = str(datetime.now().date() + timedelta(days = 1))
-    # today = str(datetime.now().date())
-    weather = WeatherTable.query.filter((WeatherTable.weather_location==User.location)&(WeatherTable.weather_date>(today))).all()
     icons = IconsTable.query.all()
-    return render_template('propositions.html', title='Home',  activities=activities, weather=weather, icons=icons, user=user)
+    
+    weather = WeatherTable \
+        .query\
+        .filter(
+            (WeatherTable.weather_location==User.location)
+            & (WeatherTable.weather_date>(tomorrow))
+           
+        ).all()
+    weather2 = WeatherTable \
+        .query\
+        .filter(
+            (WeatherTable.weather_day_name=="Saturday")
+            & (WeatherTable.weather_date>(tomorrow))
+            & (WeatherTable.weather_location==User.location)
+        ).all()
+    weather3 = WeatherTable \
+    .query\
+    .filter(
+        (WeatherTable.weather_day_name=="Sunday")
+        & (WeatherTable.weather_date>(tomorrow))
+        & (WeatherTable.weather_location==User.location)
+    ).all()
+
+    activities = ActivitiesTable\
+        .query\
+        .filter(
+            (
+            ActivitiesTable.activity_level1==User.activity_level1  
+            | ActivitiesTable.activity_level2==User.activity_level2 
+            | ActivitiesTable.activity_level3==User.activity_level3
+            ) 
+            & 
+            (ActivitiesTable.activity_conditions_temp <= WeatherTable.weather_temperature)
+            # & 
+            # (ActivitiesTable.activity_conditions_1_icon==weather2.weather_icon
+            # | ActivitiesTable.activity_conditions_2_icon==weather2.weather_icon
+            # | ActivitiesTable.activity_conditions_3_icon==weather2.weather_icon
+            # | ActivitiesTable.activity_conditions_4_icon==weather2.weather_icon
+            # | ActivitiesTable.activity_conditions_5_icon==weather2.weather_icon
+            # | ActivitiesTable.activity_conditions_6_icon==weather2.weather_icon
+            # | ActivitiesTable.activity_conditions_7_icon==weather2.weather_icon
+            # | ActivitiesTable.activity_conditions_8_icon==weather2.weather_icon
+            # | ActivitiesTable.activity_conditions_9_icon==weather2.weather_icon
+            # )
+        ).all()
+    if form.validate_on_submit():
+        activities = ActivitiesTable(
+        chosen_status = True
+        )
+        
+        db.session.commit()
+        flash('Congratulations, you have been added activities for the weekend!')
+        return redirect(url_for('propositions'))
+    return render_template('propositions.html', title='Propositions', 
+    activities=activities, weather=weather, weather2=weather2, weather3=weather3, 
+    icons=icons, user=user, form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -113,7 +167,9 @@ def edit_profile():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
         current_user.location = form.location.data
-        current_user.activity_level = form.activity_level.data
+        current_user.activity_level1 = form.activity_level1.data
+        current_user.activity_level2 = form.activity_level2.data
+        current_user.activity_level3 = form.activity_level3.data
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('edit_profile'))
@@ -121,7 +177,9 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
         form.location.data = current_user.location
-        form.activity_level.data = current_user.activity_level
+        form.activity_level1.data = current_user.activity_level1
+        form.activity_level2.data = current_user.activity_level2
+        form.activity_level3.data = current_user.activity_level3
     return render_template('edit_profile.html', title='Edit Profile',form=form)
 
 
@@ -162,7 +220,16 @@ def add_activity():
         activity_level2 = form.activity_level2.data,
         activity_level3 = form.activity_level3.data,
         activity_timestamp = today,
-        activity_user_id = current_user.id
+        activity_user_id = current_user.id,
+        activity_conditions_1_icon = "01d",
+        activity_conditions_2_icon = "02d",
+        activity_conditions_3_icon = "03d",
+        activity_conditions_4_icon = "04d",
+        activity_conditions_5_icon = "09d",
+        activity_conditions_6_icon = "10d",
+        activity_conditions_7_icon = "11d",
+        activity_conditions_8_icon = "13d",
+        activity_conditions_9_icon = "50d",
         )
 
         db.session.add(activity)
@@ -200,7 +267,16 @@ def edit_activity(activity_id):
         activity.activity_level2 = form.activity_level2.data
         activity.activity_level3 = form.activity_level3.data
         activity.activity_timestamp = today
-        activity.activity_user_id = form.activity_user_id.data
+        activity.activity_user_id = current_user.id
+        activity.activity_conditions_1_icon = "01d"
+        activity.activity_conditions_2_icon = "02d"
+        activity.activity_conditions_3_icon = "03d"
+        activity.activity_conditions_4_icon = "04d"
+        activity.activity_conditions_5_icon = "09d"
+        activity.activity_conditions_6_icon = "10d"
+        activity.activity_conditions_7_icon = "11d"
+        activity.activity_conditions_8_icon = "13d"
+        activity.activity_conditions_9_icon = "50d"
         
         db.session.commit()
         flash('Your changes have been saved.')
@@ -226,16 +302,38 @@ def edit_activity(activity_id):
     form.activity_level1.data = activity.activity_level1
     form.activity_level2.data = activity.activity_level2
     form.activity_level3.data = activity.activity_level3
-    return render_template('edit_activity.html', title='Edit Activity', form=form, icons=icons, activity=activity)
+    form.activity_conditions_1_icon.data = "01d"
+    form.activity_conditions_2_icon.data = "02d"
+    form.activity_conditions_3_icon.data = "03d"
+    form.activity_conditions_4_icon.data = "04d"
+    form.activity_conditions_5_icon.data = "09d"
+    form.activity_conditions_6_icon.data = "10d"
+    form.activity_conditions_7_icon.data = "11d"
+    form.activity_conditions_8_icon.data = "13d"
+    form.activity_conditions_9_icon.data = "50d"
+    return render_template('edit_activity.html', title='Edit Activity', form=form, 
+    icons=icons, activity=activity)
 
 
 @app.route("/users_activities", methods=["GET", "POST"])
 def users_activities():
     form = ActivitiesTable()
     user = User.query.all()
-    activities = ActivitiesTable.query.filter(ActivitiesTable.activity_user_id==current_user.id).all()
     icons = IconsTable.query.all()
-    return render_template("users_activities.html", title='Users activities',activities=activities, icons=icons, user=user, form=form)
+    activities = ActivitiesTable.query.filter(ActivitiesTable.activity_user_id==current_user.id).all()
+    return render_template("chosen_activities.html", title='Users activities', 
+    activities=activities, icons=icons, user=user, form=form)
+
+
+@app.route("/chosen_activities", methods=["GET", "POST"])
+def chosen_activities():
+    form = ActivitiesTable()
+    user = User.query.all()
+    icons = IconsTable.query.all()
+    # activities = ActivitiesTable.query.filter(ActivitiesTable.chosen_status==True).all()
+    activities = ActivitiesTable.query.all()
+    return render_template("chosen_activities.html", title='Users activities', 
+    activities=activities, user=user, form=form, icons=icons,)
 
 
 @app.route("/upload_image", methods=["GET", "POST"])
@@ -252,8 +350,6 @@ def upload_image():
         # image.save(os.path.join("app/static/uploads/", image_name))
         f=request.files
         print(f)
-
-
 
         db.session.add(image)
         db.session.commit()
