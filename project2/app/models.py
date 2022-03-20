@@ -13,7 +13,9 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.String(500))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     location = db.Column(db.String(100))
-    activity_level = db.Column(db.Integer)
+    activity_level1 = db.Column(db.Boolean)
+    activity_level2 = db.Column(db.Boolean)
+    activity_level3 = db.Column(db.Boolean)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -52,6 +54,16 @@ class ActivitiesTable(db.Model):
     activity_level3 = db.Column(db.Boolean)
     activity_timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     activity_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    activity_conditions_1_icon = db.Column(db.String(100))
+    activity_conditions_2_icon = db.Column(db.String(100))
+    activity_conditions_3_icon = db.Column(db.String(100))
+    activity_conditions_4_icon = db.Column(db.String(100))
+    activity_conditions_5_icon = db.Column(db.String(100))
+    activity_conditions_6_icon = db.Column(db.String(100))
+    activity_conditions_7_icon = db.Column(db.String(100))
+    activity_conditions_8_icon = db.Column(db.String(100))
+    activity_conditions_9_icon = db.Column(db.String(100))
+    chosen_status = db.Column(db.Boolean)
 
     def __repr__(self):
         return '<ActivitiesTable {}>'.format(self.activity_name)
@@ -96,6 +108,7 @@ class IconsTable(db.Model):
     icon_name = db.Column(db.String(10))
     icon_value = db.Column(db.String(10))
     icon_link = db.Column(db.String(100))
+    icon_value2 = db.Column(db.Boolean)
     icon_id = db.Column(db.Integer, db.ForeignKey("weather_table.weather_icon"))
 
     def __repr__(self):
@@ -112,6 +125,14 @@ class ImageTable(db.Model):
     def __repr__(self):
         return '<ImageTable {}>'.format(self.image_name)
 
+# class ChosenActivitiesTable(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     chosen_activity_name = db.Column(db.String(500), nullable=False)
+#     chosen_status = db.Column(db.Boolean)
+#     chosen_activity_timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+#     def __repr__(self):
+#         return '<ChosenActivitiesTable {}>'.format(self.chosen_status)
 
 @login.user_loader
 def load_user(id):
