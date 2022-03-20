@@ -39,18 +39,21 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="field">
-                <label class="label">Choose activity level</label>
-                <p>1-very active, 2-active, 3-less active</p>
+            <div class="notification has has-background-white">
+                <label class="label">Choose your activity level</label>
                 <div class="control">
-                    <div class="control">
-                        <input class="input" type="text" placeholder="{{ current_user.activity_level }}" name="activity_level"
-                            value="{{ current_user.activity_level }}">
-                        </input>
-                    </div>
-                    {% for error in form.username.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
+                    <p><label class="checkbox">
+                            <input type="checkbox" id="activity_level1" name="activity_level1"></input>
+                            Very active
+                        </label></p>
+                    <p><label class="checkbox">
+                            <input type="checkbox" id="activity_level2" name="activity_level2"></input>
+                            Active
+                        </label></p>
+                    <p><label class="checkbox">
+                            <input type="checkbox" id="activity_level3" name="activity_level3"></input>
+                            Less active
+                        </label></p>
                 </div>
             </div>
             <button class="button is-block is-info is-large is-fullwidth">Submit
