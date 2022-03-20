@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h3 class="title">
-        List of all activities in the system. <br>
-        From that place, WEEKEND PLANNER <br>
-        will choose a recommended solution for you.
-    </h3>
+    <article class="message">
+        <div class="message-header is-size-4">
+            <p>Hello, {{ current_user.username }}!</p>
+        </div>
+        <div class="message-body">
+            List of all activities in the system. <br>
+            From that place, WEEKEND PLANNER <br>
+            will choose a recommended solution for you.
+        </div>
+    </article>
     {% for activity in activities %}
     <div class="notification is-gapless has-background-white">
         <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
