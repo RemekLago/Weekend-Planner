@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-from app.models import User, WeatherTable, IconsTable, ActivitiesTable
+from app.models import User, WeatherTable, IconsTable, ActivitiesTable, ChosenActivitiesTable
 from wtforms import StringField, TextAreaField, SubmitField
 from wtforms.validators import DataRequired, Length
 
@@ -105,12 +105,13 @@ class EditActivity(FlaskForm):
 
 class AddImage(FlaskForm):
     image_name = TextAreaField('image_name', validators=[Length(min=0, max=100)])
+    image_user = TextAreaField('image_user', validators=[Length(min=0, max=100)])
     image_description = TextAreaField('image_description', validators=[Length(min=0, max=500)])
     image_link = TextAreaField('image_link', validators=[Length(min=0, max=500)])
     submit = SubmitField('Submit')
 
 
-# class ChosenActivities(FlaskForm):
-#     chosen_activity_name = TextAreaField('activity_name', validators=[Length(min=0, max=140)])
-#     chosen_status = BooleanField('chosen_atatus')
-#     submit = SubmitField('Submit')
+class ChosenActivities(FlaskForm):
+    chosen_activity_name = TextAreaField('activity_name', validators=[Length(min=0, max=140)])
+    chosen_status = BooleanField('chosen_atatus')
+    submit = SubmitField('Submit')
