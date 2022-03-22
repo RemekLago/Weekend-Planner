@@ -3,7 +3,7 @@
 {% block content %}
 <article class="message">
     <div class="message-header is-size-4">
-        <p>Hello, {{ current_user.username }}!</p>
+        <p>{{ current_user.username }}</p>
     </div>
     <div class="message-body">
         Below is the list with propositions for you. <br>
@@ -32,7 +32,6 @@
             <tbody>
                 <tr>
                     {% for idx in weather2 %}
-
                     <td></td>
                     <td>{{ idx.weather_date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ idx.weather_day_name }}</td>
@@ -49,12 +48,10 @@
                     {% endif %}
                     {% endfor %}
                     <td>{{ idx.weather_description }}</td>
-
                     {% endfor %}
                 </tr>
                 <tr>
                     {% for idx in weather3 %}
-
                     <td></td>
                     <td>{{ idx.weather_date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ idx.weather_day_name }}</td>
@@ -83,11 +80,17 @@
     {% if idx.weather_icon in (activity.activity_conditions_1_icon,
     activity.activity_conditions_2_icon,activity.activity_conditions_3_icon,activity.activity_conditions_4_icon,activity.activity_conditions_5_icon,activity.activity_conditions_6_icon,activity.activity_conditions_7_icon,activity.activity_conditions_8_icon,
     activity.activity_conditions_9_icon) %}
+
     {% print(activity.chosen_status) %}
+    {% print(activity.activity_name) %}
     <div class="notification is-gapless has-background-white">
+        
         <p><label class="checkbox is-horizontal">
             <box class="button is-block is-info is-inline">Add this activity to list for nearest weekend
-            <input type="checkbox" id="{{ activity.chosen_status }}" name="chosen_status"></input>
+            <input type="checkbox" id="chosen_activity.chosen_status" name="chosen_status">
+            </input>
+            <input type="checkbox" id="chosen_activity.chosen_activity_name" name="chosen_activity_name" value="{{ activity.activity_name  }}">
+            </input>
             </box>
         </label></p>
         <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
@@ -117,14 +120,54 @@
                             </div>
                             <div class="notification">
                                 <p><strong> {{ activity.activity_calories }}</strong></p>
-                                <p> {{ activity.activity_favourite }}</p>
-                                <!-- <p> {{ activity.activity_timestamp }}</p> -->
+                            <!--{% if activity.activity_favourite==True %}
+                                <label class="checkbox">
+                                    Added to favourite
+                                    <input type="checkbox" id="{{ activity.activity_favourite }}" name="activity_favourite" checked></input>
+                                </label></p>
+                                {% else %}
+                                    <label class="checkbox">
+                                        Added to favourite
+                                        <input type="checkbox" id="{{ activity.activity_favourite }}" name="activity_favourite"></input>
+                                    </label></p>
+                                {% endif %}-->
+                            <p>Created on: {{ activity.activity_timestamp.strftime('%Y-%m-%d') }}</p>
                             </div>
                             <div class="notification">
                                 <p><strong>Activity avaible for user with activity level:</strong></p>
-                                <p>Very active: {{ activity.activity_level1 }}</p>
-                                <p>Active: {{ activity.activity_level2 }}</p>
-                                <p>Less active: {{ activity.activity_level3 }}</p>
+                                {% if activity.activity_level1==True %}
+                                <p><label class="checkbox">
+                                        Very active
+                                        <input type="checkbox" id="{{ activity.activity_level1 }}" name="activity_level1" checked></input>
+                                    </label></p>
+                                {% else %}
+                                <p><label class="checkbox">
+                                        Very active
+                                        <input type="checkbox" id="{{ activity.activity_level1 }}" name="activity_level1"></input>
+                                    </label></p>
+                                {% endif %}
+                                {% if activity.activity_level2==True %}
+                                <p><label class="checkbox">
+                                        Active
+                                        <input type="checkbox" id="{{ activity.activity_level2 }}" name="activity_level2" checked></input>
+                                    </label></p>
+                                {% else %}
+                                <p><label class="checkbox">
+                                        Active
+                                        <input type="checkbox" id="{{ activity.activity_level2 }}" name="activity_level2"></input>
+                                    </label></p>
+                                {% endif %}
+                                {% if activity.activity_level3==True %}
+                                <p><label class="checkbox">
+                                        Less active
+                                        <input type="checkbox" id="{{ activity.activity_level3 }}" name="activity_level3" checked></input>
+                                    </label></p>
+                                {% else %}
+                                <p><label class="checkbox">
+                                        Less active
+                                        <input type="checkbox" id="{{ activity.activity_level3 }}" name="activity_level3"></input>
+                                    </label></p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -230,6 +273,7 @@
             </nav>
         </div>
     </div>
+    
     {% endif %}
     {% endfor %}
     {% endfor %}
