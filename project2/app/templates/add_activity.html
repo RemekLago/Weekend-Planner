@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h3 class="title has-text-white">
-        Here you can add your activity to your favourite list of activities
-    </h3>
+    <article class="message">
+        <div class="message-header is-size-4">
+            <p>{{ current_user.username }}</p>
+        </div>
+        <div class="message-body">
+            Here you can add your activity to your favourite list of activities
+        </div>
+    </article>
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <div class="notification is-gapless has-background-white">
@@ -16,17 +21,26 @@
                                 <input class="input is-large" type="text" name="activity_name" placeholder="activity name",
                                     value="{{ activity_name }}">
                                 </input>
+                                {% for error in form.activity_name.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
                             </div>
                             <div class="notification">
                                 <input class="input is-large" type="text" name="activity_description" placeholder="activity description"
                                     value="{{ activity_description }}">
                                 </input>
+                                {% for error in form.activity_description.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
                             </div>
                             <div class="notification">
                                 <p class="heading">Minimum Temperature for activity:</p>
                                 <input class="input is-large" type="text" name="activity_conditions_temp" placeholder="activity conditions temp"
                                 value="{{ activity_conditions_temp }}">
                                 </input>
+                                {% for error in form.activity_conditions_temp.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -41,12 +55,29 @@
                                 <input class="input is-large" type="text" name="activity_todo_list" placeholder="activity todo list"
                                     value="{{ activity_todo_list }}">
                                 </input>
+                                {% for error in form.activity_todo_list.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
                             </div>
                             <div class="notification">
                                 <input class="input is-large" type="text" name="activity_calories" placeholder="activity calories"
                                     value="{{ activity_calories }}">
                                 </input>
+                                {% for error in form.activity_calories.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
                             </div>
+                            <!--{% if activity.activity_favourite==True %}
+                            <label class="checkbox">
+                                Added to favourite
+                                <input type="checkbox" id="{{ activity.activity_favourite }}" name="activity_favourite" checked></input>
+                            </label></p>
+                            {% else %}
+                                <label class="checkbox">
+                                    Added to favourite
+                                    <input type="checkbox" id="{{ activity.activity_favourite }}" name="activity_favourite"></input>
+                                </label></p>
+                            {% endif %}-->
                             <div class="notification">
                                 <p><strong>Activity avaible for user with activity level:</strong></p>
                                 <p><label class="checkbox">
