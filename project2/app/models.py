@@ -117,22 +117,23 @@ class IconsTable(db.Model):
 
 class ImageTable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    image_user = db.Column(db.String(100))
     image_date = db.Column(db.DateTime)
-    image_name = db.Column(db.String(10))
-    image_description = db.Column(db.String(10))
-    image_link = db.Column(db.String(100))
+    image_name = db.Column(db.String(100))
+    image_description = db.Column(db.String(500))
+    image_link = db.Column(db.String(200))
 
     def __repr__(self):
         return '<ImageTable {}>'.format(self.image_name)
 
-# class ChosenActivitiesTable(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     chosen_activity_name = db.Column(db.String(500), nullable=False)
-#     chosen_status = db.Column(db.Boolean)
-#     chosen_activity_timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+class ChosenActivitiesTable(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    chosen_activity_name = db.Column(db.String(500), nullable=False)
+    chosen_status = db.Column(db.Boolean)
+    chosen_activity_timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
-#     def __repr__(self):
-#         return '<ChosenActivitiesTable {}>'.format(self.chosen_status)
+    def __repr__(self):
+        return '<ChosenActivitiesTable {}>'.format(self.chosen_status)
 
 @login.user_loader
 def load_user(id):
