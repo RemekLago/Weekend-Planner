@@ -11,13 +11,11 @@
 </article>
 <form action="" method="post">
     <div class="notification is-gapless has-background-white">
-    {% for activity in activities %}
-    {% if activity.id in range(4) %}
-    
+    {% for chosen in chosen_activities %}
         <div class="box title is-5 has-text-black has-background-light">
-            <p>{{ activity.activity_name }}</p>
+            <p>{{ chosen.chosen_activity_name }}</p>
         </div>
-        {% endif %}
+        
         {% endfor %}
         <div>
             <button class="button is-inline is-block is-info is-medium">Send details on e-mail</button>
