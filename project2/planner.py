@@ -1,5 +1,6 @@
 from app import app, db
 from app.models import User, ActivitiesTable, WeatherTable, IconsTable
+from keys import cloud_name, api_key, api_secret
 
 
 @app.shell_context_processor
