@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article class="message">
+    <div class="message-header is-size-4">
+        <p>{{ current_user.username }}</p>
+    </div>
+    <div class="message-body">
+        Email with all information have benn sent to you.
+    </div>
+</article>
+<button class="button is-info">
+    <a href="{{ url_for('/index') }}">Back to homepage</a>
+</button>
+
+{% endblock %}
