@@ -2,51 +2,28 @@
 
 {% block content %}
     <h1 class="title">
-        Gallery with photos
+        <article class="message">
+    <div class="message-header is-size-4">
+        <p>{{ current_user.username }}</p>
+    </div>
+    <div class="message-body">
+        Gallery with photos, here you can show other users how you have been spending your weekends
+    </div>
+</article>
     </h1>
     <div class="columns is-multiline">
+        {% for image in images%}
         <div class="column is-one-quarter">
-            <figure class="image is-100x300">
-                <img src="/static/pikachu.jpg">
+            <figure class="image is-5by4">
+                <img src="{{url_for('uploaded_file', filename=image)}}">
             </figure>
+            <p>by "username"</p>
+            <p>{{images_name(url_for('uploaded_file', filename=image)) }}</p>
         </div>
-        <div class="column is-one-quarter">
-            <figure class="image is-100x300">
-                <img src="/static/pikachu.jpg">
-            </figure>
-        </div>
-        <div class="column is-one-quarter">
-            <figure class="image is-100x300">
-                <img src="/static/pikachu.jpg">
-            </figure>
-        </div>
-        <div class="column is-one-quarter">
-            <figure class="image is-100x300">
-                <img src="/static/pikachu.jpg">
-            </figure>
-        </div>
-        <div class="column is-one-quarter">
-            <figure class="image is-100x300">
-                <img src="/static/pikachu.jpg">
-            </figure>
-        </div>
-        <div class="column is-one-quarter">
-            <figure class="image is-100x300">
-                <img src="/static/pikachu.jpg">
-            </figure>
-        </div>
-        <div class="column is-one-quarter">
-            <figure class="image is-100x300">
-                <img src="/static/pikachu.jpg">
-            </figure>
-        </div>
-        <div class="column is-one-quarter">
-            <figure class="image is-100x300">
-                <img src="/static/pikachu.jpg">
-            </figure>
-        </div>
+        {% endfor %}
+        
     </div>
-    <nav class="pagination is-small" role="navigation" aria-label="pagination">
+    <!-- <nav class="pagination is-small" role="navigation" aria-label="pagination">
         <a class="pagination-previous">Previous</a>
         <a class="pagination-next">Next page</a>
         <ul class="pagination-list">
@@ -58,5 +35,5 @@
             <li><span class="pagination-ellipsis">&hellip;</span></li>
             <li><a class="pagination-link" aria-label="Goto page 10">10</a></li>
         </ul>
-    </nav>
+    </nav> -->
 {% endblock %}
