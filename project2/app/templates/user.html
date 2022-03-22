@@ -16,12 +16,41 @@
                         <div class="box is-shadowless is-pulled-left">
                             <p class="title is-3 has-text-black">{{ user.username }}, {{user.location}}</p>
                             <p class="title is-5 has-text-black">Your activity level: </p>
-                            Very active - {{ user.activity_level1 }}<br>
-                            Active - {{ user.activity_level2 }}<br>
-                            Less active - {{ user.activity_level3 }}<br>
+                            {% if user.activity_level1==True %}
+                            <p><label class="checkbox">
+                                    Very active
+                                    <input type="checkbox" id="{{ user.activity_level1 }}" name="activity_level1" checked></input>
+                                </label></p>
+                            {% else %}
+                            <p><label class="checkbox">
+                                    Very active
+                                    <input type="checkbox" id="{{ user.activity_level1 }}" name="activity_level1"></input>
+                                </label></p>
+                            {% endif %}
+                            {% if user.activity_level2==True %}
+                            <p><label class="checkbox">
+                                    Active
+                                    <input type="checkbox" id="{{ user.activity_level2 }}" name="activity_level2" checked></input>
+                                </label></p>
+                            {% else %}
+                            <p><label class="checkbox">
+                                    Active
+                                    <input type="checkbox" id="{{ user.activity_level2 }}" name="activity_level2"></input>
+                                </label></p>
+                            {% endif %}
+                            {% if user.activity_level3==True %}
+                            <p><label class="checkbox">
+                                    Less active
+                                    <input type="checkbox" id="{{ user.activity_level3 }}" name="activity_level3" checked></input>
+                                </label></p>
+                            {% else %}
+                            <p><label class="checkbox">
+                                    Less active
+                                    <input type="checkbox" id="{{ user.activity_level3 }}" name="activity_level3"></input>
+                                </label></p>
+                            {% endif %}
                             <br>
                             {% if user.last_seen %}
-                            <!--<p>Last seen on: {{ user.last_seen }}</p>-->
                             <p>Last seen on: {{ user.last_seen.strftime('%Y-%m-%d') }}</p>
                             {% endif %}
                         </div>
@@ -35,11 +64,12 @@
                     {% endif %}
                 </div>
             </div>
+            {% if user.location %}
             <div class="column is-4">
                 <div class="column has-text-">
                     {% for idx in weather_today %}
                     <div class="title has-text-black title is-4">
-                        <p>{{ idx.weather_day_name }}, {{ idx.weather_date }}</p>
+                        <p>{{ idx.weather_day_name }}, {{ idx.weather_date.strftime('%Y-%m-%d') }}</p>
                     </div>
 
                     <table class="table is-fullwidth is-inline">
@@ -74,10 +104,20 @@
                             </div>
                         </div>
                     </div>
-                    
                     {% endfor %}
                 </div>
             </div>
+            {% else %}
+            <div class="column is-4">
+                <div class="notification is-warning">
+                    <p class="title is-5 has-text-black">Please fill up data about your location and level of activity.
+                    <br>
+                    <br>
+                    Go to Profile and edit it.</p>
+
+                </div>
+            </div>
+            {% endif %}
         </div>
         <div class="column is-8 block has-background-white has-text-black">
             {% if user == current_user %}
