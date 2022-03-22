@@ -66,7 +66,7 @@
     {% for idx in weather %}
     {% if idx.id == 1 %}
     <div class="title has-text-black title is-4">
-      <p>Today is {{ idx.weather_day_name }}, {{ idx.weather_date }}</p>
+      <p>Today is {{ idx.weather_day_name }}, {{ idx.weather_date.strftime('%Y-%m-%d') }}</p>
     </div>
     {% endif %}
     {% endfor %}
