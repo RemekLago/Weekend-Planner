@@ -3,21 +3,30 @@ This activity is the perfect solution for warm and cooler days. You can spend ti
 bike, gloves, spare inner tube, bike lock, bike keys, pump, water bottle, water, snacks, glasses, sweatshirt, money
 list of weather conditions
 calories approximately 1000kcal/h
-15
-True
-False
+2
 True
 True
 True
 True
 True
-False
-False
+True
+True
+True
+True
 Timestamp
-User_id_0
+0
 True
 True
 True
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Kayaking
 Kayaking description 
@@ -35,10 +44,19 @@ True
 False
 False
 Timestamp
-User_id_0
+0
 True
 True
 True
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Roller skating
 Roller skating description
@@ -56,10 +74,19 @@ True
 False
 False
 Timestamp
-User_id_0
+0
 False
 True
 True
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Nordic walking
 Nordic walking description
@@ -77,10 +104,19 @@ True
 False
 False
 Timestamp
-User_id_0
+0
 False
 True
 True
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Yoga exercises
 Yoga exercises description
@@ -98,10 +134,19 @@ True
 True
 True
 Timestamp
-User_id_0
+0
 False
 True
 True
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Gym exercises
 Gym exercises description
@@ -119,10 +164,19 @@ True
 False
 False
 Timestamp
-User_id_0
+0
 False
 True
 True
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Swimming in the pool
 Swimming in the pool description
@@ -140,10 +194,19 @@ True
 False
 False
 Timestamp
-User_id_0
+0
 False
 True
 True
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Going out to the cafe
 Going out to the cafe description
@@ -161,10 +224,19 @@ False
 False
 False
 Timestamp
-User_id_0
+0
 True
 True
 False
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 A trip to the forest
 A trip to the forest description
@@ -182,10 +254,19 @@ False
 False
 False
 Timestamp
-User_id_0
+0
 True
 True
 False
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 A trip to the lake or the river bank
 A trip to the lake or the river bank description
@@ -203,10 +284,19 @@ True
 True
 True
 Timestamp
-User_id_0
+0
 True
 True
 False
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Grill ze znajomymi, rodziną
 Grill ze znajomymi, rodziną description
@@ -224,10 +314,19 @@ True
 True
 True
 Timestamp
-User_id_0
+0
 True
 True
 False
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Wyprawa do parku z piknikiem
 Wyprawa do parku z piknikiem description
@@ -245,10 +344,19 @@ True
 False
 False
 Timestamp
-User_id_0
+0
 True
 True
 True
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Trip to the cinema
 Cinema description
@@ -266,10 +374,19 @@ True
 False
 False
 Timestamp
-User_id_0
+0
 True
 False
 True
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Trip to the theater
 Trip to the theater description
@@ -287,10 +404,19 @@ True
 False
 False
 Timestamp
-User_id_0
+0
 True
 False
 True
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Trip to the museum
 Muzeum description
@@ -308,10 +434,19 @@ True
 False
 False
 Timestamp
-User_id_0
+0
 True
 True
 True
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
 Board games at home or cafe
 Board games at home or cafe description
@@ -329,8 +464,17 @@ False
 True
 False
 Timestamp
-User_id_0
+0
 True
 True
 True
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
 
