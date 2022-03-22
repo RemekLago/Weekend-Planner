@@ -68,10 +68,9 @@ def create_dict_with_weather(city):
     for idx in range (8):
         weather_day_dict = {}
         weather_day_dict["id"] = idx 
-        timestamp = str(datetime.fromtimestamp(weather_data["daily"][idx]["dt"]))
         timestamp1 = datetime.fromtimestamp(weather_data["daily"][idx]["dt"])
-        timestamp2 = timestamp.rsplit(" ")[0]
-        weather_day_dict["weather_date"] = timestamp2
+        # timestamp2 = timestamp.rsplit(" ")[0]
+        weather_day_dict["weather_date"] = datetime.fromtimestamp(weather_data["daily"][idx]["dt"])
         weather_day_dict["weather_day"] = timestamp1.weekday()
         day_number = int(timestamp1.weekday())
         weather_day_dict["weather_day_name"] = dict_weekday_name.get(f"{day_number}")
@@ -84,6 +83,10 @@ def create_dict_with_weather(city):
         weather_day_dict["weather_main"] = weather_data["daily"][idx]["weather"][0]["main"]
         list_with_weather_day_dict.append(weather_day_dict)
     # pprint(list_with_weather_day_dict)
+        # a = datetime.fromtimestamp(weather_data["daily"][idx]["dt"])
+        # b = a.strftime('%Y-%m-%d')
+        # print(a)
+        # print(b)
     
     return list_with_weather_day_dict
     
