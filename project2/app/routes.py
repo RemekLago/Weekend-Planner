@@ -1,21 +1,25 @@
 import os
 from app import app
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, send_from_directory
 from app.forms import LoginForm
 from flask_login import current_user, login_user
-from app.models import User, ActivitiesTable, WeatherTable, IconsTable, ImageTable
+from app.models import User, ActivitiesTable, WeatherTable, IconsTable, ImageTable, ChosenActivitiesTable
 from flask_login import logout_user
 from flask_login import login_required
-from flask import request
+from flask import request, flash
 from werkzeug.urls import url_parse
 from app import db
 from app.forms import RegistrationForm
 from datetime import datetime, timedelta
-from app.forms import EditProfileForm, AddActivity, EditActivity, AddImage
-from flask_pymongo import PyMongo
+from app.forms import EditProfileForm, AddActivity, EditActivity, AddImage, ChosenActivities
 from werkzeug.utils import secure_filename
 from sqlalchemy import cast,Date
-# from app import mongo
+from flask_mail import Mail, Message
+from app import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
+import urllib.request
+import smtplib, ssl
+from werkzeug.middleware.shared_data import SharedDataMiddleware
+from keys import Mailkey
 
 
 @app.before_request
@@ -35,9 +39,9 @@ def index():
 @login_required
 @app.route('/propositions', methods=["GET", "POST"])
 def propositions():
-    form = EditActivity()
+    form = ChosenActivities()
     tomorrow = str(datetime.now().date() + timedelta(days = 1))
-    today = str(datetime.now().date())
+    today = datetime.now().date()
     user = User.query.all()
     icons = IconsTable.query.all()
     
@@ -84,12 +88,18 @@ def propositions():
             # | ActivitiesTable.activity_conditions_8_icon==weather2.weather_icon
             # | ActivitiesTable.activity_conditions_9_icon==weather2.weather_icon
             # )
-        ).all()
-    if form.validate_on_submit():
-        activities = ActivitiesTable(
-        chosen_status = True
-        )
+        ).all()   
         
+    if form.validate_on_submit():
+        # db.session.query(ChosenActivitiesTable).delete()
+        # db.session.commit()
+        chosen_activity = ChosenActivitiesTable(
+        chosen_activity_name = form.chosen_activity_name.data,    
+        chosen_status = form.chosen_status.data,
+        chosen_activity_timestamp = today,
+        )
+
+        db.session.add(chosen_activity)
         db.session.commit()
         flash('Congratulations, you have been added activities for the weekend!')
         return redirect(url_for('propositions'))
@@ -100,12 +110,10 @@ def propositions():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # print(current_user.__dir__())
     if current_user.is_authenticated:
         return redirect(url_for('user', username=current_user.username))
     form = LoginForm()
     if form.validate_on_submit():
-        
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
@@ -142,21 +150,24 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    # activities = ActivitiesTable.query.filter_by(username=username).first_or_404()
     activities = ActivitiesTable.query.all()
-    # activities = ActivitiesTable.query.filter(ActivitiesTable.user_id==current_user.id)
-    #weather = WeatherTable.query.get(1)
-    # weather = WeatherTable.query.all()
-    # today = str(datetime.now().date() + timedelta(days = 2))
-    today = datetime.now().date()
-    weather = WeatherTable.query.filter((WeatherTable.weather_location==user.location)&(WeatherTable.weather_date>=today)).all()
-    weather_today = WeatherTable.query.filter((WeatherTable.weather_location==user.location)&(WeatherTable.weather_date==today)).all()
-    # print(weather_today)
-    # print(today)
-    # print(WeatherTable.query(WeatherTable.weather_date).all())
-    # weather = WeatherTable.query.filter(WeatherTable.weather_date>=today).all()
+    today = datetime.today()
+    tomorrow = str(datetime.now().date() + timedelta(days = 1))
+    weather = WeatherTable\
+        .query\
+            .filter(\
+                (WeatherTable.weather_location==user.location)\
+                &(WeatherTable.weather_date>today)).all()
+    weather_today = WeatherTable\
+        .query\
+            .filter(\
+                (WeatherTable.weather_location==user.location)\
+                &(WeatherTable.weather_date<tomorrow)).all()
+    print(weather_today)
+    print(today)
     icons = IconsTable.query.all()
-    return render_template('user.html', user=user, activities=activities, weather=weather, icons=icons, weather_today=weather_today)
+    return render_template('user.html', user=user, activities=activities, 
+            weather=weather, icons=icons, weather_today=weather_today)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
@@ -189,10 +200,6 @@ def activities():
     icons = IconsTable.query.all()
     return render_template("activities.html", activities=activities, icons=icons)
 
-
-@app.route("/gallery")
-def gallery():
-    return render_template("gallery.html", gallery=mongo.db.gallery.find())
 
 @app.route("/add_activity", methods=["GET", "POST"])
 def add_activity():
@@ -241,7 +248,6 @@ def add_activity():
 
 @app.route('/edit_activity/<activity_id>', methods=['GET', 'POST'])
 def edit_activity(activity_id):
-    # activity = ActivitiesTable.query.filter(ActivitiesTable.id==activity_id).all()
     activity = ActivitiesTable.query.get_or_404(activity_id)
     form = EditActivity()
     icons = IconsTable.query.all()
@@ -282,7 +288,6 @@ def edit_activity(activity_id):
         flash('Your changes have been saved.')
         return redirect(url_for('edit_activity', activity_id=activity.id))
 
-    # elif request.method == 'GET':
     form.activity_name.data = activity.activity_name
     form.activity_description.data = activity.activity_description
     form.activity_todo_list.data = activity.activity_todo_list
@@ -321,7 +326,7 @@ def users_activities():
     user = User.query.all()
     icons = IconsTable.query.all()
     activities = ActivitiesTable.query.filter(ActivitiesTable.activity_user_id==current_user.id).all()
-    return render_template("chosen_activities.html", title='Users activities', 
+    return render_template("users_activities.html", title='Users activities', 
     activities=activities, icons=icons, user=user, form=form)
 
 
@@ -329,56 +334,100 @@ def users_activities():
 def chosen_activities():
     form = ActivitiesTable()
     user = User.query.all()
-    icons = IconsTable.query.all()
-    # activities = ActivitiesTable.query.filter(ActivitiesTable.chosen_status==True).all()
-    activities = ActivitiesTable.query.all()
+    chosen_activities = ChosenActivitiesTable.query.filter(ChosenActivitiesTable.chosen_status==True).all()
     return render_template("chosen_activities.html", title='Users activities', 
-    activities=activities, user=user, form=form, icons=icons,)
+    chosen_activities=chosen_activities, user=user, form=form,)
 
 
-@app.route("/upload_image", methods=["GET", "POST"])
-def upload_image():
-    form = AddImage()
-    if form.validate_on_submit():
-        image = ImageTable(
-        image_name=form.image_name.data,
-        image_description=form.image_description.data,
-        image_link=form.image_link.data
-        )
-
-        image_name = secure_filename(image.image_name)
-        # image.save(os.path.join("app/static/uploads/", image_name))
-        f=request.files
-        print(f)
-
-        db.session.add(image)
-        db.session.commit()
-        flash("Congratulations, you have been added new image")
-        return redirect(url_for('/upload_image'))
-    return render_template("upload_image.html")
-
-
-    # if request.method == "POST":
-    #     image = request.files["image"]
-    #     description = request.form.get("description")
-    #     if image and description and image.filename.split(".")[-1].lower() in ALLOWED_EXTENSIONS:
-    #         filename = secure_filename(image.filename)
-    #         image.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-
-    #         mongo.db.gallery.insert_one(
-    #             {
-    #             "filename": filename,
-    #             "description": description.strip()
-    #         })
-
-    #         flash("Successfully uploaded image", "success")
-    #         return redirect(url_for("upload_image"))
-    #     else:
-    #         flash("An error occurred while uploading the image!", "danger")
-    #         return redirect(url_for("upload_image"))
+@app.route("/email")
+def email():
+    chosen_activities = ChosenActivitiesTable.query.filter(ChosenActivitiesTable.chosen_status==True).all()
+    # port = 465  # For SSL
+    port = 587  # For starttls
+    smtp_server = "smtp.gmail.com"
+    sender_email = "jacekwacek123gmail.com"  # Enter your address
+    receiver_email = "jacekwacek123gmail.com"  # Enter receiver address
+    password = Mailkey
+    message = """
+    This is the email with thing you should prepare for incomming weekend
+    f"{chosen_activities}", list of thing to prepare: f"{activity_todo_list}"
     
+    """
+    context = ssl.create_default_context()
+    # with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+    #     server.login(sender_email, password)
+    #     server.sendmail(sender_email, receiver_email, message)
+    with smtplib.SMTP(smtp_server, port) as server:
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)
+        server.ehlo()  # Can be omitted
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message)
+    return "Mail sent"
+
+
+@app.route("/gallery")
+def gallery():
+    images = os.listdir("app/static/uploads/")
+    images_name = os.path.basename
+    return render_template("gallery.html", images=images, images_name=images_name)
+
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/upload_image')
+def show_image():
+	return render_template("upload_image.html")
+
+
+@app.route('/upload_image', methods=['GET', 'POST'])
+def upload_image():
+    
+    # if form.validate_on_submit():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            flash('No image selected for uploading')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            # return redirect(url_for('upload_image', filename=filename))
+            
+            
+            images = ImageTable.query.all()
+            form = AddImage()
+            today = datetime.today()
+            user = User.query.all()
+
+            if form.validate_on_submit():
+                images.image_name=filename
+                images.image_date=today
+                images.image_user=current_user.username
+                images.image_description=form.image_description.data
+                images.image_link=os.path.join(UPLOAD_FOLDER, filename)
+                
+
+                db.session.add(images)
+                db.session.commit()
+            
+
+            flash('Image successfully uploaded and displayed below')
+            return render_template('upload_image.html', filename=filename, form=form, user=user)
+        else:
+            flash('Allowed image types are - png, jpg, jpeg, gif')
+            return redirect(request.url)
+    return render_template('upload_image.html', title='Upload Image', form=form)
 
 
 
-
-
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    # return send_from_directory(UPLOAD_FOLDER, filename)
+    return redirect(url_for('static', filename='uploads/' + filename), code=301)
