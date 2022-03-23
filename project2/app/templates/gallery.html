@@ -12,28 +12,16 @@
 </article>
     </h1>
     <div class="columns is-multiline">
-        {% for image in images%}
+        {% for image in images %}
         <div class="column is-one-quarter">
             <figure class="image is-5by4">
-                <img src="{{url_for('uploaded_file', filename=image)}}">
+                <!-- <img src="{{ image.image_link }}"> -->
+                <img src="{{ url_for('uploaded_file', filename = image.image_name) }}">
+
             </figure>
-            <p>by "username"</p>
-            <p>{{images_name(url_for('uploaded_file', filename=image)) }}</p>
+            <p>by user {{ image.image_user }}</p>
+            <p>{{ image.image_name }}</p>
         </div>
         {% endfor %}
-        
     </div>
-    <!-- <nav class="pagination is-small" role="navigation" aria-label="pagination">
-        <a class="pagination-previous">Previous</a>
-        <a class="pagination-next">Next page</a>
-        <ul class="pagination-list">
-            <li><a class="pagination-link" aria-label="Goto page X-start">1</a></li>
-            <li><span class="pagination-ellipsis">&hellip;</span></li>
-            <li><a class="pagination-link" aria-label="Goto page 2">2</a></li>
-            <li><a class="pagination-link is-current" aria-label="Page 3" aria-current="page">3</a></li>
-            <li><a class="pagination-link" aria-label="Goto page 4">4</a></li>
-            <li><span class="pagination-ellipsis">&hellip;</span></li>
-            <li><a class="pagination-link" aria-label="Goto page 10">10</a></li>
-        </ul>
-    </nav> -->
 {% endblock %}
