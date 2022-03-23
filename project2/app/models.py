@@ -118,6 +118,7 @@ class IconsTable(db.Model):
 class ImageTable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_user = db.Column(db.String(100))
+    image_user_id = db.Column(db.String(100))
     image_date = db.Column(db.DateTime)
     image_name = db.Column(db.String(100))
     image_description = db.Column(db.String(500))
@@ -138,3 +139,12 @@ class ChosenActivitiesTable(db.Model):
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+
+class CityTable(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    city_name = db.Column(db.String(500), nullable=False)
+    city_timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<CityTable {}>'.format(self.city_name)
