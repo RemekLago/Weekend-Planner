@@ -1,9 +1,9 @@
 import os
 from app import app
 from flask import render_template, flash, redirect, url_for, send_from_directory
-from app.forms import LoginForm
+from app.forms import CityNames, LoginForm
 from flask_login import current_user, login_user
-from app.models import User, ActivitiesTable, WeatherTable, IconsTable, ImageTable, ChosenActivitiesTable
+from app.models import User, ActivitiesTable, WeatherTable, IconsTable, ImageTable, ChosenActivitiesTable, CityTable
 from flask_login import logout_user
 from flask_login import login_required
 from flask import request, flash
@@ -20,6 +20,7 @@ import urllib.request
 import smtplib, ssl
 from werkzeug.middleware.shared_data import SharedDataMiddleware
 from keys import Mailkey
+# from  weather import adding_data_for_all_cities as weather_input
 
 
 @app.before_request
@@ -102,7 +103,7 @@ def propositions():
         db.session.add(chosen_activity)
         db.session.commit()
         flash('Congratulations, you have been added activities for the weekend!')
-        return redirect(url_for('propositions'))
+        return redirect(url_for('chosen_activities'))
     return render_template('propositions.html', title='Propositions', 
     activities=activities, weather=weather, weather2=weather2, weather3=weather3, 
     icons=icons, user=user, form=form)
@@ -121,7 +122,7 @@ def login():
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('propositions')
+            next_page = url_for('user', username=current_user.username)
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
@@ -149,8 +150,12 @@ def register():
 @app.route('/user/<username>')
 @login_required
 def user(username):
+    # start = weather_input()
     user = User.query.filter_by(username=username).first_or_404()
-    activities = ActivitiesTable.query.all()
+    icons = IconsTable.query.all()
+    activities = ActivitiesTable\
+        .query\
+            .filter(ActivitiesTable.activity_user_id==user.id).all()
     today = datetime.today()
     tomorrow = str(datetime.now().date() + timedelta(days = 1))
     weather = WeatherTable\
@@ -163,9 +168,6 @@ def user(username):
             .filter(\
                 (WeatherTable.weather_location==user.location)\
                 &(WeatherTable.weather_date<tomorrow)).all()
-    print(weather_today)
-    print(today)
-    icons = IconsTable.query.all()
     return render_template('user.html', user=user, activities=activities, 
             weather=weather, icons=icons, weather_today=weather_today)
 
@@ -173,6 +175,7 @@ def user(username):
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
+    # cities = CityTable.query.all()
     form = EditProfileForm()
     if form.validate_on_submit():
         current_user.username = form.username.data
@@ -181,9 +184,15 @@ def edit_profile():
         current_user.activity_level1 = form.activity_level1.data
         current_user.activity_level2 = form.activity_level2.data
         current_user.activity_level3 = form.activity_level3.data
+        city = CityTable(
+        city_name = form.location.data
+        )
+        if not CityTable.query.filter(CityTable.city_name==city.city_name).all():
+            db.session.add(city)
+            db.session.commit()
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit_profile'))
+        return redirect(url_for('user', username=current_user.username))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
@@ -191,7 +200,8 @@ def edit_profile():
         form.activity_level1.data = current_user.activity_level1
         form.activity_level2.data = current_user.activity_level2
         form.activity_level3.data = current_user.activity_level3
-    return render_template('edit_profile.html', title='Edit Profile',form=form)
+    return render_template('edit_profile.html', title='Edit Profile',
+        form=form)
 
 
 @app.route("/activities", methods=["GET", "POST"])
@@ -207,37 +217,47 @@ def add_activity():
     icons = IconsTable.query.all()
     today = datetime.today()
     if form.validate_on_submit():
+        test_ativity_conditions = (form.activity_conditions_1.data or form.activity_conditions_2.data or form.activity_conditions_3.data
+        or form.activity_conditions_4.data or form.activity_conditions_5.data or form.activity_conditions_6.data or 
+        form.activity_conditions_7.data or form.activity_conditions_8.data or form.activity_conditions_9.data)
+        if not test_ativity_conditions:
+            flash("Error, please check a minimum of one weather condition")
+            return redirect(url_for('add_activity'))
+        test_user_activity = (form.activity_level1.data or form.activity_level2.data or form.activity_level3.data)    
+        if not test_user_activity:
+            flash("Error, please check a minimum of one option of level activity for the user")
+            return redirect(url_for('add_activity'))
         activity = ActivitiesTable(
-        activity_name = form.activity_name.data,
-        activity_description = form.activity_description.data,
-        activity_todo_list = form.activity_todo_list.data,
-        activity_calories = form.activity_calories.data,
-        activity_favourite = form.activity_favourite.data,
-        activity_conditions_temp = form.activity_conditions_temp.data,
-        activity_conditions_1 = form.activity_conditions_1.data,
-        activity_conditions_2 = form.activity_conditions_2.data,
-        activity_conditions_3 = form.activity_conditions_3.data,
-        activity_conditions_4 = form.activity_conditions_4.data,
-        activity_conditions_5 = form.activity_conditions_5.data,
-        activity_conditions_6 = form.activity_conditions_6.data,
-        activity_conditions_7 = form.activity_conditions_7.data,
-        activity_conditions_8 = form.activity_conditions_8.data,
-        activity_conditions_9 = form.activity_conditions_9.data,
-        activity_level1 = form.activity_level1.data,
-        activity_level2 = form.activity_level2.data,
-        activity_level3 = form.activity_level3.data,
-        activity_timestamp = today,
-        activity_user_id = current_user.id,
-        activity_conditions_1_icon = "01d",
-        activity_conditions_2_icon = "02d",
-        activity_conditions_3_icon = "03d",
-        activity_conditions_4_icon = "04d",
-        activity_conditions_5_icon = "09d",
-        activity_conditions_6_icon = "10d",
-        activity_conditions_7_icon = "11d",
-        activity_conditions_8_icon = "13d",
-        activity_conditions_9_icon = "50d",
-        )
+            activity_name = form.activity_name.data,
+            activity_description = form.activity_description.data,
+            activity_todo_list = form.activity_todo_list.data,
+            activity_calories = form.activity_calories.data,
+            activity_favourite = form.activity_favourite.data,
+            activity_conditions_temp = form.activity_conditions_temp.data,
+            activity_conditions_1 = form.activity_conditions_1.data,
+            activity_conditions_2 = form.activity_conditions_2.data,
+            activity_conditions_3 = form.activity_conditions_3.data,
+            activity_conditions_4 = form.activity_conditions_4.data,
+            activity_conditions_5 = form.activity_conditions_5.data,
+            activity_conditions_6 = form.activity_conditions_6.data,
+            activity_conditions_7 = form.activity_conditions_7.data,
+            activity_conditions_8 = form.activity_conditions_8.data,
+            activity_conditions_9 = form.activity_conditions_9.data,
+            activity_level1 = form.activity_level1.data,
+            activity_level2 = form.activity_level2.data,
+            activity_level3 = form.activity_level3.data,
+            activity_timestamp = today,
+            activity_user_id = current_user.id,
+            activity_conditions_1_icon = "01d",
+            activity_conditions_2_icon = "02d",
+            activity_conditions_3_icon = "03d",
+            activity_conditions_4_icon = "04d",
+            activity_conditions_5_icon = "09d",
+            activity_conditions_6_icon = "10d",
+            activity_conditions_7_icon = "11d",
+            activity_conditions_8_icon = "13d",
+            activity_conditions_9_icon = "50d",
+            )
 
         db.session.add(activity)
         db.session.commit()
@@ -254,6 +274,16 @@ def edit_activity(activity_id):
     today = datetime.today()
     
     if form.validate_on_submit():
+        test_ativity_conditions = (form.activity_conditions_1.data or form.activity_conditions_2.data or form.activity_conditions_3.data
+        or form.activity_conditions_4.data or form.activity_conditions_5.data or form.activity_conditions_6.data or 
+        form.activity_conditions_7.data or form.activity_conditions_8.data or form.activity_conditions_9.data)
+        if not test_ativity_conditions:
+            flash("Error, please check a minimum of one weather condition")
+            return redirect(url_for('add_activity'))
+        test_user_activity = (form.activity_level1.data or form.activity_level2.data or form.activity_level3.data)    
+        if not test_user_activity:
+            flash("Error, please check a minimum of one option of level activity for the user")
+            return redirect(url_for('add_activity'))
         activity.activity_name = form.activity_name.data
         activity.activity_description = form.activity_description.data
         activity.activity_todo_list = form.activity_todo_list.data
@@ -342,18 +372,17 @@ def chosen_activities():
 @app.route("/email")
 def email():
     chosen_activities = ChosenActivitiesTable.query.filter(ChosenActivitiesTable.chosen_status==True).all()
-    # port = 465  # For SSL
-    port = 587  # For starttls
-    smtp_server = "smtp.gmail.com"
-    sender_email = "jacekwacek123gmail.com"  # Enter your address
-    receiver_email = "jacekwacek123gmail.com"  # Enter receiver address
-    password = Mailkey
+    port = 465  # For SSL
+    smtp_server = "smtp.poczta.onet.pl"
+    sender_email = "testowo12345@onet.pl"
+    receiver_email = "jacekwacek123gmail.com"
+    password = "Testowo12345"
     message = """
     This is the email with thing you should prepare for incomming weekend
     f"{chosen_activities}", list of thing to prepare: f"{activity_todo_list}"
-    
     """
-    context = ssl.create_default_context()
+    # context = ssl.create_default_context()
+    context = ssl._create_unverified_context()
     # with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
     #     server.login(sender_email, password)
     #     server.sendmail(sender_email, receiver_email, message)
@@ -368,9 +397,9 @@ def email():
 
 @app.route("/gallery")
 def gallery():
-    images = os.listdir("app/static/uploads/")
-    images_name = os.path.basename
-    return render_template("gallery.html", images=images, images_name=images_name)
+    images = ImageTable.query.all()
+    dir_path = os.path.dirname
+    return render_template("gallery.html", images=images, dir_path=dir_path)
 
 
 def allowed_file(filename):
@@ -387,6 +416,8 @@ def upload_image():
     
     # if form.validate_on_submit():
     if request.method == 'POST':
+        # if form.validate_on_submit():
+
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -396,30 +427,25 @@ def upload_image():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             file.save(os.path.join(UPLOAD_FOLDER, filename))
-            # return redirect(url_for('upload_image', filename=filename))
             
-            
-            images = ImageTable.query.all()
+            images = ImageTable()
             form = AddImage()
             today = datetime.today()
             user = User.query.all()
 
-            if form.validate_on_submit():
-                images.image_name=filename
-                images.image_date=today
-                images.image_user=current_user.username
-                images.image_description=form.image_description.data
-                images.image_link=os.path.join(UPLOAD_FOLDER, filename)
-                
+            images.image_name=filename
+            images.image_date=today
+            images.image_user=current_user.username
+            images.image_user_id=current_user.id
+            images.image_description=form.image_description.data
+            images.image_link=os.path.join(UPLOAD_FOLDER, filename)
 
-                db.session.add(images)
-                db.session.commit()
-            
-
-            flash('Image successfully uploaded and displayed below')
-            return render_template('upload_image.html', filename=filename, form=form, user=user)
+            db.session.add(images)
+            db.session.commit()
+        
+            flash('Image successfully uploaded')
+            return render_template('upload_image.html', form=form, user=user)
         else:
             flash('Allowed image types are - png, jpg, jpeg, gif')
             return redirect(request.url)
