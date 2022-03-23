@@ -332,7 +332,7 @@
 <hr>
 
 <div class="box title is-5 has-text-black has-background-light">
-    <p>Your activities</p>
+    <p>Your activities added by you</p>
 </div>
 
 {% for activity in activities %}
@@ -347,6 +347,7 @@
                             <p> {{ activity.activity_description }}</p>
                         </div>
                         <div class="notification">
+                            <p class="heading">Minimum Temperature for activity:</p>
                             <p class="title has-text-black">{{ activity.activity_conditions_temp }}</p>
                         </div>
                     </div>
@@ -362,15 +363,55 @@
                             <p> {{ activity.activity_todo_list }}</p>
                         </div>
                         <div class="notification">
-                            <p> {{ activity.activity_calories }}</p>
-                            <p> {{ activity.activity_favourite }}</p>
-                            <!-- <p> {{ activity.activity_timestamp }}</p> -->
+                            <p><strong> {{ activity.activity_calories }}</strong></p>
+                            <!--{% if activity.activity_favourite==True %}
+                            <label class="checkbox">
+                                Added to favourite
+                                <input type="checkbox" id="{{ activity.activity_favourite }}" name="activity_favourite" checked></input>
+                            </label></p>
+                            {% else %}
+                                <label class="checkbox">
+                                    Added to favourite
+                                    <input type="checkbox" id="{{ activity.activity_favourite }}" name="activity_favourite"></input>
+                                </label></p>
+                            {% endif %}-->
+                            <p>Created on: {{ activity.activity_timestamp.strftime('%Y-%m-%d') }}</p>
                         </div>
                         <div class="notification">
                             <p><strong>Activity avaible for user with activity level:</strong></p>
-                            <p>Very active: {{ activity.activity_level1 }}</p>
-                            <p>Active: {{ activity.activity_level2 }}</p>
-                            <p>Less active: {{ activity.activity_level3 }}</p>
+                            {% if activity.activity_level1==True %}
+                            <p><label class="checkbox">
+                                    Very active
+                                    <input type="checkbox" id="{{ activity.activity_level1 }}" name="activity_level1" checked></input>
+                                </label></p>
+                            {% else %}
+                            <p><label class="checkbox">
+                                    Very active
+                                    <input type="checkbox" id="{{ activity.activity_level1 }}" name="activity_level1"></input>
+                                </label></p>
+                            {% endif %}
+                            {% if activity.activity_level2==True %}
+                            <p><label class="checkbox">
+                                    Active
+                                    <input type="checkbox" id="{{ activity.activity_level2 }}" name="activity_level2" checked></input>
+                                </label></p>
+                            {% else %}
+                            <p><label class="checkbox">
+                                    Active
+                                    <input type="checkbox" id="{{ activity.activity_level2 }}" name="activity_level2"></input>
+                                </label></p>
+                            {% endif %}
+                            {% if activity.activity_level3==True %}
+                            <p><label class="checkbox">
+                                    Less active
+                                    <input type="checkbox" id="{{ activity.activity_level3 }}" name="activity_level3" checked></input>
+                                </label></p>
+                            {% else %}
+                            <p><label class="checkbox">
+                                    Less active
+                                    <input type="checkbox" id="{{ activity.activity_level3 }}" name="activity_level3"></input>
+                                </label></p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -378,9 +419,8 @@
         </div>
     </div>
     <div class="column is-full block has-background-white">
-        <p class="heading">Minimum Temperature for activity:</p>
         <nav class="level">
-            {% if activity.activity_conditions_1 == "True" %}
+            {% if activity.activity_conditions_1 == True %}
             {% for icon in icons %}
             {% if icon.id == 1 %}
             <figure class="image is-96x96">
@@ -389,8 +429,8 @@
             {% endif %}
             {% endfor %}
             {% endif %}
-
-            {% if activity.activity_conditions_2 == "True" %}
+    
+            {% if activity.activity_conditions_2 == True %}
             {% for icon in icons %}
             {% if icon.id == 2 %}
             <figure class="image is-96x96">
@@ -399,8 +439,8 @@
             {% endif %}
             {% endfor %}
             {% endif %}
-
-            {% if activity.activity_conditions_3 == "True" %}
+    
+            {% if activity.activity_conditions_3 == True %}
             {% for icon in icons %}
             {% if icon.id == 3 %}
             <figure class="image is-96x96">
@@ -409,7 +449,7 @@
             {% endif %}
             {% endfor %}
             {% endif %}
-
+    
             </p>
             {% if activity.activity_conditions_4 == "True" %}
             {% for icon in icons %}
@@ -420,9 +460,9 @@
             {% endif %}
             {% endfor %}
             {% endif %}
-
+    
             </p>
-            {% if activity.activity_conditions_5 == "True" %}
+            {% if activity.activity_conditions_5 == True %}
             {% for icon in icons %}
             {% if icon.id == 5 %}
             <figure class="image is-96x96">
@@ -431,8 +471,8 @@
             {% endif %}
             {% endfor %}
             {% endif %}
-
-            {% if activity.activity_conditions_6 == "True" %}
+    
+            {% if activity.activity_conditions_6 == True %}
             {% for icon in icons %}
             {% if icon.id == 6 %}
             <figure class="image is-96x96">
@@ -441,9 +481,8 @@
             {% endif %}
             {% endfor %}
             {% endif %}
-
-
-            {% if activity.activity_conditions_7 == "True" %}
+    
+            {% if activity.activity_conditions_7 == True %}
             {% for icon in icons %}
             {% if icon.id == 7 %}
             <figure class="image is-96x96">
@@ -452,9 +491,9 @@
             {% endif %}
             {% endfor %}
             {% endif %}
-
+    
             </p>
-            {% if activity.activity_conditions_8 == "True" %}
+            {% if activity.activity_conditions_8 == True %}
             {% for icon in icons %}
             {% if icon.id == 8 %}
             <figure class="image is-96x96">
@@ -463,9 +502,9 @@
             {% endif %}
             {% endfor %}
             {% endif %}
-
+    
             </p>
-            {% if activity.activity_conditions_9 == "True" %}
+            {% if activity.activity_conditions_9 == True %}
             {% for icon in icons %}
             {% if icon.id == 9 %}
             <figure class="image is-96x96">
@@ -474,7 +513,7 @@
             {% endif %}
             {% endfor %}
             {% endif %}
-
+    
         </nav>
     </div>
 </div>
