@@ -3,7 +3,7 @@ from app import app
 from flask import render_template, flash, redirect, url_for, send_from_directory
 from app.forms import CityNames, LoginForm
 from flask_login import current_user, login_user
-from app.models import User, ActivitiesTable, WeatherTable, IconsTable, ImageTable, ChosenActivitiesTable, CityTable
+from app.models import User, ActivitiesTable, WeatherTable, IconsTable, ImageTable, ChosenActivitiesTable, CityTable, ChosenActivitiesTableHistory
 from flask_login import logout_user
 from flask_login import login_required
 from flask import request, flash
@@ -41,9 +41,10 @@ def index():
 @app.route('/propositions', methods=["GET", "POST"])
 def propositions():
     form = ChosenActivities()
-    tomorrow = str(datetime.now().date() + timedelta(days = 1))
+    tomorrow = datetime.now().date() + timedelta(days = 1)
+    week = datetime.now().date() + timedelta(days = 7)
     today = datetime.now().date()
-    user = User.query.all()
+    user = User.query.filter(User.username==current_user.username).all()
     icons = IconsTable.query.all()
     
     weather = WeatherTable \
@@ -51,23 +52,24 @@ def propositions():
         .filter(
             (WeatherTable.weather_location==User.location)
             & (WeatherTable.weather_date>(tomorrow))
-           
+        
         ).all()
     weather2 = WeatherTable \
         .query\
         .filter(
             (WeatherTable.weather_day_name=="Saturday")
             & (WeatherTable.weather_date>(tomorrow))
-            & (WeatherTable.weather_location==User.location)
+            # & (WeatherTable.weather_date<(week))
+        & (WeatherTable.weather_location==current_user.location)
         ).all()
     weather3 = WeatherTable \
     .query\
     .filter(
         (WeatherTable.weather_day_name=="Sunday")
         & (WeatherTable.weather_date>(tomorrow))
-        & (WeatherTable.weather_location==User.location)
+        # & (WeatherTable.weather_date<(week))
+        & (WeatherTable.weather_location==current_user.location)
     ).all()
-
     activities = ActivitiesTable\
         .query\
         .filter(
@@ -92,15 +94,21 @@ def propositions():
         ).all()   
         
     if form.validate_on_submit():
-        # db.session.query(ChosenActivitiesTable).delete()
-        # db.session.commit()
+        db.session.query(ChosenActivitiesTable).delete()
+        db.session.commit()
         chosen_activity = ChosenActivitiesTable(
+        chosen_activity_name = form.chosen_activity_name.data,    
+        chosen_status = form.chosen_status.data,
+        chosen_activity_timestamp = today,
+        )
+        chosen_activity2 = ChosenActivitiesTableHistory(
         chosen_activity_name = form.chosen_activity_name.data,    
         chosen_status = form.chosen_status.data,
         chosen_activity_timestamp = today,
         )
 
         db.session.add(chosen_activity)
+        db.session.add(chosen_activity2)
         db.session.commit()
         flash('Congratulations, you have been added activities for the weekend!')
         return redirect(url_for('chosen_activities'))
