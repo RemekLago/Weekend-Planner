@@ -27,7 +27,7 @@ def create_dict_with_descriptions():
         dict_with_descriptions["activite_description"] = idx[1]
         dict_with_descriptions["activite_todo_list"] = idx[2]
         dict_with_descriptions["activite_calories"] = idx[4]
-        dict_with_descriptions["activity_conditions_temp"] = int(idx[5].strip())
+        dict_with_descriptions["activity_conditions_temp"] = int(idx[5])
         dict_with_descriptions["activity_conditions_1"] = 1 if idx[6].strip() == "True" else 0
         dict_with_descriptions["activity_conditions_2"] = 1 if idx[7].strip() == "True" else 0
         dict_with_descriptions["activity_conditions_3"] = 1 if idx[8].strip() == "True" else 0
@@ -37,7 +37,7 @@ def create_dict_with_descriptions():
         dict_with_descriptions["activity_conditions_7"] = 1 if idx[12].strip() == "True" else 0
         dict_with_descriptions["activity_conditions_8"] = 1 if idx[13].strip() == "True" else 0
         dict_with_descriptions["activity_conditions_9"] = 1 if idx[14].strip() == "True" else 0
-        dict_with_descriptions["activity_user_id"] = int(idx[16].strip())
+        dict_with_descriptions["activity_user_id"] = (idx[16])
         dict_with_descriptions["activity_level1"] = 1 if idx[17].strip() == "True" else 0
         dict_with_descriptions["activity_level2"] = 1 if idx[18].strip() == "True" else 0
         dict_with_descriptions["activity_level3"] = 1 if idx[19].strip() == "True" else 0
@@ -96,7 +96,7 @@ def adding_activities_to_base():
             # **idx
             )
         
-        # print(activity.activity_conditions_1_icon)
+        # print(activity.activity_conditions_temp)
         db.session.add(activity)  
         db.session.commit()
  
