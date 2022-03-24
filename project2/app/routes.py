@@ -21,7 +21,7 @@ import smtplib, ssl
 from werkzeug.middleware.shared_data import SharedDataMiddleware
 from keys import Mailkey
 # from  weather import adding_data_for_all_cities as weather_input
-
+from  weather_one_city import adding_data_for_all_cities as weather_one_city_input
 
 @app.before_request
 def before_request():
@@ -80,22 +80,27 @@ def propositions():
             ) 
             & 
             (ActivitiesTable.activity_conditions_temp <= WeatherTable.weather_temperature)
-            # & 
-            # (ActivitiesTable.activity_conditions_1_icon==weather2.weather_icon
-            # | ActivitiesTable.activity_conditions_2_icon==weather2.weather_icon
-            # | ActivitiesTable.activity_conditions_3_icon==weather2.weather_icon
-            # | ActivitiesTable.activity_conditions_4_icon==weather2.weather_icon
-            # | ActivitiesTable.activity_conditions_5_icon==weather2.weather_icon
-            # | ActivitiesTable.activity_conditions_6_icon==weather2.weather_icon
-            # | ActivitiesTable.activity_conditions_7_icon==weather2.weather_icon
-            # | ActivitiesTable.activity_conditions_8_icon==weather2.weather_icon
-            # | ActivitiesTable.activity_conditions_9_icon==weather2.weather_icon
+            # & (
+            # ActivitiesTable.activity_conditions_1_icon==weather2[0].weather_icon
+            # | ActivitiesTable.activity_conditions_2_icon==weather2[0].weather_icon
+            # | ActivitiesTable.activity_conditions_3_icon==weather2[0].weather_icon
+            # | ActivitiesTable.activity_conditions_4_icon==weather2[0].weather_icon
+            # | ActivitiesTable.activity_conditions_5_icon==weather2[0].weather_icon
+            # | ActivitiesTable.activity_conditions_6_icon==weather2[0].weather_icon
+            # | ActivitiesTable.activity_conditions_7_icon==weather2[0].weather_icon
+            # | ActivitiesTable.activity_conditions_8_icon==weather2[0].weather_icon
+            # | ActivitiesTable.activity_conditions_9_icon==weather2[0].weather_icon
             # )
-        ).all()   
+        ).all()     
+    # print(weather2[0].weather_icon)
+    # for idx in activities:
+    #     print(idx) 
+    #     print(idx.activity_conditions_1_icon)
         
     if form.validate_on_submit():
         db.session.query(ChosenActivitiesTable).delete()
         db.session.commit()
+
         chosen_activity = ChosenActivitiesTable(
         chosen_activity_name = form.chosen_activity_name.data,    
         chosen_status = form.chosen_status.data,
@@ -183,7 +188,6 @@ def user(username):
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    # cities = CityTable.query.all()
     form = EditProfileForm()
     if form.validate_on_submit():
         current_user.username = form.username.data
@@ -196,8 +200,11 @@ def edit_profile():
         city_name = form.location.data
         )
         if not CityTable.query.filter(CityTable.city_name==city.city_name).all():
+            # db.session.query(CityTable).delete()
             db.session.add(city)
             db.session.commit()
+            take_weather_date = weather_one_city_input(city.city_name)
+            # pobieranie pogody w tle
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('user', username=current_user.username))
@@ -379,8 +386,9 @@ def chosen_activities():
 
 @app.route("/email")
 def email():
+    
     chosen_activities = ChosenActivitiesTable.query.filter(ChosenActivitiesTable.chosen_status==True).all()
-    port = 465  # For SSL
+    port = 587  # For SSL
     smtp_server = "smtp.poczta.onet.pl"
     sender_email = "testowo12345@onet.pl"
     receiver_email = "jacekwacek123gmail.com"
@@ -389,17 +397,26 @@ def email():
     This is the email with thing you should prepare for incomming weekend
     f"{chosen_activities}", list of thing to prepare: f"{activity_todo_list}"
     """
-    # context = ssl.create_default_context()
-    context = ssl._create_unverified_context()
-    # with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-    #     server.login(sender_email, password)
-    #     server.sendmail(sender_email, receiver_email, message)
-    with smtplib.SMTP(smtp_server, port) as server:
-        server.ehlo()  # Can be omitted
-        server.starttls(context=context)
-        server.ehlo()  # Can be omitted
+    
+    context = ssl.create_default_context()
+    # context = ssl._create_unverified_context()
+    print(1)
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        print(2)
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message)
+    
+    # with smtplib.SMTP(smtp_server, port) as server:
+    #     server.ehlo()  # Can be omitted
+    #     print(1)
+    #     server.starttls(context=context)
+    #     print(2)
+    #     server.ehlo()  # Can be omitted
+    #     print(3)
+    #     server.login(sender_email, password)
+    #     print(4)
+    #     server.sendmail(sender_email, receiver_email, message)
+
     return "Mail sent"
 
 
