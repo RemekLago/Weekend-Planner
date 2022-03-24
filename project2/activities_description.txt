@@ -1,9 +1,9 @@
 Cycling
-This activity is the perfect solution for warm and cooler days. You can spend time with family, friends or alone. You will also take care of your body.
+Riding a bike is, above all, a great pleasure. But thanks to this activity, you also take care of your health, strengthen your muscles lose weight and even save time and money. Advantages only. Not everyone is aware that regular cycling is so important for our body. First of all, even and moderate exercise improves our efficiency. And we don't have to sweat a sweat or train ourselves hard to lose our breath. 
 bike, gloves, spare inner tube, bike lock, bike keys, pump, water bottle, water, snacks, glasses, sweatshirt, money
 list of weather conditions
-calories approximately 1000kcal/h
-2
+350-400
+15
 True
 True
 True
@@ -29,19 +29,19 @@ True
 50d
 
 Kayaking
-Kayaking description 
-comfortable clothes, shoes, cap, glasses, sunscreen, snacks, water, backpack, money, mosquito repellent, sweatshirt
+Kayaking is one of the greatest physical exercises with a high health and educational value. This is due both to the nature of the movements and the conditions in which it takes place. The combined action of powerful natural factors such as sun, water and all-round exercise. it stimulates significantly (up to 300%) the work of most muscles and joints, the heart and lungs, and increases the metabolism. Canoeing in crystal clear, dust-free air, in an atmosphere free from noise and hustle and bustle, allows you to relax the nerves, has a beneficial effect on the entire human body. 
+comfortable clothes, shoes, hat, glasses, sunscreen, snacks, water, backpack, money, mosquito repellent, sweatshirt, waterproof bag 
 list of weather conditions
-calories approximately 1000kcal/h
+350-400
 20
 True
 False
 True
 True
-False
 True
 True
 False
+True
 False
 Timestamp
 0
@@ -59,11 +59,11 @@ True
 50d
 
 Roller skating
-Roller skating description
-list of things
+The first and probably the most important advantage of roller skating is the very effective burning of calories. Inline skates can be extremely useful and are one of the better choices of activity that people interested in losing excess kilos can decide on. The benefits of inline skating, however, do not end with the efficient burning of calories. Muscle work while doing this activity is often compared to running because almost the entire body is involved. Not only the lower limbs are working, but also the back, back, arms and abdomen. 
+sports outfit, roller skates, pads, helmet, water, snacks, small backpack, shoes for a change
 list of weather conditions
-calories approximately 1000kcal/h
-25
+500-700
+15
 True
 False
 True
@@ -89,11 +89,11 @@ True
 50d
 
 Nordic walking
-Nordic walking description
-list of things
+Nordic Walking is a physical activity that has gained millions of followers all over the world, especially seniors! Exercises with poles are available to everyone - they do not require large investments in sports equipment, it is easy to master the technique and there is no need to learn complicated exercises. Nordic Walking is not only a way to manage your free time. Regular physical activity of the elderly helps to reduce hypertension, improve the efficiency of the circulatory system and lower cholesterol and blood sugar levels. In addition, the poles improve the sense of balance, so you do not have to worry about falls.
+exercise outfit, sports shoes, towel, 1.5l water, poles, application with a map, tracksuit, rainwear, sunglasses
 list of weather conditions
-calories approximately 1000kcal/h
-15
+400
+5
 True
 False
 True
@@ -119,11 +119,11 @@ True
 50d
 
 Yoga exercises
-Yoga exercises description
-list of things
+Yoga is an ancient practice that connects the mind and body. Numerous scientific studies show the positive effects of yoga and its beneficial effect on our body. One of the main goals of yoga is to delve deep into yourself, to know and become aware of your own body. The beneficial effects of yoga, such as higher energy levels, improved mood, increased motivation to life, optimism, a feeling of happiness, can be felt after the first training.
+exercise outfit, sports shoes, towel, 1.5l water, exercise plan, exercise snack, exercise mat, bag for things
 list of weather conditions
-calories approximately 1000kcal/h
-5
+300-500
+-20
 True
 True
 True
@@ -149,11 +149,11 @@ True
 50d
 
 Gym exercises
-Gym exercises description
-list of things
+The gym is not only a treadmill or cross trainer. In order for your training to actually work, you need to include appropriate exercises for the gym. The best workout is one that includes both cardio and strength exercises.
+exercise outfit, sports shoes, towel, 1.5l water, exercise plan, snack after exercise, bag for things,
 list of weather conditions
-calories approximately 1000kcal/h
-2
+200-500
+-20
 True
 False
 True
@@ -179,11 +179,11 @@ True
 50d
 
 Swimming in the pool
-Swimming in the pool description
-list of things
+Swimming is great for your health and body shape. But even if you don't know how to swim, it's worth going to the swimming pool! In addition to swimming in the pool, you can practice, for example, aqua aerobics or aquacycling. Movement in water improves circulation, reduces swelling, strengthens muscles, shapes the figure. And at the same time, it does not tire like traditional gymnastics.
+swimming trunks, towel, swimming cap may be needed, snack for swimming, water, flip-flops, swimming goggles
 list of weather conditions
-calories approximately 1000kcal/h
-5
+300-500
+-20
 True
 False
 True
@@ -198,36 +198,6 @@ Timestamp
 False
 True
 True
-01d
-02d
-03d
-04d
-09d
-10d
-11d
-13d
-50d
-
-Going out to the cafe
-Going out to the cafe description
-list of things
-list of weather conditions
-calories approximately 1000kcal/h
-0
-True
-False
-True
-True
-False
-False
-False
-False
-False
-Timestamp
-0
-True
-True
-False
 01d
 02d
 03d
@@ -239,11 +209,11 @@ False
 50d
 
 A trip to the forest
-A trip to the forest description
+Rest, relaxation in the forest is an opportunity to rest from noise and air pollution. Out of concern for the forest environment, for the inhabitants of the forest, and to ensure the safety of visiting tourists, motor vehicles are not allowed on forest roads and paths. Motorized tourists can park their vehicles or park car parks located on the outskirts of forest complexes or at the most interesting tourist places. You can leave your car here and continue your journey on foot or by bike.
 list of things
 list of weather conditions
-calories approximately 1000kcal/h
-20
+100
+10
 True
 False
 True
@@ -424,14 +394,14 @@ list of things
 list of weather conditions
 calories approximately 1000kcal/h
 18
-False
-False
-True
-True
-True
-True
 True
 False
+True
+True
+True
+True
+False
+True
 False
 Timestamp
 0
@@ -478,3 +448,32 @@ True
 13d
 50d
 
+Going out to the cafe
+Going out to the cafe description
+list of things
+list of weather conditions
+calories approximately 1000kcal/h
+0
+True
+False
+True
+True
+False
+False
+False
+False
+False
+Timestamp
+0
+True
+True
+False
+01d
+02d
+03d
+04d
+09d
+10d
+11d
+13d
+50d
