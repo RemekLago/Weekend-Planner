@@ -3,7 +3,7 @@ import requests
 from keys import APIkey
 from datetime import datetime
 from app import db
-from app.models import WeatherTable, WeatherTableHistory
+from app.models import WeatherTable, WeatherTableHistory, CityTable
 
 """links to weather API and libray with icons:
 https://openweathermap.org/forecast5
@@ -17,6 +17,9 @@ def take_city_name():
     with open ("city_names.txt") as file:
         for row in file:
             city_list.append(row.strip())
+    # cities = CityTable.query.all()
+    # for city in cities:
+    #     city_list.append(city.city_name)
     return city_list
 
 def take_coordinates_of_city(city):
