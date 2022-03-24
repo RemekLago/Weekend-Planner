@@ -52,7 +52,7 @@ class ActivitiesTable(db.Model):
     activity_level1 = db.Column(db.Boolean)
     activity_level2 = db.Column(db.Boolean)
     activity_level3 = db.Column(db.Boolean)
-    activity_timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    activity_timestamp = db.Column(db.DateTime, index=True)
     activity_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     activity_conditions_1_icon = db.Column(db.String(100))
     activity_conditions_2_icon = db.Column(db.String(100))
@@ -80,7 +80,6 @@ class WeatherTable(db.Model):
     weather_description = db.Column(db.String(500))
     weather_icon = db.Column(db.String(100))
     weather_main = db.Column(db.String(300))
-    weather_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):
         return '<WeatherTable {}>'.format(self.weather_icon)
@@ -96,7 +95,6 @@ class WeatherTableHistory(db.Model):
     weather_cloud = db.Column(db.Integer)
     weather_description = db.Column(db.String(500))
     weather_icon = db.Column(db.String(100))
-    weather_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     weather_main = db.Column(db.String(300))
 
     def __repr__(self):
@@ -109,7 +107,6 @@ class IconsTable(db.Model):
     icon_value = db.Column(db.String(10))
     icon_link = db.Column(db.String(100))
     icon_value2 = db.Column(db.Boolean)
-    icon_id = db.Column(db.Integer, db.ForeignKey("weather_table.weather_icon"))
 
     def __repr__(self):
         return '<IconsTable {}>'.format(self.icon_name)
@@ -128,6 +125,15 @@ class ImageTable(db.Model):
         return '<ImageTable {}>'.format(self.image_name)
 
 class ChosenActivitiesTable(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    chosen_activity_name = db.Column(db.String(500), nullable=False)
+    chosen_status = db.Column(db.Boolean)
+    chosen_activity_timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<ChosenActivitiesTable {}>'.format(self.chosen_status)
+
+class ChosenActivitiesTableHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     chosen_activity_name = db.Column(db.String(500), nullable=False)
     chosen_status = db.Column(db.Boolean)
