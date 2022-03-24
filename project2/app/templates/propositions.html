@@ -32,6 +32,7 @@
             <tbody>
                 <tr>
                     {% for idx in weather2 %}
+                    {{ idx }}
                     <td></td>
                     <td>{{ idx.weather_date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ idx.weather_day_name }}</td>
@@ -80,9 +81,7 @@
     {% if idx.weather_icon in (activity.activity_conditions_1_icon,
     activity.activity_conditions_2_icon,activity.activity_conditions_3_icon,activity.activity_conditions_4_icon,activity.activity_conditions_5_icon,activity.activity_conditions_6_icon,activity.activity_conditions_7_icon,activity.activity_conditions_8_icon,
     activity.activity_conditions_9_icon) %}
-
-    {% print(activity.chosen_status) %}
-    {% print(activity.activity_name) %}
+    
     <div class="notification is-gapless has-background-white">
         
         <p><label class="checkbox is-horizontal">
@@ -119,7 +118,7 @@
                                 <p> {{ activity.activity_todo_list }}</p>
                             </div>
                             <div class="notification">
-                                <p><strong> {{ activity.activity_calories }}</strong></p>
+                                <p><strong> calories approximately: {{ activity.activity_calories }} kcal/h</strong></p>
                             <!--{% if activity.activity_favourite==True %}
                                 <label class="checkbox">
                                     Added to favourite
