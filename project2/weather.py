@@ -14,12 +14,12 @@ https://rapidapi.com/wettercom-wettercom-default/api/forecast9/"""
 def take_city_name():
     city_list = []
     """take city name from list of city names"""
-    with open ("city_names.txt") as file:
-        for row in file:
-            city_list.append(row.strip())
-    # cities = CityTable.query.all()
-    # for city in cities:
-    #     city_list.append(city.city_name)
+    # with open ("city_names.txt") as file:
+    #     for row in file:
+    #         city_list.append(row.strip())
+    cities = CityTable.query.all()
+    for city in cities:
+        city_list.append(city.city_name)
     return city_list
 
 def take_coordinates_of_city(city):
