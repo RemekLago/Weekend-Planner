@@ -22,6 +22,10 @@ from werkzeug.middleware.shared_data import SharedDataMiddleware
 from keys import Mailkey
 # from  weather import adding_data_for_all_cities as weather_input
 from  weather_one_city import adding_data_for_all_cities as weather_one_city_input
+import getpass
+import js2py
+
+
 
 @app.before_request
 def before_request():
@@ -40,6 +44,7 @@ def index():
 @login_required
 @app.route('/propositions', methods=["GET", "POST"])
 def propositions():
+    # tabs = js2py.run_file("propositions_tabs.js")
     form = ChosenActivities()
     tomorrow = datetime.now().date() + timedelta(days = 1)
     week = datetime.now().date() + timedelta(days = 7)
@@ -80,22 +85,7 @@ def propositions():
             ) 
             & 
             (ActivitiesTable.activity_conditions_temp <= WeatherTable.weather_temperature)
-            # & (
-            # ActivitiesTable.activity_conditions_1_icon==weather2[0].weather_icon
-            # | ActivitiesTable.activity_conditions_2_icon==weather2[0].weather_icon
-            # | ActivitiesTable.activity_conditions_3_icon==weather2[0].weather_icon
-            # | ActivitiesTable.activity_conditions_4_icon==weather2[0].weather_icon
-            # | ActivitiesTable.activity_conditions_5_icon==weather2[0].weather_icon
-            # | ActivitiesTable.activity_conditions_6_icon==weather2[0].weather_icon
-            # | ActivitiesTable.activity_conditions_7_icon==weather2[0].weather_icon
-            # | ActivitiesTable.activity_conditions_8_icon==weather2[0].weather_icon
-            # | ActivitiesTable.activity_conditions_9_icon==weather2[0].weather_icon
-            # )
         ).all()     
-    # print(weather2[0].weather_icon)
-    # for idx in activities:
-    #     print(idx) 
-    #     print(idx.activity_conditions_1_icon)
         
     if form.validate_on_submit():
         db.session.query(ChosenActivitiesTable).delete()
@@ -170,6 +160,7 @@ def user(username):
         .query\
             .filter(ActivitiesTable.activity_user_id==user.id).all()
     today = datetime.today()
+    yesterday = str(datetime.now().date() - timedelta(days = 1))
     tomorrow = str(datetime.now().date() + timedelta(days = 1))
     weather = WeatherTable\
         .query\
@@ -180,7 +171,8 @@ def user(username):
         .query\
             .filter(\
                 (WeatherTable.weather_location==user.location)\
-                &(WeatherTable.weather_date<tomorrow)).all()
+                &(WeatherTable.weather_date<tomorrow)
+                ).all()
     return render_template('user.html', user=user, activities=activities, 
             weather=weather, icons=icons, weather_today=weather_today)
 
@@ -388,11 +380,11 @@ def chosen_activities():
 def email():
     
     chosen_activities = ChosenActivitiesTable.query.filter(ChosenActivitiesTable.chosen_status==True).all()
-    port = 587  # For SSL
+    port = 465  # For SSL
     smtp_server = "smtp.poczta.onet.pl"
     sender_email = "testowo12345@onet.pl"
     receiver_email = "jacekwacek123gmail.com"
-    password = "Testowo12345"
+    password = getpass.getpass("Testowo12345")
     message = """
     This is the email with thing you should prepare for incomming weekend
     f"{chosen_activities}", list of thing to prepare: f"{activity_todo_list}"
@@ -400,22 +392,22 @@ def email():
     
     context = ssl.create_default_context()
     # context = ssl._create_unverified_context()
-    print(1)
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        print(2)
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message)
-    
-    # with smtplib.SMTP(smtp_server, port) as server:
-    #     server.ehlo()  # Can be omitted
-    #     print(1)
-    #     server.starttls(context=context)
+    # print(1)
+    # with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
     #     print(2)
-    #     server.ehlo()  # Can be omitted
-    #     print(3)
     #     server.login(sender_email, password)
-    #     print(4)
     #     server.sendmail(sender_email, receiver_email, message)
+    
+    with smtplib.SMTP(smtp_server, port) as server:
+        server.ehlo()  # Can be omitted
+        print(1)
+        server.starttls(context=context)
+        print(2)
+        server.ehlo()  # Can be omitted
+        print(3)
+        server.login(sender_email, password)
+        print(4)
+        server.sendmail(sender_email, receiver_email, message)
 
     return "Mail sent"
 
