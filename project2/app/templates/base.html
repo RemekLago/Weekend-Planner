@@ -7,6 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Welcome to WEATHER PLANNER</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <style>
+        #tabs-with-content .tabs:not(:last-child) {
+        margin-bottom: 0;
+        }
+
+        #tabs-with-content .tab-content {
+        padding: 1rem;
+        display: none;
+        }
+
+        #tabs-with-content .tab-content.is-active {
+        display: block;
+        }
+    </style>
 </head>
 
 <body>
@@ -77,27 +91,42 @@
             </div>
         </footer>
     </section>
-<script>
-    const tabs = document.querySelectorAll('.tabs li');
-    const tabContentBoxes = document.querySelectorAll('#tab-content > div');
+    <script>
+        let tabsWithContent = (function () {
+            let tabs = document.querySelectorAll('.tabs li');
+            let tabsContent = document.querySelectorAll('.tab-content');
 
-    tabs.forEach((tab) => {
-        tabs.addEventListener('click', () => {
-            tabs.forEach(item => item.classList.remove('is-active'))
-            tab.classList.add('is-active');
+            let deactvateAllTabs = function () {
+                tabs.forEach(function (tab) {
+                    tab.classList.remove('is-active');
+                });
+            };
 
-            const target = tab.dataset.target;
-            tabContentBoxes.forEach(box => {
-                if (box.getAttribiute('id') === target) {
-                    box.classList.remove('is-hidden')
-                } else {
-                    box.classList.add('is-hidden');
-                }
+            let hideTabsContent = function () {
+                tabsContent.forEach(function (tabContent) {
+                    tabContent.classList.remove('is-active');
+                });
+            };
+
+            let activateTabsContent = function (tab) {
+                tabsContent[getIndex(tab)].classList.add('is-active');
+            };
+
+            let getIndex = function (el) {
+                return [...el.parentElement.children].indexOf(el);
+            };
+
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    deactvateAllTabs();
+                    hideTabsContent();
+                    tab.classList.add('is-active');
+                    activateTabsContent(tab);
+                });
             })
-        })
-    })
 
-
-</script>
+            tabs[0].click();
+        })();
+    </script>
 </body>
 </html>

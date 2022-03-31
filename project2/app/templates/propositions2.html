@@ -1,18 +1,98 @@
 {% extends "base.html" %}
 
 {% block content %}
+<article class="message">
+    <div class="message-header is-size-4">
+        <p>{{ current_user.username }}</p>
+    </div>
+    <div class="message-body">
+        Below is the list with propositions for you. <br>
+        WEATHER PLANNER chose its as a result of checking weather conditions, lacalization and kind of your profile.
+    </div>
+</article>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
     <article class="message">
         <div class="message-header is-size-4">
-            <p>{{ current_user.username }}</p>
+            <p>Weekend weather forecast for: {{ current_user.location }}</p>
         </div>
-        <div class="message-body">
-            List of all activities in the system. <br>
-            From that place, WEEKEND PLANNER <br>
-            will choose a recommended solution for you.
-        </div>
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Weather Forecast</th>
+                    <th><abbr title="Date">Date</abbr></th>
+                    <th><abbr title="Day">Day</abbr></th>
+                    <th><abbr title="Temperature">Temperature</abbr></th>
+                    <th><abbr title="Wind">Wind</abbr></th>
+                    <th><abbr title="Cloud">Claud</abbr></th>
+                    <th><abbr title="Image">Image</abbr></th>
+                    <th><abbr title="Description">Description</abbr></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for idx in weather2 %}
+                    {{ idx }}
+                    <td></td>
+                    <td>{{ idx.weather_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ idx.weather_day_name }}</td>
+                    <td>{{ idx.weather_temperature }} °C</td>
+                    <td>{{ idx.weather_wind }} m/s</td>
+                    <td>{{ idx.weather_cloud }} %</td>
+                    {% for icon in icons %}
+                    {% if icon.icon_value == idx.weather_icon %}
+                    <td>
+                        <figure class="image is-64x64">
+                            <img src="{{ icon.icon_link }}">
+                        </figure>
+                    </td>
+                    {% endif %}
+                    {% endfor %}
+                    <td>{{ idx.weather_description }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for idx in weather3 %}
+                    <td></td>
+                    <td>{{ idx.weather_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ idx.weather_day_name }}</td>
+                    <td>{{ idx.weather_temperature }} °C</td>
+                    <td>{{ idx.weather_wind }} m/s</td>
+                    <td>{{ idx.weather_cloud }} %</td>
+                    {% for icon in icons %}
+                    {% if icon.icon_value == idx.weather_icon %}
+                    <td>
+                        <figure class="image is-64x64">
+                            <img src="{{ icon.icon_link }}">
+                        </figure>
+                    </td>
+                    {% endif %}
+                    {% endfor %}
+                    <td>{{ idx.weather_description }}</td>
+
+                    {% endfor %}
+                </tr>
+                </tr>
+            </tbody>
+        </table>
     </article>
+    {% for idx in weather2 %}
     {% for activity in activities %}
+    {% if idx.weather_icon in (activity.activity_conditions_1_icon,
+    activity.activity_conditions_2_icon,activity.activity_conditions_3_icon,activity.activity_conditions_4_icon,activity.activity_conditions_5_icon,activity.activity_conditions_6_icon,activity.activity_conditions_7_icon,activity.activity_conditions_8_icon,
+    activity.activity_conditions_9_icon) %}
+
     <div class="notification is-gapless has-background-white">
+
+        <p><label class="checkbox is-horizontal">
+                <box class="button is-block is-info is-inline">Add this activity to list for nearest weekend
+                    <input type="checkbox" id="chosen_activity.chosen_status" name="chosen_status">
+                    </input>
+                    <input type="hidden" id="chosen_activity.chosen_activity_name" name="chosen_activity_name"
+                        value="{{ activity.activity_name  }}">
+                    </input>
+                </box>
+            </label></p>
         <div class="columns is-full is-centered is-multiline is-gapless block has-background-white">
             <div class="column is-6">
                 <div class="block has-background-white has-text-black">
@@ -58,34 +138,40 @@
                                 {% if activity.activity_level1==True %}
                                 <p><label class="checkbox">
                                         Very active
-                                        <input type="checkbox" id="{{ activity.activity_level1 }}" name="activity_level1" checked></input>
+                                        <input type="checkbox" id="{{ activity.activity_level1 }}"
+                                            name="activity_level1" checked></input>
                                     </label></p>
                                 {% else %}
                                 <p><label class="checkbox">
                                         Very active
-                                        <input type="checkbox" id="{{ activity.activity_level1 }}" name="activity_level1"></input>
+                                        <input type="checkbox" id="{{ activity.activity_level1 }}"
+                                            name="activity_level1"></input>
                                     </label></p>
                                 {% endif %}
                                 {% if activity.activity_level2==True %}
                                 <p><label class="checkbox">
                                         Active
-                                        <input type="checkbox" id="{{ activity.activity_level2 }}" name="activity_level2" checked></input>
+                                        <input type="checkbox" id="{{ activity.activity_level2 }}"
+                                            name="activity_level2" checked></input>
                                     </label></p>
                                 {% else %}
                                 <p><label class="checkbox">
                                         Active
-                                        <input type="checkbox" id="{{ activity.activity_level2 }}" name="activity_level2"></input>
+                                        <input type="checkbox" id="{{ activity.activity_level2 }}"
+                                            name="activity_level2"></input>
                                     </label></p>
                                 {% endif %}
                                 {% if activity.activity_level3==True %}
                                 <p><label class="checkbox">
                                         Less active
-                                        <input type="checkbox" id="{{ activity.activity_level3 }}" name="activity_level3" checked></input>
+                                        <input type="checkbox" id="{{ activity.activity_level3 }}"
+                                            name="activity_level3" checked></input>
                                     </label></p>
                                 {% else %}
                                 <p><label class="checkbox">
                                         Less active
-                                        <input type="checkbox" id="{{ activity.activity_level3 }}" name="activity_level3"></input>
+                                        <input type="checkbox" id="{{ activity.activity_level3 }}"
+                                            name="activity_level3"></input>
                                     </label></p>
                                 {% endif %}
                             </div>
@@ -141,7 +227,7 @@
                 {% if activity.activity_conditions_5 == True %}
                 {% for icon in icons %}
                 {% if icon.id == 5 %}
-                <figure class="image is-96x96"> 
+                <figure class="image is-96x96">
                     <img src="{{ icon.icon_link }}">
                 </figure>
                 {% endif %}
@@ -189,10 +275,16 @@
                 {% endif %}
                 {% endfor %}
                 {% endif %}
-                
+
             </nav>
         </div>
     </div>
 
+    {% endif %}
     {% endfor %}
+    {% endfor %}
+    <div>
+        <button class="button is-inline is-block is-white is-large ">Submit</button>
+    </div>
+</form>
 {% endblock %}
