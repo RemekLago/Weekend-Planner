@@ -24,7 +24,12 @@ from keys import Mailkey
 from  weather_one_city import adding_data_for_all_cities as weather_one_city_input
 import getpass
 import js2py
+from app import celery_obj
 
+# @celery_obj.task()
+# def add_together():
+#     print("1")
+#     return True
 
 
 @app.before_request
@@ -38,6 +43,7 @@ def before_request():
 @app.route('/index')
 def index():
     weather = WeatherTable.query.all()
+    # add_together.delay()
     return render_template('index.html', weather=weather)
 
 
@@ -63,18 +69,18 @@ def propositions():
         .query\
         .filter(
             (WeatherTable.weather_day_name=="Saturday")
-            & (WeatherTable.weather_date>(tomorrow))
+            & (WeatherTable.weather_date>(today))
             # & (WeatherTable.weather_date<(week))
         & (WeatherTable.weather_location==current_user.location)
         ).all()
     weather3 = WeatherTable \
-    .query\
-    .filter(
-        (WeatherTable.weather_day_name=="Sunday")
-        & (WeatherTable.weather_date>(tomorrow))
-        # & (WeatherTable.weather_date<(week))
+        .query\
+        .filter(
+            (WeatherTable.weather_day_name=="Sunday")
+            & (WeatherTable.weather_date>(today))
+            # & (WeatherTable.weather_date<(week))
         & (WeatherTable.weather_location==current_user.location)
-    ).all()
+        ).all()
     activities = ActivitiesTable\
         .query\
         .filter(
@@ -108,8 +114,7 @@ def propositions():
         flash('Congratulations, you have been added activities for the weekend!')
         return redirect(url_for('chosen_activities'))
     return render_template('propositions.html', title='Propositions', 
-    activities=activities, weather=weather, weather2=weather2, weather3=weather3, 
-    icons=icons, user=user, form=form)
+    icons=icons, user=user, form=form, weather=weather, weather2=weather2, weather3=weather3, activities=activities)
 
 
 @app.route('/login', methods=['GET', 'POST'])
