@@ -9,6 +9,7 @@ from flask_pymongo import PyMongo
 from werkzeug.utils import secure_filename
 from flask_mail import Mail, Message
 from keys import Mailkey
+from .celery_maker import make_celery
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -17,6 +18,12 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
 moment = Moment(app)
+
+app.config.update(
+    CELERY_BROKER_URL='redis://localhost:6379',
+    CELERY_RESULT_BACKEND='redis://localhost:6379'
+)
+celery_obj = make_celery(app)
 
 
 
