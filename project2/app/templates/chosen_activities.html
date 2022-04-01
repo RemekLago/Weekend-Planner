@@ -11,11 +11,10 @@
 </article>
 <form action="" method="post">
     <div class="notification is-gapless has-background-white">
-    {% for chosen in chosen_activities %}
-        <div class="box title is-5 has-text-black has-background-light">
-            <p>{{ chosen.chosen_activity_name }}</p>
-        </div>
-        
+        {% for chosen in chosen_activities %}
+            <div class="box title is-5 has-text-black has-background-light">
+                <p>{{ chosen.chosen_activity_name }}</p>
+            </div>
         {% endfor %}
         <div>
             <a href = "#"> <button class="button is-inline is-block is-info is-medium">Send details on e-mail</button> </a>
