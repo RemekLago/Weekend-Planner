@@ -69,7 +69,7 @@ def propositions():
         .query\
         .filter(
             (WeatherTable.weather_day_name=="Saturday")
-            & (WeatherTable.weather_date>(today))
+            & (WeatherTable.weather_date>(tomorrow))
             # & (WeatherTable.weather_date<(week))
         & (WeatherTable.weather_location==current_user.location)
         ).all()
