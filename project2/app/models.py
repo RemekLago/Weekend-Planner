@@ -1,11 +1,11 @@
-from app import db
+from app import db, login
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from app import login
 from hashlib import md5
 
 class User(UserMixin, db.Model):
+    """ Class to create objects User"""
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -33,6 +33,7 @@ class User(UserMixin, db.Model):
 
 
 class ActivitiesTable(db.Model):
+    """ Class to create objects Activity Description with details like name, conditions, level of difficulty"""
     id = db.Column(db.Integer, primary_key=True)
     activity_name = db.Column(db.String(500), nullable=False)
     activity_description = db.Column(db.String(500), nullable=False)
@@ -69,6 +70,7 @@ class ActivitiesTable(db.Model):
         return '<ActivitiesTable {}>'.format(self.activity_name)
 
 class WeatherTable(db.Model):
+    """ Class to create objects Weather, it will be use to show weather condition on website"""
     id = db.Column(db.Integer, primary_key=True)
     weather_date = db.Column(db.DateTime)
     weather_day = db.Column(db.String(100))
@@ -84,7 +86,9 @@ class WeatherTable(db.Model):
     def __repr__(self):
         return '<WeatherTable {}>'.format(self.weather_icon)
 
+
 class WeatherTableHistory(db.Model):
+    """ Class to create objects Weather, its table with list of days and weather condition related with day"""
     id = db.Column(db.Integer, primary_key=True)
     weather_date = db.Column(db.DateTime)
     weather_day = db.Column(db.String(100))
@@ -102,6 +106,7 @@ class WeatherTableHistory(db.Model):
 
 
 class IconsTable(db.Model):
+    """ Class to create objects Icon, it will be use to show icons on webpage"""
     id = db.Column(db.Integer, primary_key=True)
     icon_name = db.Column(db.String(10))
     icon_value = db.Column(db.String(10))
@@ -113,6 +118,7 @@ class IconsTable(db.Model):
 
 
 class ImageTable(db.Model):
+    """ Class to create objects Image, it will be use to show images in gallery"""
     id = db.Column(db.Integer, primary_key=True)
     image_user = db.Column(db.String(100))
     image_user_id = db.Column(db.String(100))
@@ -124,7 +130,10 @@ class ImageTable(db.Model):
     def __repr__(self):
         return '<ImageTable {}>'.format(self.image_name)
 
+
 class ChosenActivitiesTable(db.Model):
+    """ Class to create objects Activity, this table contains activites 
+    chosen by user from whole list of activities recommended him/her"""
     id = db.Column(db.Integer, primary_key=True)
     chosen_activity_name = db.Column(db.String(500), nullable=False)
     chosen_status = db.Column(db.Boolean)
@@ -133,7 +142,11 @@ class ChosenActivitiesTable(db.Model):
     def __repr__(self):
         return '<ChosenActivitiesTable {}>'.format(self.chosen_status)
 
+
 class ChosenActivitiesTableHistory(db.Model):
+    """ Class to create objects Activity, this table contains activites 
+    chosen by user from whole list of activities recommended him/her but 
+    it will be all history from teh beginning"""
     id = db.Column(db.Integer, primary_key=True)
     chosen_activity_name = db.Column(db.String(500), nullable=False)
     chosen_status = db.Column(db.Boolean)
@@ -148,6 +161,7 @@ def load_user(id):
 
 
 class CityTable(db.Model):
+    """ Class to create objects City, City will be needed to take weather conditions"""
     id = db.Column(db.Integer, primary_key=True)
     city_name = db.Column(db.String(500), nullable=False)
     city_timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)

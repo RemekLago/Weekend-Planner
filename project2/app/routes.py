@@ -1,36 +1,17 @@
 import os
-from app import app
-from flask import render_template, flash, redirect, url_for, send_from_directory
-from app.forms import CityNames, LoginForm
-from flask_login import current_user, login_user
+from app import app, db, ALLOWED_EXTENSIONS, UPLOAD_FOLDER
+from flask import render_template, flash, redirect, url_for, request, jsonify
+from app.forms import CityNames, LoginForm, RegistrationForm, EditProfileForm, AddActivity, EditActivity, AddImage, ChosenActivities
+from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, ActivitiesTable, WeatherTable, IconsTable, ImageTable, ChosenActivitiesTable, CityTable, ChosenActivitiesTableHistory
-from flask_login import logout_user
-from flask_login import login_required
-from flask import request, flash
 from werkzeug.urls import url_parse
-from app import db
-from app.forms import RegistrationForm
-from datetime import datetime, timedelta
-from app.forms import EditProfileForm, AddActivity, EditActivity, AddImage, ChosenActivities
 from werkzeug.utils import secure_filename
-from sqlalchemy import cast,Date
+from datetime import datetime, timedelta
 from flask_mail import Mail, Message
-from app import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
-import urllib.request
-import smtplib, ssl
-from werkzeug.middleware.shared_data import SharedDataMiddleware
-from keys import Mailkey
-# from  weather import adding_data_for_all_cities as weather_input
-from  weather_one_city import adding_data_for_all_cities as weather_one_city_input
 import getpass
-import js2py
-from app import celery_obj
-
-# @celery_obj.task()
-# def add_together():
-#     print("1")
-#     return True
-
+import smtplib, ssl
+# from management.keys import Mailkey
+# from management.weather_one_city import adding_data_for_all_cities as weather_one_city_input
 
 @app.before_request
 def before_request():
@@ -42,15 +23,16 @@ def before_request():
 @app.route('/')
 @app.route('/index')
 def index():
+    """ Home Page """
     weather = WeatherTable.query.all()
-    # add_together.delay()
     return render_template('index.html', weather=weather)
 
 
 @login_required
 @app.route('/propositions', methods=["GET", "POST"])
 def propositions():
-    # tabs = js2py.run_file("propositions_tabs.js")
+    """ The page with activities that are offered to the user, chosen activities 
+    dispense on weather condition and  level of user activity  """
     form = ChosenActivities()
     tomorrow = datetime.now().date() + timedelta(days = 1)
     week = datetime.now().date() + timedelta(days = 7)
@@ -70,7 +52,6 @@ def propositions():
         .filter(
             (WeatherTable.weather_day_name=="Saturday")
             & (WeatherTable.weather_date>(tomorrow))
-            # & (WeatherTable.weather_date<(week))
         & (WeatherTable.weather_location==current_user.location)
         ).all()
     weather3 = WeatherTable \
@@ -78,7 +59,6 @@ def propositions():
         .filter(
             (WeatherTable.weather_day_name=="Sunday")
             & (WeatherTable.weather_date>(today))
-            # & (WeatherTable.weather_date<(week))
         & (WeatherTable.weather_location==current_user.location)
         ).all()
     activities = ActivitiesTable\
@@ -88,8 +68,7 @@ def propositions():
             ActivitiesTable.activity_level1==User.activity_level1  
             | ActivitiesTable.activity_level2==User.activity_level2 
             | ActivitiesTable.activity_level3==User.activity_level3
-            ) 
-            & 
+            ) & 
             (ActivitiesTable.activity_conditions_temp <= WeatherTable.weather_temperature)
         ).all()     
         
@@ -119,6 +98,7 @@ def propositions():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """ The page to login user, require name, password"""
     if current_user.is_authenticated:
         return redirect(url_for('user', username=current_user.username))
     form = LoginForm()
@@ -142,6 +122,7 @@ def logout():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    """ The page to register user, require name, password and email"""
     if current_user.is_authenticated:
         return redirect(url_for('propositions'))
     form = RegistrationForm()
@@ -158,7 +139,7 @@ def register():
 @app.route('/user/<username>')
 @login_required
 def user(username):
-    # start = weather_input()
+    """ The page with information about user"""
     user = User.query.filter_by(username=username).first_or_404()
     icons = IconsTable.query.all()
     activities = ActivitiesTable\
@@ -185,6 +166,7 @@ def user(username):
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
+    """ The page to edit information about user: level of activity, description, localisation"""
     form = EditProfileForm()
     if form.validate_on_submit():
         current_user.username = form.username.data
@@ -197,11 +179,9 @@ def edit_profile():
         city_name = form.location.data
         )
         if not CityTable.query.filter(CityTable.city_name==city.city_name).all():
-            # db.session.query(CityTable).delete()
             db.session.add(city)
             db.session.commit()
             take_weather_date = weather_one_city_input(city.city_name)
-            # pobieranie pogody w tle
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('user', username=current_user.username))
@@ -218,6 +198,7 @@ def edit_profile():
 
 @app.route("/activities", methods=["GET", "POST"])
 def activities():
+    """ The page with all activities, system activities and that added by user"""
     activities = ActivitiesTable.query.all()
     icons = IconsTable.query.all()
     return render_template("activities.html", activities=activities, icons=icons)
@@ -225,6 +206,7 @@ def activities():
 
 @app.route("/add_activity", methods=["GET", "POST"])
 def add_activity():
+    """ The page where adding new activity is possible"""
     form = AddActivity()
     icons = IconsTable.query.all()
     today = datetime.today()
@@ -280,6 +262,7 @@ def add_activity():
 
 @app.route('/edit_activity/<activity_id>', methods=['GET', 'POST'])
 def edit_activity(activity_id):
+    """ The page where passible is editting activity added by user"""
     activity = ActivitiesTable.query.get_or_404(activity_id)
     form = EditActivity()
     icons = IconsTable.query.all()
@@ -364,6 +347,7 @@ def edit_activity(activity_id):
 
 @app.route("/users_activities", methods=["GET", "POST"])
 def users_activities():
+    """ The page where are only activities added by user"""
     form = ActivitiesTable()
     user = User.query.all()
     icons = IconsTable.query.all()
@@ -374,6 +358,8 @@ def users_activities():
 
 @app.route("/chosen_activities", methods=["GET", "POST"])
 def chosen_activities():
+    """ The page where are activities offered to users by system. 
+    The system chose activities depending on weather conditions."""
     form = ActivitiesTable()
     user = User.query.all()
     chosen_activities = ChosenActivitiesTable.query.filter(ChosenActivitiesTable.chosen_status==True).all()
@@ -383,7 +369,7 @@ def chosen_activities():
 
 @app.route("/email")
 def email():
-    
+    """ The page with list of chosen activities and button to send it on users email"""
     chosen_activities = ChosenActivitiesTable.query.filter(ChosenActivitiesTable.chosen_status==True).all()
     port = 465  # For SSL
     smtp_server = "smtp.poczta.onet.pl"
@@ -396,12 +382,6 @@ def email():
     """
     
     context = ssl.create_default_context()
-    # context = ssl._create_unverified_context()
-    # print(1)
-    # with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-    #     print(2)
-    #     server.login(sender_email, password)
-    #     server.sendmail(sender_email, receiver_email, message)
     
     with smtplib.SMTP(smtp_server, port) as server:
         server.ehlo()  # Can be omitted
@@ -419,6 +399,7 @@ def email():
 
 @app.route("/gallery")
 def gallery():
+    """ The page with images added by all users"""
     images = ImageTable.query.all()
     dir_path = os.path.dirname
     return render_template("gallery.html", images=images, dir_path=dir_path)
@@ -435,11 +416,8 @@ def show_image():
 
 @app.route('/upload_image', methods=['GET', 'POST'])
 def upload_image():
-    
-    # if form.validate_on_submit():
+    """ The page to add images"""
     if request.method == 'POST':
-        # if form.validate_on_submit():
-
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -474,8 +452,17 @@ def upload_image():
     return render_template('upload_image.html', title='Upload Image', form=form)
 
 
-
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    # return send_from_directory(UPLOAD_FOLDER, filename)
     return redirect(url_for('static', filename='uploads/' + filename), code=301)
+
+@app.route('/api')
+def api():
+    var = request.values['var']
+    a = {'a': 1}
+    a['var'] = var 
+    from flask import make_response
+    
+    
+    # return jsonify(a)
+    return make_response('testststs', 404)
