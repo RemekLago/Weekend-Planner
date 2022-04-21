@@ -12,6 +12,7 @@ import getpass
 import smtplib, ssl
 # from management.keys import Mailkey
 # from management.weather_one_city import adding_data_for_all_cities as weather_one_city_input
+from dictionaries_to_api import weather_table_history_dict, activities_table_dict
 
 @app.before_request
 def before_request():
@@ -456,13 +457,15 @@ def upload_image():
 def uploaded_file(filename):
     return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
+
 @app.route('/api')
 def api():
-    var = request.values['var']
-    a = {'a': 1}
-    a['var'] = var 
-    from flask import make_response
-    
-    
-    # return jsonify(a)
-    return make_response('testststs', 404)
+    # var = request.values['var']
+    # a = {'a': 1} 
+    # a['var'] = var 
+    # from flask import make_response
+    dictionaries = {'weather_table_history': weather_table_history_dict,
+                    'activities_table': activities_table_dict,
+                    }
+    return jsonify(dictionaries)
+    # return make_response('testststs', 404)
