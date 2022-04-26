@@ -1,6 +1,6 @@
 import os
 from app import app, db, ALLOWED_EXTENSIONS, UPLOAD_FOLDER
-from flask import render_template, flash, redirect, url_for, request, jsonify
+from flask import make_response, render_template, flash, redirect, url_for, request, jsonify
 from app.forms import CityNames, LoginForm, RegistrationForm, EditProfileForm, AddActivity, EditActivity, AddImage, ChosenActivities
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, ActivitiesTable, WeatherTable, IconsTable, ImageTable, ChosenActivitiesTable, CityTable, ChosenActivitiesTableHistory
@@ -159,6 +159,7 @@ def user(username):
             .filter(\
                 (WeatherTable.weather_location==user.location)\
                 &(WeatherTable.weather_date<tomorrow)
+                &(WeatherTable.weather_date>yesterday)
                 ).all()
     return render_template('user.html', user=user, activities=activities, 
             weather=weather, icons=icons, weather_today=weather_today)
@@ -457,15 +458,27 @@ def upload_image():
 def uploaded_file(filename):
     return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
+"""api_key for tests"""
+API_KEY_CORRECT = '12345'
 
-@app.route('/api')
-def api():
-    # var = request.values['var']
-    # a = {'a': 1} 
-    # a['var'] = var 
-    # from flask import make_response
-    dictionaries = {'weather_table_history': weather_table_history_dict,
-                    'activities_table': activities_table_dict,
+@app.route('/api/')
+def api_endpoint():
+    api_key = request.args.get('api-key')
+    
+    api_response = {
+        'success': False
+    }
+     
+    if api_key == API_KEY_CORRECT:
+        dictionaries = {'weather_table_history': weather_table_history_dict(),
+                    'activities_table': activities_table_dict(),
                     }
-    return jsonify(dictionaries)
-    # return make_response('testststs', 404)
+        api_response['success'] = True
+        api_response['data'] = dictionaries
+        response_code = 200
+        return jsonify(api_response)
+    else:
+        api_response['error_massage'] = 'API KEY IS NOT CORRECT'
+        response_code = 401
+        
+    return make_response(jsonify(api_response), response_code)
