@@ -1,1 +1,1 @@
-web: gunicorn -b :$PORT app:planner
+web: gunicorn -b :$PORT app:app
