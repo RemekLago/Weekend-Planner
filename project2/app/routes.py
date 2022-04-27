@@ -1,7 +1,7 @@
 import os
 from app import app, db, ALLOWED_EXTENSIONS, UPLOAD_FOLDER
 from flask import make_response, render_template, flash, redirect, url_for, request, jsonify
-from app.forms import CityNames, LoginForm, RegistrationForm, EditProfileForm, AddActivity, EditActivity, AddImage, ChosenActivities
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, AddActivity, EditActivity, AddImage, ChosenActivities
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, ActivitiesTable, WeatherTable, IconsTable, ImageTable, ChosenActivitiesTable, CityTable, ChosenActivitiesTableHistory
 from werkzeug.urls import url_parse
@@ -10,9 +10,9 @@ from datetime import datetime, timedelta
 from flask_mail import Mail, Message
 import getpass
 import smtplib, ssl
-# from management.keys import Mailkey
-# from management.weather_one_city import adding_data_for_all_cities as weather_one_city_input
-from dictionaries_to_api import weather_table_history_dict, activities_table_dict
+from management.keys import Mailkey
+from management.weather_one_city import adding_data_for_all_cities as weather_one_city_input
+from dictionaries_to_api import weather_table_history_dict, activities_table_dict, weather_table_dict, image_table_dict, icons_table_dict, city_table_dict, chosen_activities_table_history_dict, chosen_activities_table_dict
 
 @app.before_request
 def before_request():
@@ -159,7 +159,7 @@ def user(username):
             .filter(\
                 (WeatherTable.weather_location==user.location)\
                 &(WeatherTable.weather_date<tomorrow)
-                &(WeatherTable.weather_date>yesterday)
+                # &(WeatherTable.weather_date>today)
                 ).all()
     return render_template('user.html', user=user, activities=activities, 
             weather=weather, icons=icons, weather_today=weather_today)
@@ -371,6 +371,7 @@ def chosen_activities():
 
 @app.route("/email")
 def email():
+    raise NotImplementedError
     """ The page with list of chosen activities and button to send it on users email"""
     chosen_activities = ChosenActivitiesTable.query.filter(ChosenActivitiesTable.chosen_status==True).all()
     port = 465  # For SSL
@@ -471,7 +472,13 @@ def api_endpoint():
      
     if api_key == API_KEY_CORRECT:
         dictionaries = {'weather_table_history': weather_table_history_dict(),
-                    'activities_table': activities_table_dict(),
+                        'weather_table': weather_table_dict(),
+                        'activities_table': activities_table_dict(),
+                        'image_table': image_table_dict(),
+                        'icons_table_dict': icons_table_dict(),
+                        'city_table_dict': city_table_dict(),
+                        'chosen_activities_table_history_dict': chosen_activities_table_history_dict(),
+                        'chosen_activities_table_dict': chosen_activities_table_dict()
                     }
         api_response['success'] = True
         api_response['data'] = dictionaries

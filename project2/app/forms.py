@@ -116,6 +116,7 @@ class ChosenActivities(FlaskForm):
     chosen_status = BooleanField('chosen_atatus')
     submit = SubmitField('Submit')
 
+
 class CityNames(FlaskForm):
     city_name = TextAreaField('city_name', validators=[Length(min=2, max=140)])
     submit = SubmitField('Submit')
