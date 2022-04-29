@@ -1,1 +1,2 @@
-export FLASK_APP=project
+FLASK_APP=planner.py
+FLASK_ENV=development
