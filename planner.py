@@ -6,4 +6,5 @@ adding_data_for_all_cities()
 
 @app.shell_context_processor
 def make_shell_context():
-    return {'db': db, 'User': User, 'ActivitiesTable': ActivitiesTable, 'WeatherTable': WeatherTable, 'IconsTable': IconsTable}
+    return {'db': db, 'User': User, 'ActivitiesTable': ActivitiesTable, 
+            'WeatherTable': WeatherTable, 'IconsTable': IconsTable}
