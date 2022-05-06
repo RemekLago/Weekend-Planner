@@ -8,16 +8,16 @@ True
 True
 True
 True
-True
-True
-True
-True
-True
+Falce
+Falce
+Falce
+Falce
+False
 Timestamp
 0
 True
 True
-True
+False
 01d
 02d
 03d
@@ -35,19 +35,19 @@ list of weather conditions
 350-400
 20
 True
-False
 True
 True
 True
-True
-False
-True
+Falce
+Falce
+Falce
+Falce
 False
 Timestamp
 0
 True
 True
-True
+False
 01d
 02d
 03d
@@ -65,19 +65,19 @@ list of weather conditions
 500-700
 15
 True
-False
 True
 True
-False
 True
-True
-False
+Falce
+Falce
+Falce
+Falce
 False
 Timestamp
 0
+True
+True
 False
-True
-True
 01d
 02d
 03d
@@ -93,21 +93,21 @@ Nordic Walking is a physical activity that has gained millions of followers all 
 exercise outfit, sports shoes, towel, 1.5l water, poles, application with a map, tracksuit, rainwear, sunglasses
 list of weather conditions
 400
-5
-True
-False
+-5
 True
 True
-False
-False
 True
-False
-False
+True
+True
+Falce
+Falce
+True
+True
 Timestamp
 0
+True
+True
 False
-True
-True
 01d
 02d
 03d
@@ -135,9 +135,9 @@ True
 True
 Timestamp
 0
+True
+True
 False
-True
-True
 01d
 02d
 03d
@@ -155,19 +155,19 @@ list of weather conditions
 200-500
 -20
 True
-False
 True
 True
 True
 True
 True
-False
-False
+True
+True
+True
 Timestamp
 0
+True
+True
 False
-True
-True
 01d
 02d
 03d
@@ -185,19 +185,19 @@ list of weather conditions
 300-500
 -20
 True
-False
 True
 True
-False
 True
 True
-False
-False
+True
+True
+True
+True
 Timestamp
 0
+True
+True
 False
-True
-True
 01d
 02d
 03d
@@ -213,21 +213,21 @@ Rest, relaxation in the forest is an opportunity to rest from noise and air poll
 list of things
 list of weather conditions
 100
-10
-True
-False
+-5
 True
 True
+True
+True
 False
 False
 False
-False
+True
 False
 Timestamp
 0
 True
 True
-False
+True
 01d
 02d
 03d
@@ -238,26 +238,26 @@ False
 13d
 50d
 
-A trip to the lake or the river bank
-A trip to the lake or the river bank description
-list of things
+Trip to the lake or the river bank
+A trip to the water is an excellent way to relax. Sun, water and contact with nature. It is the perfect place to relax with friends or family. Everyone will find something interesting on the banks of a river or lake, you can read a book, listen to music, sunbathe and play with children.
+beach towel, sunscreen, umbrella, blanket, food, drink, reading, headphones, mobile phone, beach toys
 list of weather conditions
 1000
-18
+20
 True
 True
 True
 True
-True
-True
-True
-True
-True
+False
+False
+False
+False
+False
 Timestamp
 0
 True
 True
-False
+True
 01d
 02d
 03d
@@ -270,24 +270,24 @@ False
 
 Grill with friends
 Barbecue for friends is an invitation to abandon the rigid uniform and behavior associated with other types of meetings. A barbecue is a nonchalant, casual meeting during which we feel completely at ease. Children like to play football or other games, and adults willingly accompany them. Each grill is a small celebration that brings together family and friends. Our ancestors used to gather in a circle by the fire to talk and listen to stories. Today, it is the grill that becomes the equivalent of the mythical bonfire.
-list of things
+grilling food, drinking, cutlery, plates, cups, spices, kindling, grill, charcoal, sauces
 list of weather conditions
-1000
-30
+100
+15
 True
 True
 True
 True
-True
-True
-True
-True
-True
+False
+False
+False
+False
+False
 Timestamp
 0
 True
 True
-False
+True
 01d
 02d
 03d
@@ -300,17 +300,17 @@ False
 
 Trip to the park with a picnic
 The best idea for a warm day outdoors is, of course, a picnic! Will pack everything better in the open air. the weather pampers! It's a waste of time sitting at home. Adults love to relax outdoors, and children love to play in nature. How to make the most of this short time of the year, when you can enjoy the warmth and sun from morning to evening, and the whole world becomes one big playground. Have picnics and parties outdoors! A few details and clever patents are enough for summer events to remain in the memory of small and large participants for many years!
-list of things
+blanket, picnic basket, food, drink, board games, umbrella, cutlery, plates, cups, sunscreen
 list of weather conditions
-1000
-14
+100
+18
 True
+True
+True
+True
+False
 False
-True
 False
-True
-True
-True
 False
 False
 Timestamp
@@ -330,23 +330,23 @@ True
 
 Trip to the cinema
 A trip to the cinema is an attraction for everyone, a perfect idea for a date or a family outing. The cinema offers a wide selection of attractive movies and delicious popcorn. The perfect way to spend a good time.
-list of things
+tickets, money, snacks, friends or family
 list of weather conditions
-1000
-9
-True
-False
+0
+-20
 True
 True
 True
 True
 True
-False
-False
+True
+True
+True
+True
 Timestamp
 0
 True
-False
+True
 True
 01d
 02d
@@ -360,23 +360,23 @@ True
 
 Trip to the theater
 Theater is very interesting, if only someone gives it a chance and allows you to try to convince him to do so. Every fan of theatrical events will find something for themselves. Comedies, dramas, plays for children.
-list of things
+tickets, money, binoculars
 list of weather conditions
-1000
-17
-True
-False
+0
+-20
 True
 True
 True
 True
 True
-False
-False
+True
+True
+True
+True
 Timestamp
 0
 True
-False
+True
 True
 01d
 02d
@@ -390,19 +390,19 @@ True
 
 Trip to the museum
 A trip to the museum is an attraction for everyone, a perfect idea for a date or a family outing. Each city offers a wide variety of Museums. The perfect way to spend a good time.
-list of things
+tickets, camera, money, notebook
 list of weather conditions
-1000
-18
-True
-False
+0
+-20
 True
 True
 True
 True
-False
 True
-False
+True
+True
+True
+True
 Timestamp
 0
 True
@@ -420,19 +420,19 @@ True
 
 Board games at home or cafe
 Evenings with friends are a perfect occasion to have fun together. There is no doubt that social board games have become fashionable for many seasons. Party games perfect for meeting friends: Taboo, Dixit, Mafia, 5 Seconds, Gentlemen's Cards, Undercover men.
-list of things
+colleague, several board games, cards, wallet, notebook
 list of weather conditions
-1000
-12
-True
-False
+0
+-15
 True
 True
 True
 True
-False
 True
-False
+True
+True
+True
+True
 Timestamp
 0
 True
@@ -450,24 +450,24 @@ True
 
 Going out to the cafe
 Who doesn't like good coffee, preferably served with a delicious cake? There are many, varied cafes, and most of them offer good, and certainly decent coffee. The cafes are distinguished by their climate and atmosphere. You cannot get bored in them.
-list of things
+friend, something to read, wallet
 list of weather conditions
-1000
 0
+-15
 True
-False
 True
 True
-False
-False
-False
-False
-False
+True
+True
+True
+True
+True
+True
 Timestamp
 0
 True
 True
-False
+True
 01d
 02d
 03d
