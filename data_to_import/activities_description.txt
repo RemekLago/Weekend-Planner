@@ -242,7 +242,7 @@ A trip to the lake or the river bank
 A trip to the lake or the river bank description
 list of things
 list of weather conditions
-calories approximately 1000kcal/h
+1000
 18
 True
 True
@@ -268,11 +268,11 @@ False
 13d
 50d
 
-Grill ze znajomymi, rodziną
-Grill ze znajomymi, rodziną description
+Grill with friends
+Barbecue for friends is an invitation to abandon the rigid uniform and behavior associated with other types of meetings. A barbecue is a nonchalant, casual meeting during which we feel completely at ease. Children like to play football or other games, and adults willingly accompany them. Each grill is a small celebration that brings together family and friends. Our ancestors used to gather in a circle by the fire to talk and listen to stories. Today, it is the grill that becomes the equivalent of the mythical bonfire.
 list of things
 list of weather conditions
-calories approximately 1000kcal/h
+1000
 30
 True
 True
@@ -298,11 +298,11 @@ False
 13d
 50d
 
-Wyprawa do parku z piknikiem
-Wyprawa do parku z piknikiem description
+Trip to the park with a picnic
+The best idea for a warm day outdoors is, of course, a picnic! Will pack everything better in the open air. the weather pampers! It's a waste of time sitting at home. Adults love to relax outdoors, and children love to play in nature. How to make the most of this short time of the year, when you can enjoy the warmth and sun from morning to evening, and the whole world becomes one big playground. Have picnics and parties outdoors! A few details and clever patents are enough for summer events to remain in the memory of small and large participants for many years!
 list of things
 list of weather conditions
-calories approximately 1000kcal/h
+1000
 14
 True
 False
@@ -329,10 +329,10 @@ True
 50d
 
 Trip to the cinema
-Cinema description
+A trip to the cinema is an attraction for everyone, a perfect idea for a date or a family outing. The cinema offers a wide selection of attractive movies and delicious popcorn. The perfect way to spend a good time.
 list of things
 list of weather conditions
-calories approximately 1000kcal/h
+1000
 9
 True
 False
@@ -359,10 +359,10 @@ True
 50d
 
 Trip to the theater
-Trip to the theater description
+Theater is very interesting, if only someone gives it a chance and allows you to try to convince him to do so. Every fan of theatrical events will find something for themselves. Comedies, dramas, plays for children.
 list of things
 list of weather conditions
-calories approximately 1000kcal/h
+1000
 17
 True
 False
@@ -389,10 +389,10 @@ True
 50d
 
 Trip to the museum
-Muzeum description
+A trip to the museum is an attraction for everyone, a perfect idea for a date or a family outing. Each city offers a wide variety of Museums. The perfect way to spend a good time.
 list of things
 list of weather conditions
-calories approximately 1000kcal/h
+1000
 18
 True
 False
@@ -419,10 +419,10 @@ True
 50d
 
 Board games at home or cafe
-Board games at home or cafe description
+Evenings with friends are a perfect occasion to have fun together. There is no doubt that social board games have become fashionable for many seasons. Party games perfect for meeting friends: Taboo, Dixit, Mafia, 5 Seconds, Gentlemen's Cards, Undercover men.
 list of things
 list of weather conditions
-calories approximately 1000kcal/h
+1000
 12
 True
 False
@@ -449,10 +449,10 @@ True
 50d
 
 Going out to the cafe
-Going out to the cafe description
+Who doesn't like good coffee, preferably served with a delicious cake? There are many, varied cafes, and most of them offer good, and certainly decent coffee. The cafes are distinguished by their climate and atmosphere. You cannot get bored in them.
 list of things
 list of weather conditions
-calories approximately 1000kcal/h
+1000
 0
 True
 False
