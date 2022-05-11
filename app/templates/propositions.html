@@ -89,11 +89,12 @@
                     <div>
                         {% for idx in weather %}
                         {% if idx.weather_day_name == "Saturday" %}
+                        <section class="tab-content">
                             {% for activity in activities %}
                             {% if idx.weather_icon in (activity.activity_conditions_1_icon,
                             activity.activity_conditions_2_icon,activity.activity_conditions_3_icon,activity.activity_conditions_4_icon,activity.activity_conditions_5_icon,activity.activity_conditions_6_icon,activity.activity_conditions_7_icon,activity.activity_conditions_8_icon,
                             activity.activity_conditions_9_icon) %}
-                        <section class="tab-content">
+                        
                             <div class="notification is-gapless has-background-white">
                                 <p><label class="checkbox is-horizontal">
                                     <box class="button is-block is-info is-inline">Add this activity to list for nearest weekend
@@ -283,20 +284,22 @@
                                     </nav>
                                 </div>
                             </div>
-                        </section>
+                        
                         {% endif %}
                             {% endfor %}
+                        </section>
                             {% endif %}
                         {% if idx.weather_day_name == "Sunday" %}
+                        <section class="tab-content">
                             {% for activity in activities %}
                             {% if idx.weather_icon in (activity.activity_conditions_1_icon,
                             activity.activity_conditions_2_icon,activity.activity_conditions_3_icon,activity.activity_conditions_4_icon,activity.activity_conditions_5_icon,activity.activity_conditions_6_icon,activity.activity_conditions_7_icon,activity.activity_conditions_8_icon,
                             activity.activity_conditions_9_icon) %}
-                        <section class="tab-content">
+                        
                             <div class="notification is-gapless has-background-white">
                                 <p><label class="checkbox is-horizontal">
                                     <box class="button is-block is-info is-inline">Add this activity to list for nearest weekend
-                                    <input type="checkbox" id="chosen_activity.chosen_status" name="chosen_status" value="True">
+                                    <input type="hidden" id="chosen_activity.chosen_status" name="chosen_status" value="true">
                                     </input>
                                     <input type="checkbox" id="chosen_activity.chosen_activity_name" name="chosen_activity_name" value="{{ activity.activity_name  }}">
                                     </input>
@@ -482,9 +485,10 @@
                                     </nav>
                                 </div>
                             </div>   
-                        </section>
+                        
                             {% endif %}
                             {% endfor %}
+                            </section>
                             {% endif %}
                         {% endfor %} 
                     </div>      
